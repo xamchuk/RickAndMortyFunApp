@@ -14,8 +14,7 @@
 		B0CD59F72222B4C700244139 /* CharacterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CD59F62222B4C700244139 /* CharacterViewController.swift */; };
 		B0CD59F92222B51F00244139 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CD59F82222B51F00244139 /* LocationViewController.swift */; };
 		B0CD59FB2222B53E00244139 /* EpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CD59FA2222B53E00244139 /* EpisodeViewController.swift */; };
-		B0CD59FD2222B55300244139 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CD59FC2222B55300244139 /* SearchViewController.swift */; };
-		B0CD59FF2222DFA000244139 /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CD59FE2222DFA000244139 /* Extension+UIView.swift */; };
+		B0CD59FF2222DFA000244139 /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CD59FE2222DFA000244139 /* UIView+extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,8 +27,7 @@
 		B0CD59F62222B4C700244139 /* CharacterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewController.swift; sourceTree = "<group>"; };
 		B0CD59F82222B51F00244139 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		B0CD59FA2222B53E00244139 /* EpisodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
-		B0CD59FC2222B55300244139 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		B0CD59FE2222DFA000244139 /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
+		B0CD59FE2222DFA000244139 /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,8 +68,7 @@
 				B0CD59F62222B4C700244139 /* CharacterViewController.swift */,
 				B0CD59F82222B51F00244139 /* LocationViewController.swift */,
 				B0CD59FA2222B53E00244139 /* EpisodeViewController.swift */,
-				B0CD59FC2222B55300244139 /* SearchViewController.swift */,
-				B0CD59FE2222DFA000244139 /* Extension+UIView.swift */,
+				B0CD59FE2222DFA000244139 /* UIView+extension.swift */,
 			);
 			path = RickAndMortyFunApp;
 			sourceTree = "<group>";
@@ -146,8 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0CD59FF2222DFA000244139 /* Extension+UIView.swift in Sources */,
-				B0CD59FD2222B55300244139 /* SearchViewController.swift in Sources */,
+				B0CD59FF2222DFA000244139 /* UIView+extension.swift in Sources */,
 				B0CD59F72222B4C700244139 /* CharacterViewController.swift in Sources */,
 				B0CD59F52222B43700244139 /* TabBarController.swift in Sources */,
 				B0CD59E32222B25F00244139 /* AppDelegate.swift in Sources */,

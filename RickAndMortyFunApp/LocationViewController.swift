@@ -21,7 +21,6 @@ class LocationViewController: UIViewController {
     fileprivate func setupTableView() {
         view.addSubview(tableView)
         tableView.fillSuperview()
-        //tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
         tableView.tableFooterView = UITableViewHeaderFooterView()

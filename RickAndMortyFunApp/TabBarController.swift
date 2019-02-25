@@ -27,26 +27,21 @@ class TabBarController: UITabBarController {
         let episodeViewController = EpisodeViewController()
         let episodeNavController = UINavigationController(rootViewController: episodeViewController)
 
-        let searchViewController = SearchViewController()
-        let searchNavController = UINavigationController(rootViewController: searchViewController)
+        self.viewControllers = [characterNavController, locationNavController, episodeNavController]
 
-        self.viewControllers = [characterNavController, locationNavController, episodeNavController, searchNavController]
+        guard let items = tabBar.items else { return }
 
+        let characterTabBarItem = items[0] as UITabBarItem
+        characterTabBarItem.title = NSLocalizedString("Characters", comment: "Person, ")
+        charcterViewController.navigationItem.title = characterTabBarItem.title
 
-        let myTabBarItem1 = (self.tabBar.items?[0])! as UITabBarItem
-        myTabBarItem1.title = "Characters"
-        charcterViewController.navigationItem.title = myTabBarItem1.title
+        let locationTabBarItem =  items[1] as UITabBarItem
+        locationTabBarItem.title = NSLocalizedString("Locations", comment: "Person, ")
+        locationViewController.navigationItem.title = locationTabBarItem.title
 
-        let myTabBarItem2 = (self.tabBar.items?[1])! as UITabBarItem
-        myTabBarItem2.title = "Locations"
-        locationViewController.navigationItem.title = myTabBarItem2.title
+        let episodeTabBarItem =  items[2] as UITabBarItem
+        episodeTabBarItem.title = "Episodes"
+        episodeViewController.navigationItem.title = episodeTabBarItem.title
 
-        let myTabBarItem3 = (self.tabBar.items?[2])! as UITabBarItem
-        myTabBarItem3.title = "Episodes"
-        episodeViewController.navigationItem.title = myTabBarItem3.title
-
-        let myTabBarItem4 = (self.tabBar.items?[3])! as UITabBarItem
-        myTabBarItem4.title = "Search"
-        searchViewController.navigationItem.title = myTabBarItem4.title
     }
 }

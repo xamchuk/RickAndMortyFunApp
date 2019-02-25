@@ -11,7 +11,10 @@ import UIKit
 extension UIView {
 
     func fillSuperview() {
-        anchor(top: superview?.topAnchor, leading: superview?.leadingAnchor, bottom: superview?.bottomAnchor, trailing: superview?.trailingAnchor)
+        anchor(top: superview?.safeAreaLayoutGuide.topAnchor,
+               leading: superview?.safeAreaLayoutGuide.leadingAnchor,
+               bottom: superview?.safeAreaLayoutGuide.bottomAnchor,
+               trailing: superview?.safeAreaLayoutGuide.trailingAnchor)
     }
 
     func anchorSize(to view: UIView) {
@@ -64,24 +67,5 @@ extension UIView {
         if size.height != 0 {
             heightAnchor.constraint(equalToConstant: size.height).isActive = true
         }
-    }
-}
-
-extension UIImageView {
-    func downloaded(from link: String, completion: ((Data) -> Void)? = nil) {
-        guard let url = URL(string: link) else { return }
-        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-                let data = data, error == nil,
-                let image = UIImage(data: data)
-                else { return }
-            DispatchQueue.main.async() {
-                self?.image = image
-                completion?(data)
-            }
-
-            }.resume()
     }
 }
