@@ -10,15 +10,25 @@ import UIKit
 
 class TabBarController: UITabBarController {
 
+    var networkService: NetworkService
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewControllers()
     }
 
+    init(networkService: NetworkService) {
+        self.networkService = networkService
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     fileprivate func setupViewControllers() {
 
-        let charcterViewController = CharacterViewController()
+        let charcterViewController = CharacterViewController(networkService: networkService)
         let characterNavController = UINavigationController(rootViewController: charcterViewController)
 
         let locationViewController = LocationViewController()
@@ -36,11 +46,11 @@ class TabBarController: UITabBarController {
         charcterViewController.navigationItem.title = characterTabBarItem.title
 
         let locationTabBarItem =  items[1] as UITabBarItem
-        locationTabBarItem.title = NSLocalizedString("Locations", comment: "Person, ")
+        locationTabBarItem.title = NSLocalizedString("Locations", comment: "TableView by places, locations or dimensions ")
         locationViewController.navigationItem.title = locationTabBarItem.title
 
         let episodeTabBarItem =  items[2] as UITabBarItem
-        episodeTabBarItem.title = "Episodes"
+        episodeTabBarItem.title = NSLocalizedString("Episodes", comment: "")
         episodeViewController.navigationItem.title = episodeTabBarItem.title
 
     }

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B06048582225384A0029ADC6 /* CharacterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06048572225384A0029ADC6 /* CharacterModel.swift */; };
+		B060485A22253AD40029ADC6 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B060485922253AD40029ADC6 /* NetworkService.swift */; };
+		B060485D22255A270029ADC6 /* UIImage+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B060485C22255A270029ADC6 /* UIImage+extension.swift */; };
+		B06048612225BF1C0029ADC6 /* CharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06048602225BF1C0029ADC6 /* CharacterCell.swift */; };
+		B06048652225DF410029ADC6 /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06048642225DF400029ADC6 /* UITableView+Reusable.swift */; };
 		B0CD59E32222B25F00244139 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CD59E22222B25F00244139 /* AppDelegate.swift */; };
 		B0CD59EA2222B26200244139 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0CD59E92222B26200244139 /* Assets.xcassets */; };
 		B0CD59ED2222B26200244139 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0CD59EB2222B26200244139 /* LaunchScreen.storyboard */; };
@@ -18,6 +23,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B06048572225384A0029ADC6 /* CharacterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterModel.swift; sourceTree = "<group>"; };
+		B060485922253AD40029ADC6 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		B060485C22255A270029ADC6 /* UIImage+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+extension.swift"; sourceTree = "<group>"; };
+		B06048602225BF1C0029ADC6 /* CharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCell.swift; sourceTree = "<group>"; };
+		B06048642225DF400029ADC6 /* UITableView+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
 		B0CD59DF2222B25F00244139 /* RickAndMortyFunApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RickAndMortyFunApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0CD59E22222B25F00244139 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B0CD59E92222B26200244139 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -41,6 +51,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B0604856222538300029ADC6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B06048572225384A0029ADC6 /* CharacterModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B060485B222559FB0029ADC6 /* NetworkServices */ = {
+			isa = PBXGroup;
+			children = (
+				B060485922253AD40029ADC6 /* NetworkService.swift */,
+				B060485C22255A270029ADC6 /* UIImage+extension.swift */,
+			);
+			path = NetworkServices;
+			sourceTree = "<group>";
+		};
+		B060485E2225BED10029ADC6 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				B060485F2225BEF00029ADC6 /* Characters */,
+				B06048622225C3760029ADC6 /* Locations */,
+				B06048632225C3860029ADC6 /* Episodes */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		B060485F2225BEF00029ADC6 /* Characters */ = {
+			isa = PBXGroup;
+			children = (
+				B0CD59F62222B4C700244139 /* CharacterViewController.swift */,
+				B06048602225BF1C0029ADC6 /* CharacterCell.swift */,
+			);
+			path = Characters;
+			sourceTree = "<group>";
+		};
+		B06048622225C3760029ADC6 /* Locations */ = {
+			isa = PBXGroup;
+			children = (
+				B0CD59F82222B51F00244139 /* LocationViewController.swift */,
+			);
+			path = Locations;
+			sourceTree = "<group>";
+		};
+		B06048632225C3860029ADC6 /* Episodes */ = {
+			isa = PBXGroup;
+			children = (
+				B0CD59FA2222B53E00244139 /* EpisodeViewController.swift */,
+			);
+			path = Episodes;
+			sourceTree = "<group>";
+		};
 		B0CD59D62222B25F00244139 = {
 			isa = PBXGroup;
 			children = (
@@ -61,14 +123,15 @@
 			isa = PBXGroup;
 			children = (
 				B0CD59E22222B25F00244139 /* AppDelegate.swift */,
+				B0CD59F42222B43700244139 /* TabBarController.swift */,
+				B060485E2225BED10029ADC6 /* Screens */,
+				B060485B222559FB0029ADC6 /* NetworkServices */,
+				B0604856222538300029ADC6 /* Models */,
 				B0CD59E92222B26200244139 /* Assets.xcassets */,
 				B0CD59EB2222B26200244139 /* LaunchScreen.storyboard */,
 				B0CD59EE2222B26200244139 /* Info.plist */,
-				B0CD59F42222B43700244139 /* TabBarController.swift */,
-				B0CD59F62222B4C700244139 /* CharacterViewController.swift */,
-				B0CD59F82222B51F00244139 /* LocationViewController.swift */,
-				B0CD59FA2222B53E00244139 /* EpisodeViewController.swift */,
 				B0CD59FE2222DFA000244139 /* UIView+extension.swift */,
+				B06048642225DF400029ADC6 /* UITableView+Reusable.swift */,
 			);
 			path = RickAndMortyFunApp;
 			sourceTree = "<group>";
@@ -145,9 +208,14 @@
 			files = (
 				B0CD59FF2222DFA000244139 /* UIView+extension.swift in Sources */,
 				B0CD59F72222B4C700244139 /* CharacterViewController.swift in Sources */,
+				B060485A22253AD40029ADC6 /* NetworkService.swift in Sources */,
 				B0CD59F52222B43700244139 /* TabBarController.swift in Sources */,
+				B06048652225DF410029ADC6 /* UITableView+Reusable.swift in Sources */,
 				B0CD59E32222B25F00244139 /* AppDelegate.swift in Sources */,
+				B06048612225BF1C0029ADC6 /* CharacterCell.swift in Sources */,
 				B0CD59F92222B51F00244139 /* LocationViewController.swift in Sources */,
+				B06048582225384A0029ADC6 /* CharacterModel.swift in Sources */,
+				B060485D22255A270029ADC6 /* UIImage+extension.swift in Sources */,
 				B0CD59FB2222B53E00244139 /* EpisodeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
