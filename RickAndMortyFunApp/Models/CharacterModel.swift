@@ -8,6 +8,18 @@
 
 import Foundation
 
+struct Characters: Codable {
+    var info: Info
+    var results: [Character]
+}
+
+struct Info: Codable {
+    var count: Int
+    var pages: Int
+    var next: String
+    var prev: String
+}
+
 struct Character: Codable {
     var id: Int
     var name: String
