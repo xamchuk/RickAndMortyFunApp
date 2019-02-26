@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B06048582225384A0029ADC6 /* CharacterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06048572225384A0029ADC6 /* CharacterModel.swift */; };
 		B0CD59E32222B25F00244139 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CD59E22222B25F00244139 /* AppDelegate.swift */; };
 		B0CD59EA2222B26200244139 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0CD59E92222B26200244139 /* Assets.xcassets */; };
 		B0CD59ED2222B26200244139 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0CD59EB2222B26200244139 /* LaunchScreen.storyboard */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B06048572225384A0029ADC6 /* CharacterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterModel.swift; sourceTree = "<group>"; };
 		B0CD59DF2222B25F00244139 /* RickAndMortyFunApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RickAndMortyFunApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0CD59E22222B25F00244139 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B0CD59E92222B26200244139 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -41,6 +43,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B0604856222538300029ADC6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B06048572225384A0029ADC6 /* CharacterModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		B0CD59D62222B25F00244139 = {
 			isa = PBXGroup;
 			children = (
@@ -60,6 +70,7 @@
 		B0CD59E12222B25F00244139 /* RickAndMortyFunApp */ = {
 			isa = PBXGroup;
 			children = (
+				B0604856222538300029ADC6 /* Models */,
 				B0CD59E22222B25F00244139 /* AppDelegate.swift */,
 				B0CD59E92222B26200244139 /* Assets.xcassets */,
 				B0CD59EB2222B26200244139 /* LaunchScreen.storyboard */,
@@ -148,6 +159,7 @@
 				B0CD59F52222B43700244139 /* TabBarController.swift in Sources */,
 				B0CD59E32222B25F00244139 /* AppDelegate.swift in Sources */,
 				B0CD59F92222B51F00244139 /* LocationViewController.swift in Sources */,
+				B06048582225384A0029ADC6 /* CharacterModel.swift in Sources */,
 				B0CD59FB2222B53E00244139 /* EpisodeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
