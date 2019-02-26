@@ -8,6 +8,24 @@
 
 import Foundation
 
+import Foundation
+
+struct CharactersResult {
+    let characters: [Character]?
+    let error: Error?
+    let currentPage: Int
+    let pageCount: Int
+
+    var hasMorePages: Bool {
+        return currentPage < pageCount
+    }
+
+    var nextPage: Int {
+        return hasMorePages ? currentPage + 1 : currentPage
+    }
+
+}
+
 struct Characters: Codable {
     var info: Info
     var results: [Character]
