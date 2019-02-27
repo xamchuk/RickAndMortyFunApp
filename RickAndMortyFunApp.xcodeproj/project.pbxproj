@@ -12,6 +12,15 @@
 		B060485D22255A270029ADC6 /* UIImage+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B060485C22255A270029ADC6 /* UIImage+extension.swift */; };
 		B06048612225BF1C0029ADC6 /* CharacterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06048602225BF1C0029ADC6 /* CharacterCell.swift */; };
 		B06048652225DF410029ADC6 /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06048642225DF400029ADC6 /* UITableView+Reusable.swift */; };
+		B060486C22267FA50029ADC6 /* ErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B060486B22267FA50029ADC6 /* ErrorView.xib */; };
+		B060486E22267FCB0029ADC6 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B060486D22267FCB0029ADC6 /* ErrorView.swift */; };
+		B060487022269EC30029ADC6 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B060486F22269EC30029ADC6 /* LoadingView.swift */; };
+		B060487222269ECE0029ADC6 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B060487122269ECE0029ADC6 /* LoadingView.xib */; };
+		B06048742226A1290029ADC6 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06048732226A1290029ADC6 /* EmptyView.swift */; };
+		B06048762226A13D0029ADC6 /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06048752226A13D0029ADC6 /* EmptyView.xib */; };
+		B06048792226B6810029ADC6 /* DetailsCharacterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06048782226B6810029ADC6 /* DetailsCharacterView.xib */; };
+		B060487B2226C02B0029ADC6 /* DetailsCharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B060487A2226C02B0029ADC6 /* DetailsCharacterView.swift */; };
+		B060487F2226C5090029ADC6 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B060487E2226C5090029ADC6 /* DetailsViewController.swift */; };
 		B0CD59E32222B25F00244139 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CD59E22222B25F00244139 /* AppDelegate.swift */; };
 		B0CD59EA2222B26200244139 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0CD59E92222B26200244139 /* Assets.xcassets */; };
 		B0CD59ED2222B26200244139 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0CD59EB2222B26200244139 /* LaunchScreen.storyboard */; };
@@ -28,6 +37,15 @@
 		B060485C22255A270029ADC6 /* UIImage+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+extension.swift"; sourceTree = "<group>"; };
 		B06048602225BF1C0029ADC6 /* CharacterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCell.swift; sourceTree = "<group>"; };
 		B06048642225DF400029ADC6 /* UITableView+Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Reusable.swift"; sourceTree = "<group>"; };
+		B060486B22267FA50029ADC6 /* ErrorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorView.xib; sourceTree = "<group>"; };
+		B060486D22267FCB0029ADC6 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		B060486F22269EC30029ADC6 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		B060487122269ECE0029ADC6 /* LoadingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
+		B06048732226A1290029ADC6 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		B06048752226A13D0029ADC6 /* EmptyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
+		B06048782226B6810029ADC6 /* DetailsCharacterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailsCharacterView.xib; sourceTree = "<group>"; };
+		B060487A2226C02B0029ADC6 /* DetailsCharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsCharacterView.swift; sourceTree = "<group>"; };
+		B060487E2226C5090029ADC6 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		B0CD59DF2222B25F00244139 /* RickAndMortyFunApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RickAndMortyFunApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0CD59E22222B25F00244139 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B0CD59E92222B26200244139 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -72,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				B060485F2225BEF00029ADC6 /* Characters */,
+				B06048772226B6450029ADC6 /* DeteilsCharacter */,
 				B06048622225C3760029ADC6 /* Locations */,
 				B06048632225C3860029ADC6 /* Episodes */,
 			);
@@ -81,6 +100,7 @@
 		B060485F2225BEF00029ADC6 /* Characters */ = {
 			isa = PBXGroup;
 			children = (
+				B060486A22267F680029ADC6 /* FooterViews */,
 				B0CD59F62222B4C700244139 /* CharacterViewController.swift */,
 				B06048602225BF1C0029ADC6 /* CharacterCell.swift */,
 			);
@@ -101,6 +121,29 @@
 				B0CD59FA2222B53E00244139 /* EpisodeViewController.swift */,
 			);
 			path = Episodes;
+			sourceTree = "<group>";
+		};
+		B060486A22267F680029ADC6 /* FooterViews */ = {
+			isa = PBXGroup;
+			children = (
+				B060486B22267FA50029ADC6 /* ErrorView.xib */,
+				B060486D22267FCB0029ADC6 /* ErrorView.swift */,
+				B060486F22269EC30029ADC6 /* LoadingView.swift */,
+				B060487122269ECE0029ADC6 /* LoadingView.xib */,
+				B06048732226A1290029ADC6 /* EmptyView.swift */,
+				B06048752226A13D0029ADC6 /* EmptyView.xib */,
+			);
+			path = FooterViews;
+			sourceTree = "<group>";
+		};
+		B06048772226B6450029ADC6 /* DeteilsCharacter */ = {
+			isa = PBXGroup;
+			children = (
+				B06048782226B6810029ADC6 /* DetailsCharacterView.xib */,
+				B060487A2226C02B0029ADC6 /* DetailsCharacterView.swift */,
+				B060487E2226C5090029ADC6 /* DetailsViewController.swift */,
+			);
+			path = DeteilsCharacter;
 			sourceTree = "<group>";
 		};
 		B0CD59D62222B25F00244139 = {
@@ -194,8 +237,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B060486C22267FA50029ADC6 /* ErrorView.xib in Resources */,
+				B060487222269ECE0029ADC6 /* LoadingView.xib in Resources */,
 				B0CD59ED2222B26200244139 /* LaunchScreen.storyboard in Resources */,
 				B0CD59EA2222B26200244139 /* Assets.xcassets in Resources */,
+				B06048762226A13D0029ADC6 /* EmptyView.xib in Resources */,
+				B06048792226B6810029ADC6 /* DetailsCharacterView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,15 +254,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0CD59FF2222DFA000244139 /* UIView+extension.swift in Sources */,
+				B060487B2226C02B0029ADC6 /* DetailsCharacterView.swift in Sources */,
 				B0CD59F72222B4C700244139 /* CharacterViewController.swift in Sources */,
 				B060485A22253AD40029ADC6 /* NetworkService.swift in Sources */,
 				B0CD59F52222B43700244139 /* TabBarController.swift in Sources */,
+				B06048742226A1290029ADC6 /* EmptyView.swift in Sources */,
 				B06048652225DF410029ADC6 /* UITableView+Reusable.swift in Sources */,
 				B0CD59E32222B25F00244139 /* AppDelegate.swift in Sources */,
 				B06048612225BF1C0029ADC6 /* CharacterCell.swift in Sources */,
+				B060486E22267FCB0029ADC6 /* ErrorView.swift in Sources */,
 				B0CD59F92222B51F00244139 /* LocationViewController.swift in Sources */,
+				B060487F2226C5090029ADC6 /* DetailsViewController.swift in Sources */,
 				B06048582225384A0029ADC6 /* CharacterModel.swift in Sources */,
 				B060485D22255A270029ADC6 /* UIImage+extension.swift in Sources */,
+				B060487022269EC30029ADC6 /* LoadingView.swift in Sources */,
 				B0CD59FB2222B53E00244139 /* EpisodeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,7 +405,7 @@
 		B0CD59F22222B26200244139 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LW7SUQMXTU;
 				INFOPLIST_FILE = RickAndMortyFunApp/Info.plist;
@@ -371,7 +423,7 @@
 		B0CD59F32222B26200244139 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LW7SUQMXTU;
 				INFOPLIST_FILE = RickAndMortyFunApp/Info.plist;

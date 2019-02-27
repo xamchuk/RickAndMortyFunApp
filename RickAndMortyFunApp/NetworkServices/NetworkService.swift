@@ -25,12 +25,15 @@ class NetworkService {
         }
 
         var queryOrEmpty = "since:1970-01-02"
+        var name = "query"
         if let query = query, !query.isEmpty {
             queryOrEmpty = query
+            name = "name"
+
         }
         var components = URLComponents(string: urlString)
         components?.queryItems = [
-            URLQueryItem(name: "query", value: queryOrEmpty),
+            URLQueryItem(name: name, value: queryOrEmpty),
             URLQueryItem(name: "page", value: String(page))
         ]
         guard let url = components?.url else {
@@ -41,6 +44,15 @@ class NetworkService {
 
         task = URLSession.shared.dataTask(with: url) { (data, respone, error) in
             DispatchQueue.main.async {
+
+                if let error = error {
+                    guard (error as NSError).code != NSURLErrorCancelled else {
+                        return
+                    }
+                    fireErrorCompletion(error)
+                    return
+                }
+                
                 guard let data = data else {
                     fireErrorCompletion(error)
                     return

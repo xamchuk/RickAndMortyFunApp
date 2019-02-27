@@ -28,8 +28,8 @@ class TabBarController: UITabBarController {
 
     fileprivate func setupViewControllers() {
 
-        let charcterViewController = CharacterViewController(networkService: networkService)
-        let characterNavController = UINavigationController(rootViewController: charcterViewController)
+        let characterViewController = CharacterViewController(networkService: networkService)
+        let characterNavController = UINavigationController(rootViewController: characterViewController)
 
         let locationViewController = LocationViewController()
         let locationNavController = UINavigationController(rootViewController: locationViewController)
@@ -43,7 +43,7 @@ class TabBarController: UITabBarController {
 
         let characterTabBarItem = items[0] as UITabBarItem
         characterTabBarItem.title = NSLocalizedString("Characters", comment: "Person, ")
-        charcterViewController.navigationItem.title = characterTabBarItem.title
+        characterViewController.navigationItem.title = characterTabBarItem.title
 
         let locationTabBarItem =  items[1] as UITabBarItem
         locationTabBarItem.title = NSLocalizedString("Locations", comment: "TableView by places, locations or dimensions ")

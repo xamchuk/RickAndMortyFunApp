@@ -30,7 +30,9 @@ enum State {
 class CharacterViewController: UIViewController {
 
     var tableView = UITableView()
+    var refreshControll = UIRefreshControl()
     var characters: [Character] = []
+    let searchController = UISearchController(searchResultsController: nil)
     var networkService: NetworkService
     var state = State.loading {
         didSet {
@@ -42,7 +44,13 @@ class CharacterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        prepareSearchBar()
         loadCharacters()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        searchController.searchBar.becomeFirstResponder()
     }
 
     init(networkService: NetworkService) {
@@ -59,11 +67,20 @@ class CharacterViewController: UIViewController {
         loadPage(1)
     }
 
+    @objc func refreshTableView() {
+        loadCharacters()
+        refreshControll.endRefreshing()
+    }
+
+
+
     func loadPage(_ page: Int) {
-        networkService.loadCharcters(matching: "", page: page ) { [weak self] response in
+         let query = searchController.searchBar.text
+        networkService.loadCharcters(matching: query, page: page ) { [weak self] response in
             guard let `self` = self else {
                 return
             }
+            self.searchController.searchBar.endEditing(true)
             self.update(response: response)
         }
     }
@@ -92,29 +109,60 @@ class CharacterViewController: UIViewController {
     func setFooterView() {
         switch state {
         case .error(let error):
-            print("error: \(error.localizedDescription)")
-            //   errorLabel.text = error.localizedDescription
-        //   tableView.tableFooterView = errorView
+            let errorView = ErrorView()
+            tableView.tableFooterView = errorView
+            errorView.errorLabel.text = error.localizedDescription
         case .loading:
-            print("loading")
-        //   tableView.tableFooterView = loadingView
+            let loadingView = LoadingView()
+            tableView.tableFooterView = loadingView
         case .paging:
-            print("loading")
-        //   tableView.tableFooterView = loadingView
+            let loadingView = LoadingView()
+            tableView.tableFooterView = loadingView
         case .empty:
-            print("empty")
-        //   tableView.tableFooterView = emptyView
+            let emptyView = EmptyView()
+            tableView.tableFooterView = emptyView
         case .populated:
             tableView.tableFooterView = nil
         }
     }
 
+    func prepareSearchBar() {
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
+        searchController.searchBar.autocapitalizationType = .none
+        searchController.searchBar.autocorrectionType = .no
+        searchController.searchBar.tintColor = .white
+        searchController.searchBar.barTintColor = .white
+        let whiteTitleAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        let textFieldInSearchBar = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
+        textFieldInSearchBar.defaultTextAttributes = whiteTitleAttributes
+        navigationItem.searchController = searchController
+        searchController.searchBar.becomeFirstResponder()
+    }
+
     fileprivate func setupTableView() {
         view.addSubview(tableView)
-        tableView.fillSuperview()
+        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor)
         tableView.dataSource = self
+        tableView.delegate = self
+        refreshControll.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
+        refreshControll.backgroundColor = .gray
+        tableView.refreshControl = refreshControll
         tableView.register(CharacterCell.self)
-        tableView.tableFooterView = UITableViewHeaderFooterView()
+    }
+}
+
+extension CharacterViewController: UISearchBarDelegate {
+
+    func searchBar(_ searchBar: UISearchBar,
+                   selectedScopeButtonIndexDidChange selectedScope: Int) {
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        NSObject.cancelPreviousPerformRequests(withTarget: self,
+                                               selector: #selector(loadCharacters),
+                                               object: nil)
+        perform(#selector(loadCharacters), with: nil, afterDelay: 1)
     }
 }
 
@@ -134,6 +182,13 @@ extension CharacterViewController: UITableViewDataSource {
         }
         return cell
     }
+}
 
-
+extension CharacterViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailsViewController()
+        let character = state.currentCharacters[indexPath.row]
+        vc.detailsView.character = character
+        show(vc, sender: nil)
+    }
 }
