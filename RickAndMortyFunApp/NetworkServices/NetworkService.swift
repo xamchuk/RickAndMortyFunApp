@@ -6,6 +6,7 @@
 //  Copyright © 2019 Rusłan Chamski. All rights reserved.
 //
 
+import Alamofire
 import Foundation
 
 enum NetworkError: Error {
@@ -29,7 +30,6 @@ class NetworkService {
         if let query = query, !query.isEmpty {
             queryOrEmpty = query
             name = "name"
-
         }
         var components = URLComponents(string: urlString)
         components?.queryItems = [
@@ -42,31 +42,27 @@ class NetworkService {
         }
         task?.cancel()
 
-        task = URLSession.shared.dataTask(with: url) { (data, respone, error) in
-            DispatchQueue.main.async {
-
-                if let error = error {
+        AF.request(url).responseJSON() { response in
+                if let error = response.error {
                     guard (error as NSError).code != NSURLErrorCancelled else {
                         return
                     }
                     fireErrorCompletion(error)
                     return
                 }
-                
-                guard let data = data else {
-                    fireErrorCompletion(error)
+                guard let data = response.data else {
+                    fireErrorCompletion(response.error)
                     return
                 }
                 do {
                     let characters = try JSONDecoder().decode(Characters.self, from: data)
                     completion(CharactersResult(characters: characters.results,
-                                                error: nil,
-                                                currentPage: page,
+                                                    error: nil,
+                                              currentPage: page,
                                                 pageCount: Int(characters.info.pages)))
                 } catch {
                     fireErrorCompletion(error)
                 }
-            }
         }
         task?.resume()
     }
