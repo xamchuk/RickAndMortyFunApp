@@ -34,7 +34,6 @@ class DetailsCharacterView: UIView {
     @IBOutlet var lastLocation: UILabel!
     @IBOutlet var idLabel: UILabel!
 
-
     override init(frame: CGRect) {
         super.init(frame: CGRect.zero)
         initFromNib()

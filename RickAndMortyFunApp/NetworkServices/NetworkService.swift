@@ -23,7 +23,6 @@ class NetworkService {
             completion(CharactersResult(characters: nil, error: error,
                                         currentPage: 0, pageCount: 0))
         }
-
         var queryOrEmpty = "since:1970-01-02"
         var name = "query"
         if let query = query, !query.isEmpty {
@@ -39,8 +38,7 @@ class NetworkService {
             fireErrorCompletion(NetworkError.invalidURL)
             return
         }
-        let queue = DispatchQueue(label: "com.quest.xamchuk.RickAndMortyFunApp", qos: .utility, attributes: [.concurrent])
-        AF.request(url).responseDecodable( queue: queue , decoder: JSONDecoder() )
+        AF.request(url).responseDecodable( queue: nil , decoder: JSONDecoder() )
         { (response: DataResponse<Characters>) in
             if let error = response.error {
                 guard (error as NSError).code != NSURLErrorCancelled else {
@@ -50,13 +48,10 @@ class NetworkService {
                 return
             }
             guard let characters = response.value else { return }
-            DispatchQueue.main.async {
-                completion(CharactersResult(characters: characters.results,
+            completion(CharactersResult(characters: characters.results,
                                             error: nil,
-                                            currentPage: page,
-                                            pageCount: Int(characters.info.pages)))
-            }
-
+                                      currentPage: page,
+                                        pageCount: Int(characters.info.pages)))
         }
     }
 }

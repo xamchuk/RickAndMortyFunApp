@@ -43,15 +43,8 @@ class CharacterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        prepareNavigationBar()
-        prepareSearchBar()
         setupTableView()
         loadCharacters()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        searchController.searchBar.becomeFirstResponder()
     }
 
     init(networkService: NetworkService) {
@@ -79,7 +72,6 @@ class CharacterViewController: UIViewController {
             guard let `self` = self else {
                 return
             }
-            self.searchController.searchBar.endEditing(true)
             self.update(response: response)
         }
     }
@@ -89,22 +81,20 @@ class CharacterViewController: UIViewController {
             state = .error(error)
             return
         }
-
         guard let newCharacters = response.characters,
             !newCharacters.isEmpty else {
                 state = .empty
                 return
         }
-
         var allCharacters = state.currentCharacters
         allCharacters.append(contentsOf: newCharacters)
-
         if response.hasMorePages {
             state = .paging(allCharacters, next: response.nextPage)
         } else {
             state = .populated(allCharacters)
         }
     }
+    
     func setFooterView() {
         switch state {
         case .error(let error):
@@ -126,24 +116,6 @@ class CharacterViewController: UIViewController {
         }
     }
 
-    func prepareSearchBar() {
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.delegate = self
-        searchController.searchBar.autocapitalizationType = .none
-        searchController.searchBar.autocorrectionType = .no
-        searchController.searchBar.barTintColor = .white
-        let whiteTitleAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        let textFieldInSearchBar = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
-        textFieldInSearchBar.defaultTextAttributes = whiteTitleAttributes
-        navigationItem.searchController = searchController
-        searchController.searchBar.becomeFirstResponder()
-    }
-
-    func prepareNavigationBar() {
-        let whiteTitleAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        navigationController?.navigationBar.titleTextAttributes = whiteTitleAttributes
-    }
-
     fileprivate func setupTableView() {
         view.addSubview(tableView)
         tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor)
@@ -151,26 +123,9 @@ class CharacterViewController: UIViewController {
         tableView.delegate = self
         refreshControll.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
         refreshControll.backgroundColor = .gray
+        refreshControll.tintColor = .green
         tableView.refreshControl = refreshControll
         tableView.register(CharacterCell.self)
-    }
-}
-
-extension CharacterViewController: UISearchBarDelegate {
-
-    func searchBar(_ searchBar: UISearchBar,
-                   selectedScopeButtonIndexDidChange selectedScope: Int) {
-    }
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        NSObject.cancelPreviousPerformRequests(withTarget: self,
-                                               selector: #selector(loadCharacters),
-                                               object: nil)
-        perform(#selector(loadCharacters), with: nil, afterDelay: 1)
-    }
-
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        perform(#selector(loadCharacters), with: nil, afterDelay: 0.1)
     }
 }
 
