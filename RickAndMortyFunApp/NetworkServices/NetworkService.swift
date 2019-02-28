@@ -16,7 +16,6 @@ enum NetworkError: Error {
 class NetworkService {
 
     let urlString = "https://rickandmortyapi.com/api/character/"
-    var task: URLSessionTask?
     
     func loadCharcters(matching query: String?, page: Int, completion: @escaping(CharactersResult) -> Void) {
 
@@ -40,30 +39,24 @@ class NetworkService {
             fireErrorCompletion(NetworkError.invalidURL)
             return
         }
-        task?.cancel()
+        let queue = DispatchQueue(label: "com.quest.xamchuk.RickAndMortyFunApp", qos: .utility, attributes: [.concurrent])
+        AF.request(url).responseDecodable( queue: queue , decoder: JSONDecoder() )
+        { (response: DataResponse<Characters>) in
+            if let error = response.error {
+                guard (error as NSError).code != NSURLErrorCancelled else {
+                    return
+                }
+                fireErrorCompletion(error)
+                return
+            }
+            guard let characters = response.value else { return }
+            DispatchQueue.main.async {
+                completion(CharactersResult(characters: characters.results,
+                                            error: nil,
+                                            currentPage: page,
+                                            pageCount: Int(characters.info.pages)))
+            }
 
-        AF.request(url).responseJSON() { response in
-                if let error = response.error {
-                    guard (error as NSError).code != NSURLErrorCancelled else {
-                        return
-                    }
-                    fireErrorCompletion(error)
-                    return
-                }
-                guard let data = response.data else {
-                    fireErrorCompletion(response.error)
-                    return
-                }
-                do {
-                    let characters = try JSONDecoder().decode(Characters.self, from: data)
-                    completion(CharactersResult(characters: characters.results,
-                                                    error: nil,
-                                              currentPage: page,
-                                                pageCount: Int(characters.info.pages)))
-                } catch {
-                    fireErrorCompletion(error)
-                }
         }
-        task?.resume()
     }
 }

@@ -43,8 +43,9 @@ class CharacterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
+        prepareNavigationBar()
         prepareSearchBar()
+        setupTableView()
         loadCharacters()
     }
 
@@ -71,8 +72,6 @@ class CharacterViewController: UIViewController {
         loadCharacters()
         refreshControll.endRefreshing()
     }
-
-
 
     func loadPage(_ page: Int) {
          let query = searchController.searchBar.text
@@ -111,6 +110,7 @@ class CharacterViewController: UIViewController {
         case .error(let error):
             let errorView = ErrorView()
             tableView.tableFooterView = errorView
+            errorView.fillSuperview()
             errorView.errorLabel.text = error.localizedDescription
         case .loading:
             let loadingView = LoadingView()
@@ -131,13 +131,17 @@ class CharacterViewController: UIViewController {
         searchController.searchBar.delegate = self
         searchController.searchBar.autocapitalizationType = .none
         searchController.searchBar.autocorrectionType = .no
-        searchController.searchBar.tintColor = .white
         searchController.searchBar.barTintColor = .white
         let whiteTitleAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         let textFieldInSearchBar = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
         textFieldInSearchBar.defaultTextAttributes = whiteTitleAttributes
         navigationItem.searchController = searchController
         searchController.searchBar.becomeFirstResponder()
+    }
+
+    func prepareNavigationBar() {
+        let whiteTitleAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = whiteTitleAttributes
     }
 
     fileprivate func setupTableView() {
@@ -163,6 +167,10 @@ extension CharacterViewController: UISearchBarDelegate {
                                                selector: #selector(loadCharacters),
                                                object: nil)
         perform(#selector(loadCharacters), with: nil, afterDelay: 1)
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        perform(#selector(loadCharacters), with: nil, afterDelay: 0.1)
     }
 }
 

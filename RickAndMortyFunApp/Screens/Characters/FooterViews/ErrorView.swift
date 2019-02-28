@@ -28,5 +28,6 @@ class ErrorView: UIView {
     func initFromNib() {
         errorView = Bundle.main.loadNibNamed(nibName, owner: self, options: nil)?.first as? UIView
         addSubview(errorView)
+        errorView.fillSuperview()
     }
 }
