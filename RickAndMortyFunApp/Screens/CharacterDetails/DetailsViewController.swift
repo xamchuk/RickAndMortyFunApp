@@ -10,7 +10,7 @@ import UIKit
 
 class DetailsViewController: UIViewController {
 
-    var detailsView = DetailsCharacterView()
+    var detailsView = CharacterDetailsView()
 
     override func viewDidLoad() {
         super.viewDidLoad()

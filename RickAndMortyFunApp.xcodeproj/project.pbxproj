@@ -18,9 +18,10 @@
 		B060487222269ECE0029ADC6 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B060487122269ECE0029ADC6 /* LoadingView.xib */; };
 		B06048742226A1290029ADC6 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06048732226A1290029ADC6 /* EmptyView.swift */; };
 		B06048762226A13D0029ADC6 /* EmptyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06048752226A13D0029ADC6 /* EmptyView.xib */; };
-		B06048792226B6810029ADC6 /* DetailsCharacterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06048782226B6810029ADC6 /* DetailsCharacterView.xib */; };
-		B060487B2226C02B0029ADC6 /* DetailsCharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B060487A2226C02B0029ADC6 /* DetailsCharacterView.swift */; };
+		B06048792226B6810029ADC6 /* CharacterDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06048782226B6810029ADC6 /* CharacterDetailsView.xib */; };
+		B060487B2226C02B0029ADC6 /* CharacterDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B060487A2226C02B0029ADC6 /* CharacterDetailsView.swift */; };
 		B060487F2226C5090029ADC6 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B060487E2226C5090029ADC6 /* DetailsViewController.swift */; };
+		B0604881222A8F2D0029ADC6 /* RickAndMortyRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0604880222A8F2D0029ADC6 /* RickAndMortyRouter.swift */; };
 		B0CD59E32222B25F00244139 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CD59E22222B25F00244139 /* AppDelegate.swift */; };
 		B0CD59EA2222B26200244139 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0CD59E92222B26200244139 /* Assets.xcassets */; };
 		B0CD59ED2222B26200244139 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0CD59EB2222B26200244139 /* LaunchScreen.storyboard */; };
@@ -47,9 +48,10 @@
 		B060487122269ECE0029ADC6 /* LoadingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
 		B06048732226A1290029ADC6 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		B06048752226A13D0029ADC6 /* EmptyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyView.xib; sourceTree = "<group>"; };
-		B06048782226B6810029ADC6 /* DetailsCharacterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailsCharacterView.xib; sourceTree = "<group>"; };
-		B060487A2226C02B0029ADC6 /* DetailsCharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsCharacterView.swift; sourceTree = "<group>"; };
+		B06048782226B6810029ADC6 /* CharacterDetailsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterDetailsView.xib; sourceTree = "<group>"; };
+		B060487A2226C02B0029ADC6 /* CharacterDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsView.swift; sourceTree = "<group>"; };
 		B060487E2226C5090029ADC6 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		B0604880222A8F2D0029ADC6 /* RickAndMortyRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyRouter.swift; sourceTree = "<group>"; };
 		B0CD59DF2222B25F00244139 /* RickAndMortyFunApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RickAndMortyFunApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0CD59E22222B25F00244139 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B0CD59E92222B26200244139 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			children = (
 				B060485922253AD40029ADC6 /* NetworkService.swift */,
 				B060485C22255A270029ADC6 /* UIImage+extension.swift */,
+				B0604880222A8F2D0029ADC6 /* RickAndMortyRouter.swift */,
 			);
 			path = NetworkServices;
 			sourceTree = "<group>";
@@ -112,7 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				B060485F2225BEF00029ADC6 /* Characters */,
-				B06048772226B6450029ADC6 /* DeteilsCharacter */,
+				B06048772226B6450029ADC6 /* CharacterDetails */,
 				B06048622225C3760029ADC6 /* Locations */,
 				B06048632225C3860029ADC6 /* Episodes */,
 			);
@@ -158,14 +161,14 @@
 			path = FooterViews;
 			sourceTree = "<group>";
 		};
-		B06048772226B6450029ADC6 /* DeteilsCharacter */ = {
+		B06048772226B6450029ADC6 /* CharacterDetails */ = {
 			isa = PBXGroup;
 			children = (
-				B06048782226B6810029ADC6 /* DetailsCharacterView.xib */,
-				B060487A2226C02B0029ADC6 /* DetailsCharacterView.swift */,
+				B06048782226B6810029ADC6 /* CharacterDetailsView.xib */,
+				B060487A2226C02B0029ADC6 /* CharacterDetailsView.swift */,
 				B060487E2226C5090029ADC6 /* DetailsViewController.swift */,
 			);
-			path = DeteilsCharacter;
+			path = CharacterDetails;
 			sourceTree = "<group>";
 		};
 		B0CD59D62222B25F00244139 = {
@@ -268,7 +271,7 @@
 				B0CD59ED2222B26200244139 /* LaunchScreen.storyboard in Resources */,
 				B0CD59EA2222B26200244139 /* Assets.xcassets in Resources */,
 				B06048762226A13D0029ADC6 /* EmptyView.xib in Resources */,
-				B06048792226B6810029ADC6 /* DetailsCharacterView.xib in Resources */,
+				B06048792226B6810029ADC6 /* CharacterDetailsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,11 +330,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0CD59FF2222DFA000244139 /* UIView+extension.swift in Sources */,
-				B060487B2226C02B0029ADC6 /* DetailsCharacterView.swift in Sources */,
+				B060487B2226C02B0029ADC6 /* CharacterDetailsView.swift in Sources */,
 				B0CD59F72222B4C700244139 /* CharacterViewController.swift in Sources */,
 				B060485A22253AD40029ADC6 /* NetworkService.swift in Sources */,
 				B0CD59F52222B43700244139 /* TabBarController.swift in Sources */,
 				B06048742226A1290029ADC6 /* EmptyView.swift in Sources */,
+				B0604881222A8F2D0029ADC6 /* RickAndMortyRouter.swift in Sources */,
 				B06048652225DF410029ADC6 /* UITableView+Reusable.swift in Sources */,
 				B0CD59E32222B25F00244139 /* AppDelegate.swift in Sources */,
 				B06048612225BF1C0029ADC6 /* CharacterCell.swift in Sources */,
@@ -479,7 +483,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 19ECBFD40C618F1086A191AA /* Pods-RickAndMortyFunApp.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LW7SUQMXTU;
 				INFOPLIST_FILE = RickAndMortyFunApp/Info.plist;
@@ -498,7 +502,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1C642F928D4A80B2BF675C4B /* Pods-RickAndMortyFunApp.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LW7SUQMXTU;
 				INFOPLIST_FILE = RickAndMortyFunApp/Info.plist;

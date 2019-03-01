@@ -8,9 +8,9 @@
 
 import UIKit
 
-class DetailsCharacterView: UIView {
+class CharacterDetailsView: UIView {
 
-    let nibName = String(describing: DetailsCharacterView.self)
+    let nibName = String(describing: CharacterDetailsView.self)
     var character: Character! {
         didSet {
             imageView.imageFromURL(urlString: character.image)

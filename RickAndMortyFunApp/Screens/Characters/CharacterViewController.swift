@@ -67,8 +67,7 @@ class CharacterViewController: UIViewController {
     }
 
     func loadPage(_ page: Int) {
-         let query = searchController.searchBar.text
-        networkService.loadCharcters(matching: query, page: page ) { [weak self] response in
+        networkService.loadCharacters(page: page ) { [weak self] response in
             guard let `self` = self else {
                 return
             }
