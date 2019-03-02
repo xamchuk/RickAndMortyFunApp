@@ -9,7 +9,7 @@
 import UIKit
 
 class CharacterCell: UITableViewCell {
-
+    
     var character: Character! {
         didSet {
             imageCharacter.imageFromURL(urlString: character.image)

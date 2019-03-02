@@ -1,8 +1,8 @@
 //
 // Store
 //
-// Created by Alex Alexandrovych on 08/02/2019
-// Copyright © 2019 Alexhome. All rights reserved.
+//  Created by Rusłan Chamski on 26/02/2019.
+//  Copyright © 2019 Rusłan Chamski. All rights reserved.
 //
 
 import UIKit

@@ -30,7 +30,9 @@ enum State {
 class CharacterViewController: UIViewController {
 
     var tableView = UITableView()
+    var refreshControll = UIRefreshControl()
     var characters: [Character] = []
+    let searchController = UISearchController(searchResultsController: nil)
     var networkService: NetworkService
     var state = State.loading {
         didSet {
@@ -59,8 +61,13 @@ class CharacterViewController: UIViewController {
         loadPage(1)
     }
 
+    @objc func refreshTableView() {
+        loadCharacters()
+        refreshControll.endRefreshing()
+    }
+
     func loadPage(_ page: Int) {
-        networkService.loadCharcters(matching: "", page: page ) { [weak self] response in
+        networkService.loadCharacters(page: page ) { [weak self] response in
             guard let `self` = self else {
                 return
             }
@@ -73,37 +80,36 @@ class CharacterViewController: UIViewController {
             state = .error(error)
             return
         }
-
         guard let newCharacters = response.characters,
             !newCharacters.isEmpty else {
                 state = .empty
                 return
         }
-
         var allCharacters = state.currentCharacters
         allCharacters.append(contentsOf: newCharacters)
-
         if response.hasMorePages {
             state = .paging(allCharacters, next: response.nextPage)
         } else {
             state = .populated(allCharacters)
         }
     }
+    
     func setFooterView() {
         switch state {
         case .error(let error):
-            print("error: \(error.localizedDescription)")
-            //   errorLabel.text = error.localizedDescription
-        //   tableView.tableFooterView = errorView
+            let errorView = ErrorView()
+            tableView.tableFooterView = errorView
+            errorView.fillSuperview()
+            errorView.errorLabel.text = error.localizedDescription
         case .loading:
-            print("loading")
-        //   tableView.tableFooterView = loadingView
+            let loadingView = LoadingView()
+            tableView.tableFooterView = loadingView
         case .paging:
-            print("loading")
-        //   tableView.tableFooterView = loadingView
+            let loadingView = LoadingView()
+            tableView.tableFooterView = loadingView
         case .empty:
-            print("empty")
-        //   tableView.tableFooterView = emptyView
+            let emptyView = EmptyView()
+            tableView.tableFooterView = emptyView
         case .populated:
             tableView.tableFooterView = nil
         }
@@ -111,10 +117,14 @@ class CharacterViewController: UIViewController {
 
     fileprivate func setupTableView() {
         view.addSubview(tableView)
-        tableView.fillSuperview()
+        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor)
         tableView.dataSource = self
+        tableView.delegate = self
+        refreshControll.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
+        refreshControll.backgroundColor = .gray
+        refreshControll.tintColor = .green
+        tableView.refreshControl = refreshControll
         tableView.register(CharacterCell.self)
-        tableView.tableFooterView = UITableViewHeaderFooterView()
     }
 }
 
@@ -134,6 +144,13 @@ extension CharacterViewController: UITableViewDataSource {
         }
         return cell
     }
+}
 
-
+extension CharacterViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailsViewController()
+        let character = state.currentCharacters[indexPath.row]
+        vc.character = character
+        show(vc, sender: nil)
+    }
 }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ErrorView" customModule="RickAndMortyFunApp" customModuleProvider="target">
+            <connections>
+                <outlet property="errorLabel" destination="iVA-vM-nKp" id="xas-4c-gTd"/>
+                <outlet property="errorView" destination="nnf-pb-tSf" id="aLV-Y9-bZv"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleAspectFill" id="nnf-pb-tSf" userLabel="Error View">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oops!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7iO-nL-fmI">
+                    <rect key="frame" x="156" y="319" width="63" height="29"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iVA-vM-nKp">
+                    <rect key="frame" x="146" y="356" width="83.5" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="iVA-vM-nKp" firstAttribute="centerX" secondItem="7iO-nL-fmI" secondAttribute="centerX" id="2pU-mb-J0N"/>
+                <constraint firstItem="7iO-nL-fmI" firstAttribute="centerY" secondItem="nnf-pb-tSf" secondAttribute="centerY" id="Cds-hz-bVI"/>
+                <constraint firstItem="iVA-vM-nKp" firstAttribute="top" secondItem="7iO-nL-fmI" secondAttribute="bottom" constant="8" id="bo5-Bt-tLa"/>
+                <constraint firstItem="7iO-nL-fmI" firstAttribute="centerX" secondItem="nnf-pb-tSf" secondAttribute="centerX" id="fHS-g4-hrI"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="hLI-G9-I64"/>
+            <point key="canvasLocation" x="-258" y="0.0"/>
+        </view>
+    </objects>
+</document>
