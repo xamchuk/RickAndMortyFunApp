@@ -9,7 +9,9 @@
 import Alamofire
 
 enum RickAndMortyRouter: URLRequestConvertible {
-    static let baseURL = URL(string: "https://rickandmortyapi.com/api/")!
+    var baseURL: URL {
+        return URL(string: "https://rickandmortyapi.com/api/")!
+    }
 
     case getCharacters(Int)
     case create([String: Any])
@@ -42,7 +44,7 @@ enum RickAndMortyRouter: URLRequestConvertible {
             default:
                 break
             }
-            let url = RickAndMortyRouter.baseURL.appendingPathComponent(relativePath)
+            let url = baseURL.appendingPathComponent(relativePath)
             return url
         }()
 

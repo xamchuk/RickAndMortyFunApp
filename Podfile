@@ -6,6 +6,6 @@ target 'RickAndMortyFunApp' do
   use_frameworks!
 
   # Pods for RickAndMortyFunApp
-pod 'Alamofire', '~> 5.0
+	pod 'Alamofire', '~> 5.0.0-beta.2'
 
 end
