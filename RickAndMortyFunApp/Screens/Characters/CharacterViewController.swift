@@ -150,7 +150,7 @@ extension CharacterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailsViewController()
         let character = state.currentCharacters[indexPath.row]
-        vc.detailsView.character = character
+        vc.character = character
         show(vc, sender: nil)
     }
 }

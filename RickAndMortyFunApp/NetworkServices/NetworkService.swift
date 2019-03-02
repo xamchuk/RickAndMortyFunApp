@@ -20,8 +20,9 @@ class NetworkService {
             completion(CharactersResult(characters: nil, error: error,
                                         currentPage: 0, pageCount: 0))
         }
-        AF.request(RickAndMortyRouter.getCharacters(page)).responseDecodable
-        { (response: DataResponse<Characters>) in
+        let request = RickAndMortyRouter.getCharacters(page: page)
+        AF.request(request).responseDecodable {
+            (response: DataResponse<Characters>) in
             if let error = response.error {
                 guard (error as NSError).code != NSURLErrorCancelled else {
                     return

@@ -11,18 +11,6 @@ import UIKit
 class CharacterDetailsView: UIView {
 
     let nibName = String(describing: CharacterDetailsView.self)
-    var character: Character! {
-        didSet {
-            imageView.imageFromURL(urlString: character.image)
-            nameLabel.text = character.name
-            idLabel.text = "id: \(character.id)"
-            statusLabel.text = character.status
-            speciesLabel.text = character.species
-            genderLabel.text = character.gender
-            originLabel.text = character.origin.name
-            lastLocation.text = character.location.name
-        }
-    }
 
     @IBOutlet var detailsView: UIView!
     @IBOutlet var imageView: UIImageView!
