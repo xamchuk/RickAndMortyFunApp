@@ -15,11 +15,12 @@ class LocationViewController: GenericViewController<LocationCell, Location, Resu
     }
 
     override func loadPage(_ page: Int) {
-        networkService.loadLocations(page: page ) { [weak self] response in
+        networkService.load(state: RickAndMortyRouter.getLocation(page: page)) { [weak self] (response: Locations) in
             guard let `self` = self else {
                 return
             }
-            self.update(response: response)
+            let results = (Result<Locations>(items: response, error: nil, currentPage: page, pageCount: response.info.pages))
+            self.update(response: results)
         }
     }
     

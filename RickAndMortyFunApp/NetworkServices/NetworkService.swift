@@ -38,15 +38,14 @@ class NetworkService {
         }
     }
 
-    func loadLocations(page: Int, completion: @escaping(Result<Locations>) -> Void) {
+    func load<T: Codable>(state: RickAndMortyRouter , completion: @escaping(T) -> Void) {
 
         func fireErrorCompletion(_ error: Error?) {
-            completion(Result<Locations>(items: nil, error: error,
-                                        currentPage: 0, pageCount: 0))
+           // completion(T)
         }
-        let request = RickAndMortyRouter.getLocation(page: page)
+        let request = state
         AF.request(request).responseDecodable {
-            (response: DataResponse<Locations>) in
+            (response: DataResponse<T>) in
             if let error = response.error {
                 guard (error as NSError).code != NSURLErrorCancelled else {
                     return
@@ -55,10 +54,7 @@ class NetworkService {
                 return
             }
             guard let items = response.value else { return }
-            completion(Result<Locations>(items: items,
-                                        error: nil,
-                                        currentPage: page,
-                                        pageCount: Int(items.info.pages)))
+            completion(items)
         }
     }
 
