@@ -5,38 +5,40 @@
 //  Created by Rusłan Chamski on 24/02/2019.
 //  Copyright © 2019 Rusłan Chamski. All rights reserved.
 //
-
 import UIKit
 
-class LocationViewController: UIViewController {
-
-    private let cellId = "CellId"
-    var tableView = UITableView()
-
+class LocationViewController: GenericViewController<LocationCell, Location, Result<Locations>> {
+    var networkService = NetworkService()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
     }
 
-    fileprivate func setupTableView() {
-        view.addSubview(tableView)
-        tableView.fillSuperview()
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
-        tableView.tableFooterView = UITableViewHeaderFooterView()
+    override func loadPage(_ page: Int) {
+        networkService.loadLocations(page: page ) { [weak self] response in
+            guard let `self` = self else {
+                return
+            }
+            self.update(response: response)
+        }
     }
-}
-
-extension LocationViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+    
+    override func update(response: Result<Locations>) {
+        if let error = response.error {
+            state = .error(error)
+            return
+        }
+        guard let newItems = response.items?.results,
+            !newItems.isEmpty else {
+                state = .empty
+                return
+        }
+        var allItems = state.currentItem
+        allItems.append(contentsOf: newItems)
+        if response.hasMorePages {
+            state = .paging(allItems, next: response.nextPage)
+        } else {
+            state = .populated(allItems)
+        }
     }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-            as UITableViewCell
-        return cell
-    }
-
-
 }

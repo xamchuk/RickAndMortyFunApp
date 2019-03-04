@@ -22,6 +22,10 @@
 		B060487B2226C02B0029ADC6 /* CharacterDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B060487A2226C02B0029ADC6 /* CharacterDetailsView.swift */; };
 		B060487F2226C5090029ADC6 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B060487E2226C5090029ADC6 /* DetailsViewController.swift */; };
 		B0604881222A8F2D0029ADC6 /* RickAndMortyRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0604880222A8F2D0029ADC6 /* RickAndMortyRouter.swift */; };
+		B0604883222CA4970029ADC6 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0604882222CA4970029ADC6 /* GenericViewController.swift */; };
+		B0604885222CAE5E0029ADC6 /* GenericCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0604884222CAE5E0029ADC6 /* GenericCell.swift */; };
+		B0604887222CB70D0029ADC6 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0604886222CB70D0029ADC6 /* LocationCell.swift */; };
+		B0604889222CB78E0029ADC6 /* GenericState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0604888222CB78E0029ADC6 /* GenericState.swift */; };
 		B0CD59E32222B25F00244139 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CD59E22222B25F00244139 /* AppDelegate.swift */; };
 		B0CD59EA2222B26200244139 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0CD59E92222B26200244139 /* Assets.xcassets */; };
 		B0CD59ED2222B26200244139 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0CD59EB2222B26200244139 /* LaunchScreen.storyboard */; };
@@ -52,6 +56,10 @@
 		B060487A2226C02B0029ADC6 /* CharacterDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsView.swift; sourceTree = "<group>"; };
 		B060487E2226C5090029ADC6 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		B0604880222A8F2D0029ADC6 /* RickAndMortyRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyRouter.swift; sourceTree = "<group>"; };
+		B0604882222CA4970029ADC6 /* GenericViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericViewController.swift; sourceTree = "<group>"; };
+		B0604884222CAE5E0029ADC6 /* GenericCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericCell.swift; sourceTree = "<group>"; };
+		B0604886222CB70D0029ADC6 /* LocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
+		B0604888222CB78E0029ADC6 /* GenericState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericState.swift; sourceTree = "<group>"; };
 		B0CD59DF2222B25F00244139 /* RickAndMortyFunApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RickAndMortyFunApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0CD59E22222B25F00244139 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B0CD59E92222B26200244139 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -97,6 +105,9 @@
 			isa = PBXGroup;
 			children = (
 				B06048572225384A0029ADC6 /* CharacterModel.swift */,
+				B0604882222CA4970029ADC6 /* GenericViewController.swift */,
+				B0604884222CAE5E0029ADC6 /* GenericCell.swift */,
+				B0604888222CB78E0029ADC6 /* GenericState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -136,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				B0CD59F82222B51F00244139 /* LocationViewController.swift */,
+				B0604886222CB70D0029ADC6 /* LocationCell.swift */,
 			);
 			path = Locations;
 			sourceTree = "<group>";
@@ -335,16 +347,20 @@
 				B060485A22253AD40029ADC6 /* NetworkService.swift in Sources */,
 				B0CD59F52222B43700244139 /* TabBarController.swift in Sources */,
 				B06048742226A1290029ADC6 /* EmptyView.swift in Sources */,
+				B0604887222CB70D0029ADC6 /* LocationCell.swift in Sources */,
+				B0604889222CB78E0029ADC6 /* GenericState.swift in Sources */,
 				B0604881222A8F2D0029ADC6 /* RickAndMortyRouter.swift in Sources */,
 				B06048652225DF410029ADC6 /* UITableView+Reusable.swift in Sources */,
 				B0CD59E32222B25F00244139 /* AppDelegate.swift in Sources */,
 				B06048612225BF1C0029ADC6 /* CharacterCell.swift in Sources */,
 				B060486E22267FCB0029ADC6 /* ErrorView.swift in Sources */,
 				B0CD59F92222B51F00244139 /* LocationViewController.swift in Sources */,
+				B0604885222CAE5E0029ADC6 /* GenericCell.swift in Sources */,
 				B060487F2226C5090029ADC6 /* DetailsViewController.swift in Sources */,
 				B06048582225384A0029ADC6 /* CharacterModel.swift in Sources */,
 				B060485D22255A270029ADC6 /* UIImage+extension.swift in Sources */,
 				B060487022269EC30029ADC6 /* LoadingView.swift in Sources */,
+				B0604883222CA4970029ADC6 /* GenericViewController.swift in Sources */,
 				B0CD59FB2222B53E00244139 /* EpisodeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

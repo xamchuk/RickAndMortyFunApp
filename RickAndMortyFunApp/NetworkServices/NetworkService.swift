@@ -31,10 +31,36 @@ class NetworkService {
                 return
             }
             guard let characters = response.value else { return }
-            completion(CharactersResult(characters: characters.results,
+            completion(CharactersResult(characters: characters,
                                         error: nil,
                                         currentPage: page,
                                         pageCount: Int(characters.info.pages)))
         }
     }
+
+    func loadLocations(page: Int, completion: @escaping(Result<Locations>) -> Void) {
+
+        func fireErrorCompletion(_ error: Error?) {
+            completion(Result<Locations>(items: nil, error: error,
+                                        currentPage: 0, pageCount: 0))
+        }
+        let request = RickAndMortyRouter.getLocation(page: page)
+        AF.request(request).responseDecodable {
+            (response: DataResponse<Locations>) in
+            if let error = response.error {
+                guard (error as NSError).code != NSURLErrorCancelled else {
+                    return
+                }
+                fireErrorCompletion(error)
+                return
+            }
+            guard let items = response.value else { return }
+            completion(Result<Locations>(items: items,
+                                        error: nil,
+                                        currentPage: page,
+                                        pageCount: Int(items.info.pages)))
+        }
+    }
+
+
 }

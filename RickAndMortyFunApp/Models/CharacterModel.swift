@@ -11,7 +11,23 @@ import Foundation
 import Foundation
 
 struct CharactersResult {
-    let characters: [Character]?
+    let characters: Characters?
+    let error: Error?
+    let currentPage: Int
+    let pageCount: Int
+
+    var hasMorePages: Bool {
+        return currentPage < pageCount
+    }
+
+    var nextPage: Int {
+        return hasMorePages ? currentPage + 1 : currentPage
+    }
+
+}
+
+struct Result<T> {
+    let items: T?
     let error: Error?
     let currentPage: Int
     let pageCount: Int
@@ -29,6 +45,11 @@ struct CharactersResult {
 struct Characters: Codable {
     var info: Info
     var results: [Character]
+}
+
+struct Locations: Codable {
+    var info: Info
+    var results: [Location]
 }
 
 struct Info: Codable {
@@ -58,6 +79,11 @@ struct Origin: Codable {
 }
 
 struct Location: Codable {
+    var id: Int?
     var name: String
+    var type: String?
+    var dimension: String?
+   // var residents: [Character]?
     var url: String
 }
+

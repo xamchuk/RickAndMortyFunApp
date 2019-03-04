@@ -31,8 +31,6 @@ class CharacterViewController: UIViewController {
 
     var tableView = UITableView()
     var refreshControll = UIRefreshControl()
-    var characters: [Character] = []
-    let searchController = UISearchController(searchResultsController: nil)
     var networkService: NetworkService
     var state = State.loading {
         didSet {
@@ -80,7 +78,7 @@ class CharacterViewController: UIViewController {
             state = .error(error)
             return
         }
-        guard let newCharacters = response.characters,
+        guard let newCharacters = response.characters?.results,
             !newCharacters.isEmpty else {
                 state = .empty
                 return
