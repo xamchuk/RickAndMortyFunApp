@@ -1,26 +1,26 @@
 //
-//  GenericState.swift
+//  State.swift
 //  RickAndMortyFunApp
 //
-//  Created by Rusłan Chamski on 04/03/2019.
+//  Created by Rusłan Chamski on 05/03/2019.
 //  Copyright © 2019 Rusłan Chamski. All rights reserved.
 //
 
 import Foundation
 
-enum GenericState<R> {
+enum State<T> {
     case loading
-    case populated([R])
-    case paging([R], next: Int)
+    case populated([T])
+    case paging([T], next: Int)
     case empty
     case error(Error)
 
-    var currentItem: [R] {
+    var currentItem: [T] {
         switch self {
         case .paging(let item, _):
             return item
-        case .populated(let items):
-            return items
+        case .populated(let item):
+            return item
         default:
             return []
         }

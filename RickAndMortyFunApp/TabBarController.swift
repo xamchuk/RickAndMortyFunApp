@@ -9,26 +9,15 @@
 import UIKit
 
 class TabBarController: UITabBarController {
-
-    var networkService: NetworkService
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewControllers()
     }
 
-    init(networkService: NetworkService) {
-        self.networkService = networkService
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     fileprivate func setupViewControllers() {
 
-        let characterViewController = CharacterViewController(networkService: networkService)
+        let characterViewController = CharacterViewController()
         let characterNavController = UINavigationController(rootViewController: characterViewController)
 
         let locationViewController = LocationViewController()

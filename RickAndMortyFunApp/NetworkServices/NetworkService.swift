@@ -8,55 +8,48 @@
 
 import Alamofire
 
-enum NetworkError: Error {
-    case invalidURL
+protocol ResponseType {
+    associatedtype Model
+    var info: Info { get }
+    var results: [Model] { get }
 }
 
-class NetworkService {
+struct Result<Model> {
+    let items: [Model]?
+    let error: Error?
+    let currentPage: Int
+    let pageCount: Int
 
-    func loadCharacters(page: Int, completion: @escaping(CharactersResult) -> Void) {
+    var hasMorePages: Bool {
+        return currentPage < pageCount
+    }
 
-        func fireErrorCompletion(_ error: Error?) {
-            completion(CharactersResult(characters: nil, error: error,
-                                        currentPage: 0, pageCount: 0))
-        }
-        let request = RickAndMortyRouter.getCharacters(page: page)
-        AF.request(request).responseDecodable {
-            (response: DataResponse<Characters>) in
+    var nextPage: Int {
+        return hasMorePages ? currentPage + 1 : currentPage
+    }
+}
+
+class NetworkService<Response> where Response: ResponseType & Decodable {
+    func loadItems(request: URLRequestConvertible, page: Int, completion: @escaping (Result<Response.Model>) -> Void) {
+        AF.request(request).responseDecodable { (response: DataResponse<Response>) in
             if let error = response.error {
                 guard (error as NSError).code != NSURLErrorCancelled else {
                     return
                 }
-                fireErrorCompletion(error)
+                completion(Result(items: nil, error: error, currentPage: 0, pageCount: 0))
                 return
             }
-            guard let characters = response.value else { return }
-            completion(CharactersResult(characters: characters,
-                                        error: nil,
-                                        currentPage: page,
-                                        pageCount: Int(characters.info.pages)))
+
+            guard let response = response.value else { return }
+
+            let result = Result(
+                items: response.results,
+                error: nil,
+                currentPage: page,
+                pageCount: Int(response.info.pages)
+            )
+
+            completion(result)
         }
     }
-
-    func load<T: Codable>(state: RickAndMortyRouter , completion: @escaping(T) -> Void) {
-
-        func fireErrorCompletion(_ error: Error?) {
-           // completion(T)
-        }
-        let request = state
-        AF.request(request).responseDecodable {
-            (response: DataResponse<T>) in
-            if let error = response.error {
-                guard (error as NSError).code != NSURLErrorCancelled else {
-                    return
-                }
-                fireErrorCompletion(error)
-                return
-            }
-            guard let items = response.value else { return }
-            completion(items)
-        }
-    }
-
-
 }

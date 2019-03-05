@@ -7,147 +7,111 @@
 //
 
 import UIKit
-
-enum State {
-    case loading
-    case populated([Character])
-    case paging([Character], next: Int)
-    case empty
-    case error(Error)
-
-    var currentCharacters: [Character] {
-        switch self {
-        case .paging(let character, _):
-            return character
-        case .populated(let characters):
-            return characters
-        default:
-            return []
-        }
-    }
-}
+import Alamofire
 
 class CharacterViewController: UIViewController {
 
-    var tableView = UITableView()
+    // MARK: - Views
+
+    var characterTableView = UITableView()
     var refreshControll = UIRefreshControl()
-    var networkService: NetworkService
-    var state = State.loading {
-        didSet {
-            setFooterView()
-            tableView.reloadData()
-        }
-    }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupTableView()
-        loadCharacters()
-    }
+    // MARK: - Properties
 
-    init(networkService: NetworkService) {
-        self.networkService = networkService
+    var viewModel: ViewModel<ItemsResponse<Character>>
+
+    // MARK: - Init
+
+    init(viewModel: ViewModel<ItemsResponse<Character>> = .init()) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    @objc func loadCharacters() {
-        state = .loading
-        loadPage(1)
+    // MARK: - Life cycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupTableView()
+        setupRefreshControll()
     }
 
-    @objc func refreshTableView() {
-        loadCharacters()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadPage(1)
+
+        viewModel.stateUpdated = { [weak self] state in
+            self?.setFooterView(for: state)
+            self?.characterTableView.reloadData()
+        }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        viewModel.stateUpdated = nil
+    }
+
+    // MARK: - Actions
+
+    @objc private func refreshTableView() {
+        loadPage(1)
         refreshControll.endRefreshing()
     }
 
-    func loadPage(_ page: Int) {
-        networkService.loadCharacters(page: page ) { [weak self] response in
-            guard let `self` = self else {
-                return
-            }
-            self.update(response: response)
-        }
+    // MARK: - Private
+
+    private func loadPage(_ page: Int) {
+        let request = RickAndMortyRouter.getCharacters(page: page)
+        viewModel.load(request: request, page: page)
     }
 
-    func update(response: CharactersResult) {
-        if let error = response.error {
-            state = .error(error)
-            return
-        }
-        guard let newCharacters = response.characters?.results,
-            !newCharacters.isEmpty else {
-                state = .empty
-                return
-        }
-        var allCharacters = state.currentCharacters
-        allCharacters.append(contentsOf: newCharacters)
-        if response.hasMorePages {
-            state = .paging(allCharacters, next: response.nextPage)
-        } else {
-            state = .populated(allCharacters)
-        }
-    }
-    
-    func setFooterView() {
-        switch state {
-        case .error(let error):
-            let errorView = ErrorView()
-            tableView.tableFooterView = errorView
-            errorView.fillSuperview()
-            errorView.errorLabel.text = error.localizedDescription
-        case .loading:
-            let loadingView = LoadingView()
-            tableView.tableFooterView = loadingView
-        case .paging:
-            let loadingView = LoadingView()
-            tableView.tableFooterView = loadingView
-        case .empty:
-            let emptyView = EmptyView()
-            tableView.tableFooterView = emptyView
-        case .populated:
-            tableView.tableFooterView = nil
-        }
+    private func setFooterView(for state: State<Character>) {
+        let footer = FooterViewModel<Character>(tableView: characterTableView)
+        footer.setFooterView(for: state)
     }
 
-    fileprivate func setupTableView() {
-        view.addSubview(tableView)
-        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor)
-        tableView.dataSource = self
-        tableView.delegate = self
+    private func setupTableView() {
+        view.addSubview(characterTableView)
+        characterTableView.fillSuperview()
+        characterTableView.dataSource = self
+        characterTableView.delegate = self
+        characterTableView.refreshControl = refreshControll
+        characterTableView.register(CharacterCell.self)
+    }
+
+    private func setupRefreshControll() {
         refreshControll.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
         refreshControll.backgroundColor = .gray
         refreshControll.tintColor = .green
-        tableView.refreshControl = refreshControll
-        tableView.register(CharacterCell.self)
     }
 }
 
+// MARK: - UITableViewDataSource
 extension CharacterViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return state.currentCharacters.count
+        return viewModel.items.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CharacterCell = tableView.dequeueReusableCell(for: indexPath)
-        let character = state.currentCharacters[indexPath.row]
-        cell.character = character
+        cell.character = viewModel.items[indexPath.row]
 
-        if case .paging(_, let nextPage) = state,
-            indexPath.row == state.currentCharacters.count - 1 {
+        if case .paging(_, let nextPage) = viewModel.state,
+            indexPath.row == viewModel.items.count - 1 {
             loadPage(nextPage)
         }
         return cell
     }
 }
 
+// MARK: - UITableViewDelegate
 extension CharacterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailsViewController()
-        let character = state.currentCharacters[indexPath.row]
+        let character = viewModel.items[indexPath.row]
         vc.character = character
         show(vc, sender: nil)
     }

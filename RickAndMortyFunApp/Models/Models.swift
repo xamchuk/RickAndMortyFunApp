@@ -8,48 +8,9 @@
 
 import Foundation
 
-import Foundation
-
-struct CharactersResult {
-    let characters: Characters?
-    let error: Error?
-    let currentPage: Int
-    let pageCount: Int
-
-    var hasMorePages: Bool {
-        return currentPage < pageCount
-    }
-
-    var nextPage: Int {
-        return hasMorePages ? currentPage + 1 : currentPage
-    }
-
-}
-
-struct Result<T> {
-    let items: T?
-    let error: Error?
-    let currentPage: Int
-    let pageCount: Int
-
-    var hasMorePages: Bool {
-        return currentPage < pageCount
-    }
-
-    var nextPage: Int {
-        return hasMorePages ? currentPage + 1 : currentPage
-    }
-
-}
-
-struct Characters: Codable {
+struct ItemsResponse<T: Codable>: Codable, ResponseType {
     var info: Info
-    var results: [Character]
-}
-
-struct Locations: Codable {
-    var info: Info
-    var results: [Location]
+    var results: [T]
 }
 
 struct Info: Codable {
@@ -83,7 +44,22 @@ struct Location: Codable {
     var name: String
     var type: String?
     var dimension: String?
-   // var residents: [Character]?
+    var residents: [String]?
     var url: String
+}
+
+struct Episode: Codable {
+    var id: Int?
+    var name: String?
+    var airDate: String?
+    var episode: String
+    var characters: [String]?
+    var url: String?
+    var episodeForUI: String {
+        return String(episode)
+    }
+    var season: String {
+        return String(episode.prefix(3))
+    }
 }
 
