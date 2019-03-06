@@ -6,20 +6,20 @@
 //  Copyright © 2019 Rusłan Chamski. All rights reserved.
 //
 
-import UIKit
+import Kingfisher
 
 extension UIImageView {
-    public func imageFromURL(urlString: String) {
-        URLSession.shared.dataTask(with: NSURL(string: urlString)! as URL, completionHandler: { (data, response, error) -> Void in
 
-            if error != nil {
-                print(error ?? "No Error")
-                return
-            }
-            DispatchQueue.main.async(execute: { () -> Void in
-                let image = UIImage(data: data!)
-                self.image = image
-            })
-        }).resume()
+
+    public func setImage(from urlString: String, size: CGSize) {
+        guard let url = URL(string: urlString) else { return }
+        let resource = ImageResource(downloadURL: url, cacheKey: urlString)
+        self.kf.setImage(
+            with: resource,
+            options: [
+                .processor(DownsamplingImageProcessor(size: size)),
+                .scaleFactor(UIScreen.main.scale),
+                .cacheOriginalImage
+            ])
     }
 }
