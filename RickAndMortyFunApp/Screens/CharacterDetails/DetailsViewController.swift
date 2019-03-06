@@ -14,7 +14,7 @@ class DetailsViewController: UIViewController {
 
     var character: Character! {
         didSet {
-            detailsView.imageView.imageFromURL(urlString: character.image)
+            detailsView.imageView.setImage(from: character.image, size: detailsView.imageView.frame.size)
             detailsView.nameLabel.text = character.name
             detailsView.idLabel.text = "id: \(character.id)"
             detailsView.statusLabel.text = character.status
