@@ -19,7 +19,6 @@ class LoadingView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: CGRect.zero)
-   //     loadingIndicator.color = .black
         initFromNib()
     }
 
