@@ -13,14 +13,9 @@ class EpisodeCell: UITableViewCell {
     var episode: Episode! {
         didSet {
             nameLabel.text = episode.name
-            locationLabel.text = episode.episodeForUI
+            locationLabel.text = episode.episode
         }
     }
-    let imageLocation: UIImageView = {
-        let imageV = UIImageView()
-        imageV.contentMode = .scaleAspectFill
-        return imageV
-    }()
 
     let nameLabel: UILabel = {
         let label = UILabel()
@@ -46,17 +41,13 @@ class EpisodeCell: UITableViewCell {
     }
 
     override func prepareForReuse() {
-        imageLocation.image = nil
         nameLabel.text = nil
         locationLabel.text = nil
     }
 
     func setupViews() {
-        addSubview(imageLocation)
-        imageLocation.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: nil, padding: .init(top: 4, left: 4, bottom: 4, right: 0), size: .init(width: 60, height: 60))
-
         addSubview(nameLabel)
-        nameLabel.anchor(top: imageLocation.topAnchor, leading: imageLocation.trailingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 8, bottom: 0, right: 4))
+        nameLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 4, left: 8, bottom: 0, right: 4))
         nameLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1 / 2, constant: 8)
 
         addSubview(locationLabel)

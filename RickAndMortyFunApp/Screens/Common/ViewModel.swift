@@ -25,7 +25,7 @@ class ViewModel<T> where T: ResponseType & Decodable {
     }
 
     var items: [T.Model] {
-        return state.currentItem
+        return state.currentItems
     }
 
     var stateUpdated: ((State<T.Model>) -> Void)?
@@ -57,7 +57,7 @@ class ViewModel<T> where T: ResponseType & Decodable {
                 state = .empty
                 return
         }
-        var allitems = state.currentItem
+        var allitems = state.currentItems
         allitems.append(contentsOf: newItems)
         if response.hasMorePages {
             state = .paging(allitems, next: response.nextPage)

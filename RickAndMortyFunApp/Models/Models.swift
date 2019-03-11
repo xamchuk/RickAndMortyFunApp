@@ -55,9 +55,6 @@ struct Episode: Codable {
     var episode: String
     var characters: [String]?
     var url: String?
-    var episodeForUI: String {
-        return String(episode)
-    }
     var season: String {
         return String(episode.prefix(3))
     }

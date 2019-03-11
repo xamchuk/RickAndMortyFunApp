@@ -27,11 +27,7 @@ enum RickAndMortyRouter {
 
     var params: ([String: Any]?) {
         switch self {
-        case .getCharacters(let page):
-            return ["page": String(page)]
-        case .getLocation(let page):
-            return ["page": String(page)]
-        case .getEpisode(let page):
+        case .getCharacters(let page), .getLocation(let page), .getEpisode(let page):
             return ["page": String(page)]
         }
     }

@@ -15,7 +15,7 @@ enum State<T> {
     case empty
     case error(Error)
 
-    var currentItem: [T] {
+    var currentItems: [T] {
         switch self {
         case .paging(let item, _):
             return item

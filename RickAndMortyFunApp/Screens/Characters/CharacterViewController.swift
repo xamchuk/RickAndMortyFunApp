@@ -69,7 +69,8 @@ class CharacterViewController: UIViewController {
     }
 
     private func setFooterView(for state: State<Character>) {
-        let footer = FooterViewModel<Character>(tableView: characterTableView)
+        let footer = FooterView<Character>()
+        footer.tableView = characterTableView
         footer.setFooterView(for: state)
     }
 

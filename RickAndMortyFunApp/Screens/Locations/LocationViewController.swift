@@ -67,7 +67,8 @@ class LocationViewController: UIViewController {
     }
 
     private func setFooterView(for state: State<Location>) {
-        let footer = FooterViewModel<Location>(tableView: locationTableView)
+        let footer = FooterView<Location>()
+        footer.tableView = locationTableView
         footer.setFooterView(for: state)
     }
 

@@ -69,24 +69,14 @@ class EpisodeViewController: UIViewController {
     }
 
     private func makeSectionsAndRowsArray() {
-        itemsGrouped = []
-        let group = Dictionary(grouping: viewModel.items) { (item) -> String? in
-            return item.season
-        }
-        let keys = group.keys
-        keys.forEach { (keyString) in
-            itemsGrouped.insert(group[keyString]!, at: 0)
-        }
-        // MARK: help me to refacror this sorting pls
-        itemsGrouped.sort(by: { (a, b) -> Bool in
-            let q = Int(a.first!.season.suffix(1))
-            let x = Int(b.first!.season.suffix(1))
-            return q! < x!
-        })
+        itemsGrouped = Dictionary(grouping: viewModel.items) { $0.season }
+            .sorted { $0.key < $1.key }
+            .map { $0.value }
     }
 
     private func setFooterView(for state: State<Episode>) {
-        let footer = FooterViewModel<Episode>(tableView: episodeTableView)
+        let footer = FooterView<Episode>()
+        footer.tableView = episodeTableView
         footer.setFooterView(for: state)
     }
 
