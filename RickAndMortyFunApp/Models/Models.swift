@@ -59,4 +59,3 @@ struct Episode: Codable {
         return String(episode.prefix(3))
     }
 }
-

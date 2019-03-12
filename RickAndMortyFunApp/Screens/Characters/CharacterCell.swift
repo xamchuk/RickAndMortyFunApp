@@ -12,7 +12,6 @@ import UIKit
 class CharacterCell: UITableViewCell {
 
     private let imageSize = CGSize(width: 60, height: 60)
-    
     var character: Character! {
         didSet {
             characterImageView.setImage(from: character.image, size: imageSize)
@@ -58,14 +57,25 @@ class CharacterCell: UITableViewCell {
 
     func setupViews() {
         addSubview(characterImageView)
-        characterImageView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: nil, padding: .init(top: 4, left: 4, bottom: 4, right: 0), size: imageSize)
+        characterImageView.anchor(top: topAnchor,
+                                  leading: leadingAnchor,
+                                  bottom: bottomAnchor,
+                                  trailing: nil,
+                                  padding: .init(top: 4, left: 4, bottom: 4, right: 0), size: imageSize)
 
         addSubview(nameLabel)
-        nameLabel.anchor(top: characterImageView.topAnchor, leading: characterImageView.trailingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 8, bottom: 0, right: 4))
+        nameLabel.anchor(top: characterImageView.topAnchor,
+                         leading: characterImageView.trailingAnchor,
+                         bottom: nil,
+                         trailing: trailingAnchor,
+                         padding: .init(top: 0, left: 8, bottom: 0, right: 4))
         nameLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1 / 2, constant: 8)
 
         addSubview(locationLabel)
-        locationLabel.anchor(top: nameLabel.bottomAnchor, leading: nameLabel.leadingAnchor, bottom: bottomAnchor, trailing: nameLabel.trailingAnchor, padding: .init(top: 4, left: 0, bottom: 4, right: 0))
+        locationLabel.anchor(top: nameLabel.bottomAnchor,
+                             leading: nameLabel.leadingAnchor,
+                             bottom: bottomAnchor,
+                             trailing: nameLabel.trailingAnchor,
+                             padding: .init(top: 4, left: 0, bottom: 4, right: 0))
     }
-
 }

@@ -9,8 +9,6 @@
 import Kingfisher
 
 extension UIImageView {
-
-
     public func setImage(from urlString: String, size: CGSize) {
         guard let url = URL(string: urlString) else { return }
         let resource = ImageResource(downloadURL: url, cacheKey: urlString)

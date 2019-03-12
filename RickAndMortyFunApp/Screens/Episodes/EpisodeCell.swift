@@ -47,13 +47,18 @@ class EpisodeCell: UITableViewCell {
 
     func setupViews() {
         addSubview(nameLabel)
-        nameLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 4, left: 8, bottom: 0, right: 4))
+        nameLabel.anchor(top: topAnchor,
+                         leading: leadingAnchor,
+                         bottom: nil,
+                         trailing: trailingAnchor,
+                         padding: .init(top: 4, left: 8, bottom: 0, right: 4))
         nameLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1 / 2, constant: 8)
 
         addSubview(locationLabel)
-        locationLabel.anchor(top: nameLabel.bottomAnchor, leading: nameLabel.leadingAnchor, bottom: bottomAnchor, trailing: nameLabel.trailingAnchor, padding: .init(top: 4, left: 0, bottom: 4, right: 0))
+        locationLabel.anchor(top: nameLabel.bottomAnchor,
+                             leading: nameLabel.leadingAnchor,
+                             bottom: bottomAnchor,
+                             trailing: nameLabel.trailingAnchor,
+                             padding: .init(top: 4, left: 0, bottom: 4, right: 0))
     }
-
 }
-
-

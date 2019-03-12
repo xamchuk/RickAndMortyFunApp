@@ -22,7 +22,12 @@ extension UIView {
         heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
     }
 
-    func anchor(top: NSLayoutYAxisAnchor?, leading: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, trailing: NSLayoutXAxisAnchor?, padding: UIEdgeInsets = .zero, size: CGSize = .zero) {
+    func anchor(top: NSLayoutYAxisAnchor?,
+                leading: NSLayoutXAxisAnchor?,
+                bottom: NSLayoutYAxisAnchor?,
+                trailing: NSLayoutXAxisAnchor?,
+                padding: UIEdgeInsets = .zero,
+                size: CGSize = .zero) {
         translatesAutoresizingMaskIntoConstraints = false
 
         if let top = top {

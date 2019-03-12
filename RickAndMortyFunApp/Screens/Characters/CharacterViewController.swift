@@ -14,15 +14,14 @@ class CharacterViewController: UIViewController {
     // MARK: - Views
 
     var characterTableView = UITableView()
-    var refreshControll = UIRefreshControl()
 
     // MARK: - Properties
 
-    var viewModel: ViewModel<ItemsResponse<Character>>
+    var viewModel: CharacterViewModel
 
     // MARK: - Init
 
-    init(viewModel: ViewModel<ItemsResponse<Character>> = .init()) {
+    init(viewModel: CharacterViewModel = .init()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -36,12 +35,11 @@ class CharacterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        setupRefreshControll()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadPage(1)
+        viewModel.loadPage(1)
 
         viewModel.stateUpdated = { [weak self] state in
             self?.setFooterView(for: state)
@@ -54,19 +52,7 @@ class CharacterViewController: UIViewController {
         viewModel.stateUpdated = nil
     }
 
-    // MARK: - Actions
-
-    @objc private func refreshTableView() {
-        loadPage(1)
-        refreshControll.endRefreshing()
-    }
-
     // MARK: - Private
-
-    private func loadPage(_ page: Int) {
-        let request = RickAndMortyRouter.getCharacters(page: page)
-        viewModel.load(request: request, page: page)
-    }
 
     private func setFooterView(for state: State<Character>) {
         let footer = FooterView<Character>()
@@ -79,14 +65,7 @@ class CharacterViewController: UIViewController {
         characterTableView.fillSuperview()
         characterTableView.dataSource = self
         characterTableView.delegate = self
-        characterTableView.refreshControl = refreshControll
         characterTableView.register(CharacterCell.self)
-    }
-
-    private func setupRefreshControll() {
-        refreshControll.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
-        refreshControll.backgroundColor = .gray
-        refreshControll.tintColor = .green
     }
 }
 
@@ -102,7 +81,7 @@ extension CharacterViewController: UITableViewDataSource {
 
         if case .paging(_, let nextPage) = viewModel.state,
             indexPath.row == viewModel.items.count - 1 {
-            loadPage(nextPage)
+            viewModel.loadPage(nextPage)
         }
         return cell
     }

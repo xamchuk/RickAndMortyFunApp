@@ -16,7 +16,6 @@ class LoadingView: UIView {
 
     @IBOutlet var loadingIndicator: UIActivityIndicatorView!
 
-
     override init(frame: CGRect) {
         super.init(frame: CGRect.zero)
         initFromNib()

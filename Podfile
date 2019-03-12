@@ -8,5 +8,6 @@ target 'RickAndMortyFunApp' do
   # Pods for RickAndMortyFunApp
 	pod 'Alamofire', '~> 5.0.0-beta.2'
 	pod 'Kingfisher', '~> 5.0'
+	pod 'SwiftLint'
 
 end

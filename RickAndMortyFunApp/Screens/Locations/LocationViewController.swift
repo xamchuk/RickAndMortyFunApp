@@ -74,7 +74,10 @@ class LocationViewController: UIViewController {
 
     private func setupTableView() {
         view.addSubview(locationTableView)
-        locationTableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor)
+        locationTableView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                                 leading: view.safeAreaLayoutGuide.leadingAnchor,
+                                 bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                                 trailing: view.safeAreaLayoutGuide.trailingAnchor)
         locationTableView.dataSource = self
         locationTableView.delegate = self
         locationTableView.refreshControl = refreshControll
@@ -115,4 +118,3 @@ extension LocationViewController: UITableViewDelegate {
 //        show(vc, sender: nil)
     }
 }
-

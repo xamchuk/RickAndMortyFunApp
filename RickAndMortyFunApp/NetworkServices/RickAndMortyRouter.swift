@@ -20,7 +20,7 @@ enum RickAndMortyRouter {
 
     var method: HTTPMethod {
         switch self {
-        case .getCharacters,.getLocation, .getEpisode:
+        case .getCharacters, .getLocation, .getEpisode:
             return .get
         }
     }

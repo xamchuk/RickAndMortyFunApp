@@ -82,7 +82,10 @@ class EpisodeViewController: UIViewController {
 
     private func setupTableView() {
         view.addSubview(episodeTableView)
-        episodeTableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.safeAreaLayoutGuide.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.safeAreaLayoutGuide.trailingAnchor)
+        episodeTableView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                                leading: view.safeAreaLayoutGuide.leadingAnchor,
+                                bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                                trailing: view.safeAreaLayoutGuide.trailingAnchor)
         episodeTableView.dataSource = self
         episodeTableView.delegate = self
         episodeTableView.refreshControl = refreshControll
@@ -131,4 +134,3 @@ extension EpisodeViewController: UITableViewDelegate {
         //        show(vc, sender: nil)
     }
 }
-

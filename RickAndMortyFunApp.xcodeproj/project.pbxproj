@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B04A2CB52237E80900162E45 /* CharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04A2CB42237E80900162E45 /* CharacterViewModel.swift */; };
 		B06048582225384A0029ADC6 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06048572225384A0029ADC6 /* Models.swift */; };
 		B060485A22253AD40029ADC6 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B060485922253AD40029ADC6 /* NetworkService.swift */; };
 		B060485D22255A270029ADC6 /* UIImage+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B060485C22255A270029ADC6 /* UIImage+extension.swift */; };
@@ -42,6 +43,7 @@
 		19ECBFD40C618F1086A191AA /* Pods-RickAndMortyFunApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RickAndMortyFunApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RickAndMortyFunApp/Pods-RickAndMortyFunApp.debug.xcconfig"; sourceTree = "<group>"; };
 		1C642F928D4A80B2BF675C4B /* Pods-RickAndMortyFunApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RickAndMortyFunApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-RickAndMortyFunApp/Pods-RickAndMortyFunApp.release.xcconfig"; sourceTree = "<group>"; };
 		9BB4F13A7F855A5C6065C143 /* Pods_RickAndMortyFunApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RickAndMortyFunApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B04A2CB42237E80900162E45 /* CharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewModel.swift; sourceTree = "<group>"; };
 		B06048572225384A0029ADC6 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		B060485922253AD40029ADC6 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		B060485C22255A270029ADC6 /* UIImage+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+extension.swift"; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 			children = (
 				B0CD59F62222B4C700244139 /* CharacterViewController.swift */,
 				B06048602225BF1C0029ADC6 /* CharacterCell.swift */,
+				B04A2CB42237E80900162E45 /* CharacterViewModel.swift */,
 			);
 			path = Characters;
 			sourceTree = "<group>";
@@ -344,7 +347,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RickAndMortyFunApp/Pods-RickAndMortyFunApp-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RickAndMortyFunApp/Pods-RickAndMortyFunApp-frameworks.sh\"\n\nif which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\n\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -361,6 +364,7 @@
 				B060485A22253AD40029ADC6 /* NetworkService.swift in Sources */,
 				B0CD59F52222B43700244139 /* TabBarController.swift in Sources */,
 				B06048742226A1290029ADC6 /* EmptyView.swift in Sources */,
+				B04A2CB52237E80900162E45 /* CharacterViewModel.swift in Sources */,
 				B0604887222CB70D0029ADC6 /* LocationCell.swift in Sources */,
 				B0604881222A8F2D0029ADC6 /* RickAndMortyRouter.swift in Sources */,
 				B060488E222EF0BF0029ADC6 /* State.swift in Sources */,
