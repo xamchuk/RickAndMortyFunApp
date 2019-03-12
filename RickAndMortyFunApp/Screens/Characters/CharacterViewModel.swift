@@ -10,9 +10,9 @@ import Foundation
 import Alamofire
 
 class CharacterViewModel {
-    var networkService: Network<ItemsResponse<Character>>
+    var networkService: Network<Character>
 
-    init(networkService: Network<ItemsResponse<Character>> = .init()) {
+    init(networkService: Network<Character> = .init()) {
         self.networkService = networkService
     }
 
@@ -24,11 +24,16 @@ class CharacterViewModel {
         }
     }
 
-    var items: [Character] {
-        return state.currentItems
+//    var items: [Character] {
+//        return state.currentItems
+//    }
+    var items: [CharacterCellViewModel] {
+        return state.currentItems.map(({ return CharacterCellViewModel(character: $0)}))
     }
 
     var stateUpdated: ((State<Character>) -> Void)?
+
+    var footer: ((FooterView<Character>) -> Void)?
 
     // MARK: - Input
 
@@ -43,26 +48,12 @@ class CharacterViewModel {
             state = .loading
         }
 
-        networkService.loadItems(request: request, page: page) { [weak self] response in
+        networkService.load(request: request, page: page) { [weak self] response in
             guard let `self` = self else {
                 return
             }
-            if let error = response.error {
-                guard (error as NSError).code != NSURLErrorCancelled else { return }
-                let result = Result<Character>(items: nil, error: error, currentPage: 0, pageCount: 0)
-                self.update(response: result)
-                return
-            }
 
-            guard let response = response.value else { return }
-
-            let result = Result<Character>(
-                items: response.results,
-                error: nil,
-                currentPage: page,
-                pageCount: Int(response.info.pages)
-            )
-            self.update(response: result)
+            self.update(response: response)
         }
 
     }

@@ -42,7 +42,12 @@ class CharacterViewController: UIViewController {
         viewModel.loadPage(1)
 
         viewModel.stateUpdated = { [weak self] state in
-            self?.setFooterView(for: state)
+
+            self?.viewModel.footer = {
+                [weak self] footer in
+                footer.tableView = self?.characterTableView
+                footer.setFooterView(for: state)
+            }
             self?.characterTableView.reloadData()
         }
     }
@@ -53,12 +58,6 @@ class CharacterViewController: UIViewController {
     }
 
     // MARK: - Private
-
-    private func setFooterView(for state: State<Character>) {
-        let footer = FooterView<Character>()
-        footer.tableView = characterTableView
-        footer.setFooterView(for: state)
-    }
 
     private func setupTableView() {
         view.addSubview(characterTableView)
@@ -77,7 +76,8 @@ extension CharacterViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CharacterCell = tableView.dequeueReusableCell(for: indexPath)
-        cell.character = viewModel.items[indexPath.row]
+        let characters = viewModel.items
+        cell.character = characters[indexPath.row]
 
         if case .paging(_, let nextPage) = viewModel.state,
             indexPath.row == viewModel.items.count - 1 {

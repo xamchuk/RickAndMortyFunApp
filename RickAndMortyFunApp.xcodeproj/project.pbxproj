@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B04A2CB52237E80900162E45 /* CharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04A2CB42237E80900162E45 /* CharacterViewModel.swift */; };
+		B04A2CB72237FECE00162E45 /* CharacterCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04A2CB62237FECE00162E45 /* CharacterCellViewModel.swift */; };
 		B06048582225384A0029ADC6 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06048572225384A0029ADC6 /* Models.swift */; };
 		B060485A22253AD40029ADC6 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B060485922253AD40029ADC6 /* NetworkService.swift */; };
 		B060485D22255A270029ADC6 /* UIImage+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B060485C22255A270029ADC6 /* UIImage+extension.swift */; };
@@ -44,6 +45,7 @@
 		1C642F928D4A80B2BF675C4B /* Pods-RickAndMortyFunApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RickAndMortyFunApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-RickAndMortyFunApp/Pods-RickAndMortyFunApp.release.xcconfig"; sourceTree = "<group>"; };
 		9BB4F13A7F855A5C6065C143 /* Pods_RickAndMortyFunApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RickAndMortyFunApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B04A2CB42237E80900162E45 /* CharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewModel.swift; sourceTree = "<group>"; };
+		B04A2CB62237FECE00162E45 /* CharacterCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCellViewModel.swift; sourceTree = "<group>"; };
 		B06048572225384A0029ADC6 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		B060485922253AD40029ADC6 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		B060485C22255A270029ADC6 /* UIImage+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+extension.swift"; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				B0CD59F62222B4C700244139 /* CharacterViewController.swift */,
 				B06048602225BF1C0029ADC6 /* CharacterCell.swift */,
 				B04A2CB42237E80900162E45 /* CharacterViewModel.swift */,
+				B04A2CB62237FECE00162E45 /* CharacterCellViewModel.swift */,
 			);
 			path = Characters;
 			sourceTree = "<group>";
@@ -373,6 +376,7 @@
 				B06048612225BF1C0029ADC6 /* CharacterCell.swift in Sources */,
 				B060486E22267FCB0029ADC6 /* ErrorView.swift in Sources */,
 				B0CD59F92222B51F00244139 /* LocationViewController.swift in Sources */,
+				B04A2CB72237FECE00162E45 /* CharacterCellViewModel.swift in Sources */,
 				B060488B222EEFD10029ADC6 /* ViewModel.swift in Sources */,
 				B0604890222EFC600029ADC6 /* FooterView.swift in Sources */,
 				B060487F2226C5090029ADC6 /* DetailsViewController.swift in Sources */,

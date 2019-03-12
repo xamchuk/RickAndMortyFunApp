@@ -57,11 +57,28 @@ class NetworkService<Response> where Response: ResponseType & Decodable {
 }
 
 class Network<Model: Codable> {
-    func loadItems(request: URLRequestConvertible,
+    func load(request: URLRequestConvertible,
                    page: Int,
-                   completion: @escaping (DataResponse<Model>) -> Void) {
-        AF.request(request).responseDecodable { (response: DataResponse<Model>) in
-            completion(response)
+                   completion: @escaping (Result<Model>) -> Void) {
+        AF.request(request).responseDecodable { (response: DataResponse<ItemsResponse<Model>> ) in
+            if let error = response.error {
+                guard (error as NSError).code != NSURLErrorCancelled else {
+                    return
+                }
+                completion(Result(items: nil, error: error, currentPage: 0, pageCount: 0))
+                return
+            }
+
+            guard let response = response.value else { return }
+
+            let result = Result(
+                items: response.results,
+                error: nil,
+                currentPage: page,
+                pageCount: Int(response.info.pages)
+            )
+
+            completion(result)
         }
     }
 }

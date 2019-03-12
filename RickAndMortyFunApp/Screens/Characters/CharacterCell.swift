@@ -12,13 +12,15 @@ import UIKit
 class CharacterCell: UITableViewCell {
 
     private let imageSize = CGSize(width: 60, height: 60)
-    var character: Character! {
+    
+    var character: CharacterCellViewModel! {
         didSet {
-            characterImageView.setImage(from: character.image, size: imageSize)
+            characterImageView.image = character.image
             nameLabel.text = character.name
-            locationLabel.text = character.location.name
+            locationLabel.text = character.locationName
         }
     }
+
     let characterImageView: UIImageView = {
         var imageV = UIImageView()
         imageV.contentMode = .scaleAspectFill

@@ -12,7 +12,6 @@ class LocationViewController: UIViewController {
     // MARK: - Views
 
     var locationTableView = UITableView()
-    var refreshControll = UIRefreshControl()
 
     // MARK: - Properties
 
@@ -34,7 +33,6 @@ class LocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        setupRefreshControll()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -56,7 +54,6 @@ class LocationViewController: UIViewController {
 
     @objc private func refreshTableView() {
         loadPage(1)
-        refreshControll.endRefreshing()
     }
 
     // MARK: - Private
@@ -80,14 +77,7 @@ class LocationViewController: UIViewController {
                                  trailing: view.safeAreaLayoutGuide.trailingAnchor)
         locationTableView.dataSource = self
         locationTableView.delegate = self
-        locationTableView.refreshControl = refreshControll
         locationTableView.register(LocationCell.self)
-    }
-
-    private func setupRefreshControll() {
-        refreshControll.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
-        refreshControll.backgroundColor = .gray
-        refreshControll.tintColor = .green
     }
 }
 

@@ -13,7 +13,6 @@ class EpisodeViewController: UIViewController {
     // MARK: - Views
 
     var episodeTableView = UITableView()
-    var refreshControll = UIRefreshControl()
 
     // MARK: - Properties
     var itemsGrouped: [[Episode]] = []
@@ -35,7 +34,6 @@ class EpisodeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        setupRefreshControll()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -58,7 +56,6 @@ class EpisodeViewController: UIViewController {
 
     @objc private func refreshTableView() {
         loadPage(1)
-        refreshControll.endRefreshing()
     }
 
     // MARK: - Private
@@ -88,14 +85,7 @@ class EpisodeViewController: UIViewController {
                                 trailing: view.safeAreaLayoutGuide.trailingAnchor)
         episodeTableView.dataSource = self
         episodeTableView.delegate = self
-        episodeTableView.refreshControl = refreshControll
         episodeTableView.register(EpisodeCell.self)
-    }
-
-    private func setupRefreshControll() {
-        refreshControll.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
-        refreshControll.backgroundColor = .gray
-        refreshControll.tintColor = .green
     }
 }
 
