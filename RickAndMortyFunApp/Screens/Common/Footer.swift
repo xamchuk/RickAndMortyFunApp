@@ -8,16 +8,15 @@
 
 import UIKit
 
-class FooterView<T> {
+class Footer {
 
      weak var tableView: UITableView?
 
-      func setFooterView(for state: State<T>) {
+      func setFooterView<T>(for state: State<T>) {
         switch state {
         case .error(let error):
-            let errorView = ErrorView()
+            let errorView: ErrorView = .fromNib()
             tableView?.tableFooterView = errorView
-            errorView.fillSuperview()
             errorView.errorLabel.text = error.localizedDescription
         case .loading:
             let loadingView = LoadingView()

@@ -8,6 +8,11 @@
 
 import UIKit
 
+struct Section<T> {
+    let title: String?
+    let rows: [T]
+}
+
 class EpisodeViewController: UIViewController {
 
     // MARK: - Views
@@ -15,7 +20,7 @@ class EpisodeViewController: UIViewController {
     var episodeTableView = UITableView()
 
     // MARK: - Properties
-    var itemsGrouped: [[Episode]] = []
+    var sections: [Section<Episode>] = []
     var viewModel: ViewModel<ItemsResponse<Episode>>
 
     // MARK: - Init
@@ -66,13 +71,13 @@ class EpisodeViewController: UIViewController {
     }
 
     private func makeSectionsAndRowsArray() {
-        itemsGrouped = Dictionary(grouping: viewModel.items) { $0.season }
+        sections = Dictionary(grouping: viewModel.items) { $0.season }
             .sorted { $0.key < $1.key }
-            .map { $0.value }
+            .map { Section(title: $0.value.first?.season, rows: $0.value) }
     }
 
     private func setFooterView(for state: State<Episode>) {
-        let footer = FooterView<Episode>()
+        let footer = Footer()
         footer.tableView = episodeTableView
         footer.setFooterView(for: state)
     }
@@ -84,7 +89,6 @@ class EpisodeViewController: UIViewController {
                                 bottom: view.safeAreaLayoutGuide.bottomAnchor,
                                 trailing: view.safeAreaLayoutGuide.trailingAnchor)
         episodeTableView.dataSource = self
-        episodeTableView.delegate = self
         episodeTableView.register(EpisodeCell.self)
     }
 }
@@ -93,34 +97,23 @@ class EpisodeViewController: UIViewController {
 extension EpisodeViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return itemsGrouped[section].first?.season
+        return sections[section].title
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return itemsGrouped.count
+        return sections.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemsGrouped[section].count//viewModel.items.count
+        return sections[section].rows.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: EpisodeCell = tableView.dequeueReusableCell(for: indexPath)
-        cell.episode = itemsGrouped[indexPath.section][indexPath.row]//viewModel.items[indexPath.row]
-
+        cell.episode = sections[indexPath.section].rows[indexPath.row]
         if case .paging(_, let nextPage) = viewModel.state,
-            indexPath.row == itemsGrouped[indexPath.section].count - 1 {
+            indexPath.row == sections[indexPath.section].rows.count - 1 {
             loadPage(nextPage)
         }
         return cell
-    }
-}
-
-// MARK: - UITableViewDelegate
-extension EpisodeViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //        let vc = DetailsViewController()
-        //        let location = viewModel.items[indexPath.row]
-        //        vc.location = location
-        //        show(vc, sender: nil)
     }
 }

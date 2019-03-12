@@ -12,14 +12,6 @@ import UIKit
 class CharacterCell: UITableViewCell {
 
     private let imageSize = CGSize(width: 60, height: 60)
-    
-    var character: CharacterCellViewModel! {
-        didSet {
-            characterImageView.image = character.image
-            nameLabel.text = character.name
-            locationLabel.text = character.locationName
-        }
-    }
 
     let characterImageView: UIImageView = {
         var imageV = UIImageView()
@@ -57,7 +49,13 @@ class CharacterCell: UITableViewCell {
         locationLabel.text = nil
     }
 
-    func setupViews() {
+    func configure(with viewModel: CharacterCellViewModel) {
+      //  characterImageView.image = viewModel.image
+        nameLabel.text = viewModel.name
+        locationLabel.text = viewModel.locationName
+    }
+
+    private func setupViews() {
         addSubview(characterImageView)
         characterImageView.anchor(top: topAnchor,
                                   leading: leadingAnchor,

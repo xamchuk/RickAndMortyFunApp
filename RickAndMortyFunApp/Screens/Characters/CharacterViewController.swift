@@ -40,14 +40,10 @@ class CharacterViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.loadPage(1)
-
+        let footer = Footer()
         viewModel.stateUpdated = { [weak self] state in
-
-            self?.viewModel.footer = {
-                [weak self] footer in
-                footer.tableView = self?.characterTableView
-                footer.setFooterView(for: state)
-            }
+            footer.tableView = self?.characterTableView
+            footer.setFooterView(for: state)
             self?.characterTableView.reloadData()
         }
     }
@@ -77,7 +73,7 @@ extension CharacterViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CharacterCell = tableView.dequeueReusableCell(for: indexPath)
         let characters = viewModel.items
-        cell.character = characters[indexPath.row]
+        cell.configure(with: characters[indexPath.row])
 
         if case .paging(_, let nextPage) = viewModel.state,
             indexPath.row == viewModel.items.count - 1 {
@@ -91,7 +87,7 @@ extension CharacterViewController: UITableViewDataSource {
 extension CharacterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailsViewController()
-        let character = viewModel.items[indexPath.row]
+        let character = viewModel.character(for: indexPath)
         vc.character = character
         show(vc, sender: nil)
     }

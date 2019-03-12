@@ -10,9 +10,9 @@ import Foundation
 import Alamofire
 
 class CharacterViewModel {
-    var networkService: Network<Character>
+    var networkService: Network
 
-    init(networkService: Network<Character> = .init()) {
+    init(networkService: Network = .init()) {
         self.networkService = networkService
     }
 
@@ -24,16 +24,17 @@ class CharacterViewModel {
         }
     }
 
-//    var items: [Character] {
-//        return state.currentItems
-//    }
     var items: [CharacterCellViewModel] {
-        return state.currentItems.map(({ return CharacterCellViewModel(character: $0)}))
+        return state.currentItems.map(({ return CharacterCellViewModel(name: $0.name, imageURl: $0.image, locationName: $0.location.name)}))
+    }
+    
+    func character(for indexPath: IndexPath) -> Character {
+        return state.currentItems[indexPath.row]
     }
 
     var stateUpdated: ((State<Character>) -> Void)?
 
-    var footer: ((FooterView<Character>) -> Void)?
+    var footer: ((Footer) -> Void)?
 
     // MARK: - Input
 
@@ -48,7 +49,7 @@ class CharacterViewModel {
             state = .loading
         }
 
-        networkService.load(request: request, page: page) { [weak self] response in
+        networkService.load(request: request, page: page) { [weak self] (response: Result<Character>) in
             guard let `self` = self else {
                 return
             }
@@ -71,6 +72,8 @@ class CharacterViewModel {
                 return
         }
         var allitems = state.currentItems
+        // newitems dic
+        /// new section here
         allitems.append(contentsOf: newItems)
         if response.hasMorePages {
             state = .paging(allitems, next: response.nextPage)

@@ -12,16 +12,16 @@ class DetailsViewController: UIViewController {
 
     var detailsView = CharacterDetailsView()
 
-    var character: CharacterCellViewModel! {
+    var character: Character! {
         didSet {
-            detailsView.imageView.image = character.image
+          //  detailsView.imageView.image = character.image
             detailsView.nameLabel.text = character.name
             detailsView.idLabel.text = "id: \(character.id)"
             detailsView.statusLabel.text = character.status
             detailsView.speciesLabel.text = character.species
             detailsView.genderLabel.text = character.gender
-            detailsView.originLabel.text = character.originName
-            detailsView.lastLocation.text = character.locationName
+          //  detailsView.originLabel.text = character.originName
+          //  detailsView.lastLocation.text = character.locationName
         }
     }
 

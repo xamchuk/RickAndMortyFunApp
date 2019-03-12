@@ -56,10 +56,10 @@ class NetworkService<Response> where Response: ResponseType & Decodable {
     }
 }
 
-class Network<Model: Codable> {
-    func load(request: URLRequestConvertible,
+class Network {
+    func load<Model>(request: URLRequestConvertible,
                    page: Int,
-                   completion: @escaping (Result<Model>) -> Void) {
+                   completion: @escaping (Result<Model>) -> Void) where Model: Codable {
         AF.request(request).responseDecodable { (response: DataResponse<ItemsResponse<Model>> ) in
             if let error = response.error {
                 guard (error as NSError).code != NSURLErrorCancelled else {
