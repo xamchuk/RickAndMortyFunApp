@@ -5,7 +5,6 @@ excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Source/ExcludedFolder
   - Source/ExcludedFile.swift
 
-
 line_length: 150
 # they can set both implicitly with an array
 type_body_length:

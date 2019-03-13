@@ -1,5 +1,5 @@
 //
-//  CharacterViewModel.swift
+//  EpisodeViewModel.swift
 //  RickAndMortyFunApp
 //
 //  Created by Rusłan Chamski on 12/03/2019.
@@ -9,37 +9,29 @@
 import Foundation
 import Alamofire
 
-class CharacterViewModel {
-    var networkService: Network
+class EpisodeViewModel {
+    var networkService: NetworkService
 
-    init(networkService: Network = .init()) {
+    init(networkService: NetworkService = .init()) {
         self.networkService = networkService
     }
 
     // MARK: - Output
 
-    private(set) var state = State<Character>.loading {
+    private(set) var state = State<Episode>.loading {
         didSet {
             stateUpdated?(state)
         }
     }
 
-    var items: [CharacterCellViewModel] {
-        return state.currentItems.map(({ return CharacterCellViewModel(name: $0.name, imageURl: $0.image, locationName: $0.location.name)}))
-    }
-    
-    func character(for indexPath: IndexPath) -> Character {
-        return state.currentItems[indexPath.row]
-    }
+    var sections: [Section<Episode>] = []
 
-    var stateUpdated: ((State<Character>) -> Void)?
-
-    var footer: ((Footer) -> Void)?
+    var stateUpdated: ((State<Episode>) -> Void)?
 
     // MARK: - Input
 
     func loadPage(_ page: Int) {
-        let request = RickAndMortyRouter.getCharacters(page: page)
+        let request = RickAndMortyRouter.getEpisode(page: page)
         load(request: request, page: page)
     }
 
@@ -49,7 +41,7 @@ class CharacterViewModel {
             state = .loading
         }
 
-        networkService.load(request: request, page: page) { [weak self] (response: Result<Character>) in
+        networkService.load(request: request, page: page) { [weak self] (response: Result<Episode>) in
             guard let `self` = self else {
                 return
             }
@@ -61,7 +53,7 @@ class CharacterViewModel {
 
     // MARK: - Private
 
-    private func update(response: Result<Character>) {
+    private func update(response: Result<Episode>) {
         if let error = response.error {
             state = .error(error)
             return
@@ -72,9 +64,12 @@ class CharacterViewModel {
                 return
         }
         var allitems = state.currentItems
-        // newitems dic
-        /// new section here
         allitems.append(contentsOf: newItems)
+        // MARK: I'm not sure about that, but I can't find better place...
+        sections = Dictionary(grouping: allitems) { $0.season }
+            .sorted { $0.key < $1.key }
+            .map { Section(title: $0.value.first?.season, rows: $0.value) }
+
         if response.hasMorePages {
             state = .paging(allitems, next: response.nextPage)
         } else {

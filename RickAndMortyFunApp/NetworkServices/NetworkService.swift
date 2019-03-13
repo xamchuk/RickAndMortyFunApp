@@ -29,37 +29,8 @@ struct Result<Model> {
     }
 }
 
-class NetworkService<Response> where Response: ResponseType & Decodable {
-    func loadItems(request: URLRequestConvertible,
-                   page: Int,
-                   completion: @escaping (Result<Response.Model>) -> Void) {
-        AF.request(request).responseDecodable { (response: DataResponse<Response>) in
-            if let error = response.error {
-                guard (error as NSError).code != NSURLErrorCancelled else {
-                    return
-                }
-                completion(Result(items: nil, error: error, currentPage: 0, pageCount: 0))
-                return
-            }
-
-            guard let response = response.value else { return }
-
-            let result = Result(
-                items: response.results,
-                error: nil,
-                currentPage: page,
-                pageCount: Int(response.info.pages)
-            )
-
-            completion(result)
-        }
-    }
-}
-
-class Network {
-    func load<Model>(request: URLRequestConvertible,
-                   page: Int,
-                   completion: @escaping (Result<Model>) -> Void) where Model: Codable {
+class NetworkService {
+    func load<Model>(request: URLRequestConvertible, page: Int, completion: @escaping (Result<Model>) -> Void) where Model: Codable {
         AF.request(request).responseDecodable { (response: DataResponse<ItemsResponse<Model>> ) in
             if let error = response.error {
                 guard (error as NSError).code != NSURLErrorCancelled else {

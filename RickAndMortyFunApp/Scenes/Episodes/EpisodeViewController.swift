@@ -17,15 +17,15 @@ class EpisodeViewController: UIViewController {
 
     // MARK: - Views
 
-    var episodeTableView = UITableView()
+    var tableView = UITableView()
 
     // MARK: - Properties
-    var sections: [Section<Episode>] = []
-    var viewModel: ViewModel<ItemsResponse<Episode>>
+
+    var viewModel: EpisodeViewModel
 
     // MARK: - Init
 
-    init(viewModel: ViewModel<ItemsResponse<Episode>> = .init()) {
+    init(viewModel: EpisodeViewModel = .init()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -38,6 +38,7 @@ class EpisodeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.prefersLargeTitles = true
         setupTableView()
     }
 
@@ -46,9 +47,8 @@ class EpisodeViewController: UIViewController {
         loadPage(1)
 
         viewModel.stateUpdated = { [weak self] state in
-            self?.makeSectionsAndRowsArray()
             self?.setFooterView(for: state)
-            self?.episodeTableView.reloadData()
+            self?.tableView.reloadData()
         }
     }
 
@@ -70,26 +70,31 @@ class EpisodeViewController: UIViewController {
         viewModel.load(request: request, page: page)
     }
 
-    private func makeSectionsAndRowsArray() {
-        sections = Dictionary(grouping: viewModel.items) { $0.season }
-            .sorted { $0.key < $1.key }
-            .map { Section(title: $0.value.first?.season, rows: $0.value) }
-    }
-
     private func setFooterView(for state: State<Episode>) {
-        let footer = Footer()
-        footer.tableView = episodeTableView
-        footer.setFooterView(for: state)
+        switch state {
+        case .error(let error):
+            let errorView: ErrorView = .fromNib()
+            tableView.tableFooterView = errorView
+            errorView.errorLabel.text = error.localizedDescription
+        case .loading, .paging:
+            let loadingView: LoadingView = .fromNib()
+            tableView.tableFooterView = loadingView
+        case .empty:
+            let emptyView: EmptyView = .fromNib()
+            tableView.tableFooterView = emptyView
+        case .populated:
+            tableView.tableFooterView = nil
+        }
     }
 
     private func setupTableView() {
-        view.addSubview(episodeTableView)
-        episodeTableView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+        view.addSubview(tableView)
+        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                                 leading: view.safeAreaLayoutGuide.leadingAnchor,
                                 bottom: view.safeAreaLayoutGuide.bottomAnchor,
                                 trailing: view.safeAreaLayoutGuide.trailingAnchor)
-        episodeTableView.dataSource = self
-        episodeTableView.register(EpisodeCell.self)
+        tableView.dataSource = self
+        tableView.register(EpisodeCell.self)
     }
 }
 
@@ -97,21 +102,21 @@ class EpisodeViewController: UIViewController {
 extension EpisodeViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section].title
+        return viewModel.sections[section].title
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return viewModel.sections.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].rows.count
+        return viewModel.sections[section].rows.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: EpisodeCell = tableView.dequeueReusableCell(for: indexPath)
-        cell.episode = sections[indexPath.section].rows[indexPath.row]
+        cell.episode = viewModel.sections[indexPath.section].rows[indexPath.row]
         if case .paging(_, let nextPage) = viewModel.state,
-            indexPath.row == sections[indexPath.section].rows.count - 1 {
+            indexPath.row == viewModel.sections[indexPath.section].rows.count - 1 {
             loadPage(nextPage)
         }
         return cell

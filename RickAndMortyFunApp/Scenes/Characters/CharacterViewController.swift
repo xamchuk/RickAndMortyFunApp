@@ -13,7 +13,7 @@ class CharacterViewController: UIViewController {
 
     // MARK: - Views
 
-    var characterTableView = UITableView()
+    var tableView = UITableView()
 
     // MARK: - Properties
 
@@ -34,17 +34,17 @@ class CharacterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.prefersLargeTitles = true
         setupTableView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.loadPage(1)
-        let footer = Footer()
+
         viewModel.stateUpdated = { [weak self] state in
-            footer.tableView = self?.characterTableView
-            footer.setFooterView(for: state)
-            self?.characterTableView.reloadData()
+            self?.setFooterView(for: state)
+            self?.tableView.reloadData()
         }
     }
 
@@ -54,13 +54,29 @@ class CharacterViewController: UIViewController {
     }
 
     // MARK: - Private
+    private func setFooterView(for state: State<Character>) {
+        switch state {
+        case .error(let error):
+            let errorView: ErrorView = .fromNib()
+            tableView.tableFooterView = errorView
+            errorView.errorLabel.text = error.localizedDescription
+        case .loading, .paging:
+            let loadingView: LoadingView = .fromNib()
+            tableView.tableFooterView = loadingView
+        case .empty:
+            let emptyView: EmptyView = .fromNib()
+            tableView.tableFooterView = emptyView
+        case .populated:
+            tableView.tableFooterView = nil
+        }
+    }
 
     private func setupTableView() {
-        view.addSubview(characterTableView)
-        characterTableView.fillSuperview()
-        characterTableView.dataSource = self
-        characterTableView.delegate = self
-        characterTableView.register(CharacterCell.self)
+        view.addSubview(tableView)
+        tableView.fillSuperview()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(CharacterCell.self)
     }
 }
 

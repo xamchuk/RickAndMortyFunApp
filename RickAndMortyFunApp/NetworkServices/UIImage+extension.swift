@@ -9,13 +9,13 @@
 import Kingfisher
 
 extension UIImageView {
-    public func setImage(from urlString: String) {
+    public func setImage(from urlString: String, size: CGSize) {
         guard let url = URL(string: urlString) else { return }
         let resource = ImageResource(downloadURL: url, cacheKey: urlString)
         self.kf.setImage(
             with: resource,
             options: [
-//                .processor(DownsamplingImageProcessor(size: self.frame.size)),
+                .processor(DownsamplingImageProcessor(size: size)),
                 .scaleFactor(UIScreen.main.scale),
                 .cacheOriginalImage
             ])

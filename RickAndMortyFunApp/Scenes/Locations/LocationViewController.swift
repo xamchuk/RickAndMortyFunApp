@@ -11,15 +11,15 @@ class LocationViewController: UIViewController {
 
     // MARK: - Views
 
-    var locationTableView = UITableView()
+    var tableView = UITableView()
 
     // MARK: - Properties
 
-    var viewModel: ViewModel<ItemsResponse<Location>>
+    var viewModel: LocationViewModel
 
     // MARK: - Init
 
-    init(viewModel: ViewModel<ItemsResponse<Location>> = .init()) {
+    init(viewModel: LocationViewModel = .init()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -32,6 +32,7 @@ class LocationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.prefersLargeTitles = true
         setupTableView()
     }
 
@@ -41,7 +42,7 @@ class LocationViewController: UIViewController {
 
         viewModel.stateUpdated = { [weak self] state in
             self?.setFooterView(for: state)
-            self?.locationTableView.reloadData()
+            self?.tableView.reloadData()
         }
     }
 
@@ -58,26 +59,36 @@ class LocationViewController: UIViewController {
 
     // MARK: - Private
 
+    private func setFooterView(for state: State<Location>) {
+        switch state {
+        case .error(let error):
+            let errorView: ErrorView = .fromNib()
+            tableView.tableFooterView = errorView
+            errorView.errorLabel.text = error.localizedDescription
+        case .loading, .paging:
+            let loadingView: LoadingView = .fromNib()
+            tableView.tableFooterView = loadingView
+        case .empty:
+            let emptyView: EmptyView = .fromNib()
+            tableView.tableFooterView = emptyView
+        case .populated:
+            tableView.tableFooterView = nil
+        }
+    }
+
     private func loadPage(_ page: Int) {
         let request = RickAndMortyRouter.getLocation(page: page)
         viewModel.load(request: request, page: page)
     }
 
-    private func setFooterView(for state: State<Location>) {
-        let footer = Footer()
-//        footer.tableView = locationTableView
-//        footer.setFooterView(for: state)
-    }
-
     private func setupTableView() {
-        view.addSubview(locationTableView)
-        locationTableView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+        view.addSubview(tableView)
+        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
                                  leading: view.safeAreaLayoutGuide.leadingAnchor,
                                  bottom: view.safeAreaLayoutGuide.bottomAnchor,
                                  trailing: view.safeAreaLayoutGuide.trailingAnchor)
-        locationTableView.dataSource = self
-        locationTableView.delegate = self
-        locationTableView.register(LocationCell.self)
+        tableView.dataSource = self
+        tableView.register(LocationCell.self)
     }
 }
 
@@ -89,22 +100,11 @@ extension LocationViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: LocationCell = tableView.dequeueReusableCell(for: indexPath)
-        cell.location = viewModel.items[indexPath.row]
-
+        cell.configure(with: viewModel.items[indexPath.row])
         if case .paging(_, let nextPage) = viewModel.state,
             indexPath.row == viewModel.items.count - 1 {
             loadPage(nextPage)
         }
         return cell
-    }
-}
-
-// MARK: - UITableViewDelegate
-extension LocationViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let vc = DetailsViewController()
-//        let location = viewModel.items[indexPath.row]
-//        vc.location = location
-//        show(vc, sender: nil)
     }
 }
