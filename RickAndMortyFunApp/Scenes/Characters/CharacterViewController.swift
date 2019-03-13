@@ -13,16 +13,15 @@ class CharacterViewController: UIViewController {
 
     // MARK: - Views
 
-    var characterTableView = UITableView()
-    var refreshControll = UIRefreshControl()
+    var tableView = UITableView()
 
     // MARK: - Properties
 
-    var viewModel: ViewModel<ItemsResponse<Character>>
+    var viewModel: CharacterViewModel
 
     // MARK: - Init
 
-    init(viewModel: ViewModel<ItemsResponse<Character>> = .init()) {
+    init(viewModel: CharacterViewModel = .init()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -35,17 +34,17 @@ class CharacterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.prefersLargeTitles = true
         setupTableView()
-        setupRefreshControll()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadPage(1)
+        viewModel.loadPage(1)
 
         viewModel.stateUpdated = { [weak self] state in
             self?.setFooterView(for: state)
-            self?.characterTableView.reloadData()
+            self?.tableView.reloadData()
         }
     }
 
@@ -54,39 +53,30 @@ class CharacterViewController: UIViewController {
         viewModel.stateUpdated = nil
     }
 
-    // MARK: - Actions
-
-    @objc private func refreshTableView() {
-        loadPage(1)
-        refreshControll.endRefreshing()
-    }
-
     // MARK: - Private
-
-    private func loadPage(_ page: Int) {
-        let request = RickAndMortyRouter.getCharacters(page: page)
-        viewModel.load(request: request, page: page)
-    }
-
     private func setFooterView(for state: State<Character>) {
-        let footer = FooterView<Character>()
-        footer.tableView = characterTableView
-        footer.setFooterView(for: state)
+        switch state {
+        case .error(let error):
+            let errorView: ErrorView = .fromNib()
+            tableView.tableFooterView = errorView
+            errorView.errorLabel.text = error.localizedDescription
+        case .loading, .paging:
+            let loadingView: LoadingView = .fromNib()
+            tableView.tableFooterView = loadingView
+        case .empty:
+            let emptyView: EmptyView = .fromNib()
+            tableView.tableFooterView = emptyView
+        case .populated:
+            tableView.tableFooterView = nil
+        }
     }
 
     private func setupTableView() {
-        view.addSubview(characterTableView)
-        characterTableView.fillSuperview()
-        characterTableView.dataSource = self
-        characterTableView.delegate = self
-        characterTableView.refreshControl = refreshControll
-        characterTableView.register(CharacterCell.self)
-    }
-
-    private func setupRefreshControll() {
-        refreshControll.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
-        refreshControll.backgroundColor = .gray
-        refreshControll.tintColor = .green
+        view.addSubview(tableView)
+        tableView.fillSuperview()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(CharacterCell.self)
     }
 }
 
@@ -98,11 +88,12 @@ extension CharacterViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CharacterCell = tableView.dequeueReusableCell(for: indexPath)
-        cell.character = viewModel.items[indexPath.row]
+        let characters = viewModel.items
+        cell.configure(with: characters[indexPath.row])
 
         if case .paging(_, let nextPage) = viewModel.state,
             indexPath.row == viewModel.items.count - 1 {
-            loadPage(nextPage)
+            viewModel.loadPage(nextPage)
         }
         return cell
     }
@@ -112,7 +103,7 @@ extension CharacterViewController: UITableViewDataSource {
 extension CharacterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailsViewController()
-        let character = viewModel.items[indexPath.row]
+        let character = viewModel.character(for: indexPath)
         vc.character = character
         show(vc, sender: nil)
     }

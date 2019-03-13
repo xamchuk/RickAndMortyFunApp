@@ -50,7 +50,7 @@ struct Location: Codable {
 
 struct Episode: Codable {
     var id: Int?
-    var name: String?
+    var name: String
     var airDate: String?
     var episode: String
     var characters: [String]?
@@ -59,4 +59,3 @@ struct Episode: Codable {
         return String(episode.prefix(3))
     }
 }
-

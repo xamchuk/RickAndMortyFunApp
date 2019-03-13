@@ -12,19 +12,19 @@ class EpisodeCell: UITableViewCell {
 
     var episode: Episode! {
         didSet {
-            nameLabel.text = episode.name
-            locationLabel.text = episode.episode
+            titleLabel.text = episode.name
+            detailsLabel.text = episode.episode
         }
     }
 
-    let nameLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         let style = UIFont.TextStyle.title2
         label.font = UIFont.preferredFont(forTextStyle: style)
         return label
     }()
 
-    let locationLabel: UILabel = {
+    let detailsLabel: UILabel = {
         let label = UILabel()
         let style = UIFont.TextStyle.body
         label.font = UIFont.preferredFont(forTextStyle: style)
@@ -41,19 +41,24 @@ class EpisodeCell: UITableViewCell {
     }
 
     override func prepareForReuse() {
-        nameLabel.text = nil
-        locationLabel.text = nil
+        titleLabel.text = nil
+        detailsLabel.text = nil
     }
 
     func setupViews() {
-        addSubview(nameLabel)
-        nameLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 4, left: 8, bottom: 0, right: 4))
-        nameLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1 / 2, constant: 8)
+        addSubview(titleLabel)
+        titleLabel.anchor(top: topAnchor,
+                         leading: leadingAnchor,
+                         bottom: nil,
+                         trailing: trailingAnchor,
+                         padding: .init(top: 4, left: 8, bottom: 0, right: 4))
+        titleLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1 / 2, constant: 8)
 
-        addSubview(locationLabel)
-        locationLabel.anchor(top: nameLabel.bottomAnchor, leading: nameLabel.leadingAnchor, bottom: bottomAnchor, trailing: nameLabel.trailingAnchor, padding: .init(top: 4, left: 0, bottom: 4, right: 0))
+        addSubview(detailsLabel)
+        detailsLabel.anchor(top: titleLabel.bottomAnchor,
+                             leading: titleLabel.leadingAnchor,
+                             bottom: bottomAnchor,
+                             trailing: titleLabel.trailingAnchor,
+                             padding: .init(top: 4, left: 0, bottom: 4, right: 0))
     }
-
 }
-
-
