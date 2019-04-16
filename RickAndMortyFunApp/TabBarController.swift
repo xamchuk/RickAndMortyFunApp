@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TabBarController: UITabBarController {
+class TabBarController: AppTabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewControllers()
@@ -17,7 +17,7 @@ class TabBarController: UITabBarController {
     fileprivate func setupViewControllers() {
 
         let characterViewController = CharacterViewController()
-        let characterNavController = UINavigationController(rootViewController: characterViewController)
+        let characterNavController = AppNavigationController(rootViewController: characterViewController)
 
         let locationViewController = LocationViewController()
         let locationNavController = UINavigationController(rootViewController: locationViewController)

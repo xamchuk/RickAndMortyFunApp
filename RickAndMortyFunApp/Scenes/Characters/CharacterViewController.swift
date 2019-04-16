@@ -34,14 +34,14 @@ class CharacterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
         setupTableView()
+        setUpTheming()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.loadPage(1)
-
+        themeProvider.nextTheme()
         viewModel.stateUpdated = { [weak self] state in
             self?.setFooterView(for: state)
             self?.tableView.reloadData()
@@ -54,17 +54,19 @@ class CharacterViewController: UIViewController {
     }
 
     // MARK: - Private
-    private func setFooterView(for state: State<Character>) {
+    private func setFooterView(for state: State<CharacterOfShow>) {
         switch state {
         case .error(let error):
             let errorView: ErrorView = .fromNib()
+            // add var error trouth didSet //
             tableView.tableFooterView = errorView
             errorView.errorLabel.text = error.localizedDescription
         case .loading, .paging:
             let loadingView: LoadingView = .fromNib()
             tableView.tableFooterView = loadingView
         case .empty:
-            let emptyView: EmptyView = .fromNib()
+            let emptyView: ErrorView = .fromNib()
+            emptyView.errorLabel.text = "No results! Try searching for something different."
             tableView.tableFooterView = emptyView
         case .populated:
             tableView.tableFooterView = nil
@@ -74,6 +76,7 @@ class CharacterViewController: UIViewController {
     private func setupTableView() {
         view.addSubview(tableView)
         tableView.fillSuperview()
+        tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(CharacterCell.self)
@@ -106,5 +109,12 @@ extension CharacterViewController: UITableViewDelegate {
         let character = viewModel.character(for: indexPath)
         vc.character = character
         show(vc, sender: nil)
+    }
+}
+
+extension CharacterViewController: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        tableView.backgroundColor = theme.cellBorderColor
+        view.backgroundColor = theme.cellBorderColor
     }
 }

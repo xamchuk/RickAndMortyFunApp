@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+struct Weak<Object: AnyObject> {
+    weak var value: Object?
+}

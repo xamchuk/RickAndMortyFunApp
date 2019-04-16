@@ -16,17 +16,17 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No results! Try searching for something different." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DhY-eT-Odq">
-                    <rect key="frame" x="77.5" y="313" width="220.5" height="41"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No results! Try searching for something different." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DhY-eT-Odq">
+                    <rect key="frame" x="8" y="323.5" width="375" height="20.5"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <constraints>
-                <constraint firstItem="DhY-eT-Odq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="arv-sM-lNO" secondAttribute="leading" constant="20" id="B5O-fu-VLc"/>
-                <constraint firstItem="DhY-eT-Odq" firstAttribute="centerX" secondItem="arv-sM-lNO" secondAttribute="centerX" id="IYU-2a-V1F"/>
+                <constraint firstItem="DhY-eT-Odq" firstAttribute="trailing" secondItem="B5i-Iu-Ubq" secondAttribute="trailing" constant="8" id="Oyg-4i-fKE"/>
                 <constraint firstItem="DhY-eT-Odq" firstAttribute="centerY" secondItem="arv-sM-lNO" secondAttribute="centerY" id="S4k-yg-Zt1"/>
+                <constraint firstItem="DhY-eT-Odq" firstAttribute="leading" secondItem="B5i-Iu-Ubq" secondAttribute="leading" constant="8" id="lfL-dY-U1u"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="B5i-Iu-Ubq"/>

@@ -10,19 +10,30 @@ import UIKit
 
 class DetailsViewController: UIViewController {
 
-    var detailsView = CharacterDetailsView()
+    let detailsView: CharacterDetailsView! = .fromNib()
 
-    var character: Character! {
+    var character: CharacterOfShow! {
         didSet {
-            detailsView.imageView.setImage(from: character.image, size: detailsView.imageView.frame.size)
+            detailsView.imageView.setImage(from: character.image,
+                                           size: detailsView.imageView.frame.size)
             detailsView.nameLabel.text = character.name
             detailsView.idLabel.text = "id: \(character.id)"
             detailsView.statusLabel.text = character.status
             detailsView.speciesLabel.text = character.species
             detailsView.genderLabel.text = character.gender
             detailsView.originLabel.text = character.origin.name
-            detailsView.lastLocation.text = character.location.name
+            detailsView.locationButton.setTitle(character.location.name, for: .normal)
+            detailsView.locationButton.addTarget(self,
+                                                 action: #selector(handleLocationAction),
+                                                 for: .touchUpInside)
         }
+    }
+
+    @objc func handleLocationAction() {
+        let vc = LVC()
+        let url = URL(string: character.location.url)
+        vc.id = url?.lastPathComponent
+        show(vc, sender: nil)
     }
 
     override func viewDidLoad() {

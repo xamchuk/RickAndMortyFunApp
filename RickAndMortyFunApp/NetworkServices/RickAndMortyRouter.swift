@@ -18,9 +18,13 @@ enum RickAndMortyRouter {
     case getLocation(page: Int)
     case getEpisode(page: Int)
 
+    case getSingleLocation(id: String)
+
     var method: HTTPMethod {
         switch self {
         case .getCharacters, .getLocation, .getEpisode:
+            return .get
+        case .getSingleLocation:
             return .get
         }
     }
@@ -29,6 +33,8 @@ enum RickAndMortyRouter {
         switch self {
         case .getCharacters(let page), .getLocation(let page), .getEpisode(let page):
             return ["page": String(page)]
+        case .getSingleLocation:
+            return nil
         }
     }
 
@@ -41,6 +47,8 @@ enum RickAndMortyRouter {
             relativePath = "location"
         case .getEpisode:
             relativePath = "episode"
+        case .getSingleLocation(let id):
+            relativePath = "location/\(id)"
         }
 
         let url = baseURL.appendingPathComponent(relativePath)

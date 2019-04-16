@@ -11,25 +11,20 @@ import UIKit
 
 class CharacterCell: UITableViewCell {
 
-    private let imageSize = CGSize(width: 60, height: 60)
+    private let imageSize = CGSize(width: 100, height: 100)
 
     let characterImageView: UIImageView = {
         var imageV = UIImageView()
         imageV.contentMode = .scaleAspectFill
         imageV.kf.indicatorType = .activity
-        imageV.layer.cornerRadius = 5
+        imageV.layer.cornerRadius = 10
         imageV.layer.masksToBounds = true
         return imageV
     }()
 
-    let nameLabel: UILabel = {
-        let label = UILabel()
-        let style = UIFont.TextStyle.title2
-        label.font = UIFont.preferredFont(forTextStyle: style)
-        return label
-    }()
+    let nameLabel = UILabel()
 
-    let locationLabel: UILabel = {
+    let detailsLabel: UILabel = {
         let label = UILabel()
         let style = UIFont.TextStyle.body
         label.font = UIFont.preferredFont(forTextStyle: style)
@@ -39,6 +34,7 @@ class CharacterCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
+        setUpTheming()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -47,13 +43,13 @@ class CharacterCell: UITableViewCell {
 
     override func prepareForReuse() {
         nameLabel.text = nil
-        locationLabel.text = nil
+        detailsLabel.text = nil
     }
 
     func configure(with viewModel: CharacterCellViewModel) {
         characterImageView.setImage(from: viewModel.imageURl, size: imageSize)
         nameLabel.text = viewModel.name
-        locationLabel.text = viewModel.locationName
+        detailsLabel.text = viewModel.locationName
     }
 
     private func setupViews() {
@@ -72,11 +68,24 @@ class CharacterCell: UITableViewCell {
                          padding: .init(top: 0, left: 8, bottom: 0, right: 4))
         nameLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1 / 2, constant: 8)
 
-        addSubview(locationLabel)
-        locationLabel.anchor(top: nameLabel.bottomAnchor,
+        addSubview(detailsLabel)
+        detailsLabel.anchor(top: nameLabel.bottomAnchor,
                              leading: nameLabel.leadingAnchor,
                              bottom: bottomAnchor,
                              trailing: nameLabel.trailingAnchor,
                              padding: .init(top: 4, left: 0, bottom: 4, right: 0))
+    }
+}
+
+extension CharacterCell: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        self.layer.borderColor = theme.cellBorderColor.cgColor
+        self.layer.borderWidth = 4
+        self.layer.cornerRadius = 10
+        self.layer.masksToBounds = true
+        self.backgroundColor = theme.backgroundColor
+        nameLabel.textColor = theme.textColor
+        nameLabel.font = theme.titleFont
+        detailsLabel.textColor = theme.textColor
     }
 }

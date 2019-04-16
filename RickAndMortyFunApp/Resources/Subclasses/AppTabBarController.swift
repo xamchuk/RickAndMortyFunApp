@@ -6,4 +6,18 @@
 //  Copyright © 2019 Rusłan Chamski. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class AppTabBarController: UITabBarController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUpTheming()
+    }
+}
+
+extension AppTabBarController: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        tabBar.barTintColor = theme.barBackgroundColor
+        tabBar.tintColor = theme.barForegroundColor
+    }
+}

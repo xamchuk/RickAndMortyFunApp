@@ -25,7 +25,11 @@ class LocationViewModel {
     }
 
     var items: [LocationCellViewModel] {
-        return state.currentItems.map { LocationCellViewModel(name: $0.name, dimension: $0.dimension ?? "")}
+        return state.currentItems.map { LocationCellViewModel(name: $0.name, dimension: $0.dimension ?? "", residents: $0.residents)}
+    }
+
+    func location(for indexPath: IndexPath) -> Location {
+        return state.currentItems[indexPath.row]
     }
 
     var stateUpdated: ((State<Location>) -> Void)?

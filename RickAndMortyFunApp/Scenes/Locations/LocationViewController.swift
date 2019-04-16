@@ -88,6 +88,7 @@ class LocationViewController: UIViewController {
                                  bottom: view.safeAreaLayoutGuide.bottomAnchor,
                                  trailing: view.safeAreaLayoutGuide.trailingAnchor)
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(LocationCell.self)
     }
 }
@@ -106,5 +107,14 @@ extension LocationViewController: UITableViewDataSource {
             loadPage(nextPage)
         }
         return cell
+    }
+}
+
+// MARK: - UITableViewDelegate
+extension LocationViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = LVC()
+        vc.item = viewModel.location(for: indexPath)
+        show(vc, sender: nil)
     }
 }

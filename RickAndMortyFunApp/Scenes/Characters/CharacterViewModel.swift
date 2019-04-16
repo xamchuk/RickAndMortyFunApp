@@ -18,7 +18,7 @@ class CharacterViewModel {
 
     // MARK: - Output
 
-    private(set) var state = State<Character>.loading {
+    private(set) var state = State<CharacterOfShow>.loading {
         didSet {
             stateUpdated?(state)
         }
@@ -29,11 +29,11 @@ class CharacterViewModel {
 
     }
 
-    func character(for indexPath: IndexPath) -> Character {
+    func character(for indexPath: IndexPath) -> CharacterOfShow {
         return state.currentItems[indexPath.row]
     }
 
-    var stateUpdated: ((State<Character>) -> Void)?
+    var stateUpdated: ((State<CharacterOfShow>) -> Void)?
 
     // MARK: - Input
 
@@ -48,7 +48,7 @@ class CharacterViewModel {
             state = .loading
         }
 
-        networkService.load(request: request, page: page) { [weak self] (response: Result<Character>) in
+        networkService.load(request: request, page: page) { [weak self] (response: Result<CharacterOfShow>) in
             guard let `self` = self else {
                 return
             }
@@ -58,7 +58,7 @@ class CharacterViewModel {
 
     // MARK: - Private
 
-    private func update(response: Result<Character>) {
+    private func update(response: Result<CharacterOfShow>) {
         if let error = response.error {
             state = .error(error)
             return

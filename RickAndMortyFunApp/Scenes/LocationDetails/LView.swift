@@ -6,4 +6,8 @@
 //  Copyright © 2019 Rusłan Chamski. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class LView: UIView {
+    @IBOutlet var imageView: UIImageView!
+}
