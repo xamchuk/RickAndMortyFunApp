@@ -30,7 +30,7 @@ class DetailsViewController: UIViewController {
     }
 
     @objc func handleLocationAction() {
-        let vc = LVC()
+        let vc = LocationDetailsViewController()
         let url = URL(string: character.location.url)
         vc.id = url?.lastPathComponent
         show(vc, sender: nil)
@@ -38,6 +38,7 @@ class DetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.prefersLargeTitles = false
         view.addSubview(detailsView)
         detailsView.fillSuperview()
     }

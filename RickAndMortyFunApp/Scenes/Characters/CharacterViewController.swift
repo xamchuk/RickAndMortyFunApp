@@ -36,11 +36,11 @@ class CharacterViewController: UIViewController {
         super.viewDidLoad()
         setupTableView()
         setUpTheming()
+        viewModel.loadPage(1)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.loadPage(1)
         themeProvider.nextTheme()
         viewModel.stateUpdated = { [weak self] state in
             self?.setFooterView(for: state)

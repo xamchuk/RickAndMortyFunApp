@@ -11,7 +11,7 @@ import UIKit
 
 class CharacterCell: UITableViewCell {
 
-    private let imageSize = CGSize(width: 100, height: 100)
+    private var imageSize = CGSize(width: 100, height: 100)
 
     let characterImageView: UIImageView = {
         var imageV = UIImageView()
@@ -27,6 +27,7 @@ class CharacterCell: UITableViewCell {
     let detailsLabel: UILabel = {
         let label = UILabel()
         let style = UIFont.TextStyle.body
+        label.adjustsFontSizeToFitWidth = true
         label.font = UIFont.preferredFont(forTextStyle: style)
         return label
     }()
@@ -53,12 +54,19 @@ class CharacterCell: UITableViewCell {
     }
 
     private func setupViews() {
+        imageSize = CGSize(width: frame.width / 3.5, height: frame.width / 3.5)
+        print(imageSize)
+        self.frame.size.height = 400
         addSubview(characterImageView)
         characterImageView.anchor(top: topAnchor,
                                   leading: leadingAnchor,
                                   bottom: bottomAnchor,
                                   trailing: nil,
-                                  padding: .init(top: 4, left: 4, bottom: 4, right: 0), size: imageSize)
+                                  padding: .init(top: 4,
+                                                 left: 4,
+                                                 bottom: 4,
+                                                 right: 0),
+                                  size: imageSize)
 
         addSubview(nameLabel)
         nameLabel.anchor(top: characterImageView.topAnchor,
@@ -66,14 +74,14 @@ class CharacterCell: UITableViewCell {
                          bottom: nil,
                          trailing: trailingAnchor,
                          padding: .init(top: 0, left: 8, bottom: 0, right: 4))
-        nameLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1 / 2, constant: 8)
+        nameLabel.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 1 / 2, constant: 8).isActive = true
 
         addSubview(detailsLabel)
         detailsLabel.anchor(top: nameLabel.bottomAnchor,
                              leading: nameLabel.leadingAnchor,
-                             bottom: bottomAnchor,
+                             bottom: characterImageView.bottomAnchor,
                              trailing: nameLabel.trailingAnchor,
-                             padding: .init(top: 4, left: 0, bottom: 4, right: 0))
+                             padding: .init(top: 4, left: 0, bottom: 0, right: 0))
     }
 }
 

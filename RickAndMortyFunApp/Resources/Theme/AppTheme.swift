@@ -9,6 +9,7 @@
 import UIKit
 
 struct AppTheme {
+    // make enum from it 
     var statusBarStyle: UIStatusBarStyle
     var barBackgroundColor: UIColor
     var barForegroundColor: UIColor

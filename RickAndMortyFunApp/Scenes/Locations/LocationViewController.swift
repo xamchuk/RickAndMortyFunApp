@@ -34,12 +34,11 @@ class LocationViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
         setupTableView()
+        loadPage(1)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadPage(1)
-
         viewModel.stateUpdated = { [weak self] state in
             self?.setFooterView(for: state)
             self?.tableView.reloadData()
@@ -113,7 +112,7 @@ extension LocationViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension LocationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = LVC()
+        let vc = LocationDetailsViewController()
         vc.item = viewModel.location(for: indexPath)
         show(vc, sender: nil)
     }

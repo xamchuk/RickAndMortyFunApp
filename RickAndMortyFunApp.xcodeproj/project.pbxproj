@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B0367C902267598400059D80 /* ImageCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0367C8F2267598400059D80 /* ImageCollectionView.swift */; };
+		B0367C9222675A9300059D80 /* ImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0367C9122675A9300059D80 /* ImageCollectionCell.swift */; };
 		B04A2CB52237E80900162E45 /* CharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04A2CB42237E80900162E45 /* CharacterViewModel.swift */; };
 		B04A2CB72237FECE00162E45 /* CharacterCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04A2CB62237FECE00162E45 /* CharacterCellViewModel.swift */; };
 		B05D84022238625300F43F0E /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05D84012238625300F43F0E /* LocationViewModel.swift */; };
@@ -21,9 +23,7 @@
 		B05D842B22414E1200F43F0E /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05D842A22414E1200F43F0E /* Weak.swift */; };
 		B05D842E2241526400F43F0E /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05D842D2241526400F43F0E /* AppNavigationController.swift */; };
 		B05D84302241527500F43F0E /* AppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05D842F2241527500F43F0E /* AppTabBarController.swift */; };
-		B05D84412242804200F43F0E /* LView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05D84402242804200F43F0E /* LView.swift */; };
-		B05D84432242804D00F43F0E /* LVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05D84422242804D00F43F0E /* LVC.swift */; };
-		B05D84472242807300F43F0E /* LView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B05D84462242807300F43F0E /* LView.xib */; };
+		B05D84432242804D00F43F0E /* LocationDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05D84422242804D00F43F0E /* LocationDetailsViewController.swift */; };
 		B05D84492247BBD600F43F0E /* UICollectionView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05D84482247BBD600F43F0E /* UICollectionView+Reusable.swift */; };
 		B06048582225384A0029ADC6 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06048572225384A0029ADC6 /* Models.swift */; };
 		B060485A22253AD40029ADC6 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B060485922253AD40029ADC6 /* NetworkService.swift */; };
@@ -68,6 +68,8 @@
 		19ECBFD40C618F1086A191AA /* Pods-RickAndMortyFunApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RickAndMortyFunApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RickAndMortyFunApp/Pods-RickAndMortyFunApp.debug.xcconfig"; sourceTree = "<group>"; };
 		1C642F928D4A80B2BF675C4B /* Pods-RickAndMortyFunApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RickAndMortyFunApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-RickAndMortyFunApp/Pods-RickAndMortyFunApp.release.xcconfig"; sourceTree = "<group>"; };
 		9BB4F13A7F855A5C6065C143 /* Pods_RickAndMortyFunApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RickAndMortyFunApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0367C8F2267598400059D80 /* ImageCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionView.swift; sourceTree = "<group>"; };
+		B0367C9122675A9300059D80 /* ImageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionCell.swift; sourceTree = "<group>"; };
 		B04A2CB42237E80900162E45 /* CharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterViewModel.swift; sourceTree = "<group>"; };
 		B04A2CB62237FECE00162E45 /* CharacterCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCellViewModel.swift; sourceTree = "<group>"; };
 		B05D84012238625300F43F0E /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
@@ -84,9 +86,7 @@
 		B05D842A22414E1200F43F0E /* Weak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weak.swift; sourceTree = "<group>"; };
 		B05D842D2241526400F43F0E /* AppNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
 		B05D842F2241527500F43F0E /* AppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabBarController.swift; sourceTree = "<group>"; };
-		B05D84402242804200F43F0E /* LView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LView.swift; sourceTree = "<group>"; };
-		B05D84422242804D00F43F0E /* LVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LVC.swift; sourceTree = "<group>"; };
-		B05D84462242807300F43F0E /* LView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LView.xib; sourceTree = "<group>"; };
+		B05D84422242804D00F43F0E /* LocationDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailsViewController.swift; sourceTree = "<group>"; };
 		B05D84482247BBD600F43F0E /* UICollectionView+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Reusable.swift"; sourceTree = "<group>"; };
 		B06048572225384A0029ADC6 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		B060485922253AD40029ADC6 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -207,9 +207,7 @@
 		B05D8431224252CC00F43F0E /* LocationDetails */ = {
 			isa = PBXGroup;
 			children = (
-				B05D84402242804200F43F0E /* LView.swift */,
-				B05D84422242804D00F43F0E /* LVC.swift */,
-				B05D84462242807300F43F0E /* LView.xib */,
+				B05D84422242804D00F43F0E /* LocationDetailsViewController.swift */,
 			);
 			path = LocationDetails;
 			sourceTree = "<group>";
@@ -303,6 +301,8 @@
 		B060488C222EF0A60029ADC6 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				B0367C8F2267598400059D80 /* ImageCollectionView.swift */,
+				B0367C9122675A9300059D80 /* ImageCollectionCell.swift */,
 				B060488D222EF0BF0029ADC6 /* State.swift */,
 				B060486A22267F680029ADC6 /* FooterViews */,
 			);
@@ -443,7 +443,6 @@
 				B0CD59EA2222B26200244139 /* Assets.xcassets in Resources */,
 				B06048762226A13D0029ADC6 /* EmptyView.xib in Resources */,
 				B06048792226B6810029ADC6 /* CharacterDetailsView.xib in Resources */,
-				B05D84472242807300F43F0E /* LView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,10 +528,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0367C902267598400059D80 /* ImageCollectionView.swift in Sources */,
 				B0CD59FF2222DFA000244139 /* UIView+extension.swift in Sources */,
 				B060487B2226C02B0029ADC6 /* CharacterDetailsView.swift in Sources */,
 				B0CD59F72222B4C700244139 /* CharacterViewController.swift in Sources */,
-				B05D84432242804D00F43F0E /* LVC.swift in Sources */,
+				B05D84432242804D00F43F0E /* LocationDetailsViewController.swift in Sources */,
 				B05D842022414CA700F43F0E /* AppTheme.swift in Sources */,
 				B05D84022238625300F43F0E /* LocationViewModel.swift in Sources */,
 				B0604892222F0D1F0029ADC6 /* EpisodeCell.swift in Sources */,
@@ -541,12 +541,12 @@
 				B05D842422414D1400F43F0E /* Theming.swift in Sources */,
 				B0CD59F52222B43700244139 /* TabBarController.swift in Sources */,
 				B06048742226A1290029ADC6 /* EmptyView.swift in Sources */,
-				B05D84412242804200F43F0E /* LView.swift in Sources */,
 				B04A2CB52237E80900162E45 /* CharacterViewModel.swift in Sources */,
 				B05D84302241527500F43F0E /* AppTabBarController.swift in Sources */,
 				B0604887222CB70D0029ADC6 /* LocationCell.swift in Sources */,
 				B05D842E2241526400F43F0E /* AppNavigationController.swift in Sources */,
 				B0604881222A8F2D0029ADC6 /* RickAndMortyRouter.swift in Sources */,
+				B0367C9222675A9300059D80 /* ImageCollectionCell.swift in Sources */,
 				B060488E222EF0BF0029ADC6 /* State.swift in Sources */,
 				B06048652225DF410029ADC6 /* UITableView+Reusable.swift in Sources */,
 				B0CD59E32222B25F00244139 /* AppDelegate.swift in Sources */,
