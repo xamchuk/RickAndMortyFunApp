@@ -24,6 +24,7 @@ class ImageColectionView: UICollectionView {
         self.dataSource = self
         self.delegate = self
         self.backgroundColor = .clear
+        self.isUserInteractionEnabled = false
     }
 
     required init?(coder aDecoder: NSCoder) {

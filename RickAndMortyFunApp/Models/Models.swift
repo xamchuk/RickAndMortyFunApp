@@ -34,6 +34,12 @@ struct CharacterOfShow: Codable {
     let url: String
 }
 
+struct CharacterDetails {
+    var isButton: Bool
+    var title: String
+    var value: String
+}
+
 struct Origin: Codable {
     var name: String
     var url: String

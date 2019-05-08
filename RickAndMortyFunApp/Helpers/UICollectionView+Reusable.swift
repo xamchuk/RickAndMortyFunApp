@@ -22,8 +22,7 @@ import UIKit
                                                 ofKind kind: String = UICollectionView.elementKindSectionHeader,
                                                 bundle: Bundle? = nil) {
         let className = reusableViewType.className
-        let nib = UINib(nibName: className, bundle: bundle)
-        register(nib, forSupplementaryViewOfKind: kind, withReuseIdentifier: className)
+        register(reusableViewType, forSupplementaryViewOfKind: kind, withReuseIdentifier: className)
     }
 
      func register<T: UICollectionReusableView>(reusableViewTypes: [T.Type],

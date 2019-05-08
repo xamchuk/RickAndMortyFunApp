@@ -29,6 +29,7 @@ class LocationDetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         view.addSubview(imageColletionView)
         imageColletionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

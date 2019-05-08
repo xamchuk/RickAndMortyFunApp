@@ -9,6 +9,12 @@
 import UIKit
 
 extension UIView {
+    func addSubviews(_ views: UIView...) {
+        views.forEach {addSubview($0)}
+    }
+}
+
+extension UIView {
 
     func fillSuperview() {
         anchor(top: superview?.safeAreaLayoutGuide.topAnchor,

@@ -9,7 +9,6 @@
 import UIKit
 
 struct AppTheme {
-    // make enum from it 
     var statusBarStyle: UIStatusBarStyle
     var barBackgroundColor: UIColor
     var barForegroundColor: UIColor
@@ -19,7 +18,6 @@ struct AppTheme {
     var cellBorderColor: UIColor
     var titleFont: UIFont
     var datailsFont: UIFont
-
 }
 
 extension AppTheme {

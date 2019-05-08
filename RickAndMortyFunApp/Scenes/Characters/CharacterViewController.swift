@@ -18,6 +18,11 @@ class CharacterViewController: UIViewController {
     // MARK: - Properties
 
     var viewModel: CharacterViewModel
+    var pointX: CGFloat!
+    var pointY: CGFloat!
+    var selectedFrame: CGRect?
+    var selectedImage: UIImage?
+    var alpha: CGFloat!
 
     // MARK: - Init
 
@@ -34,14 +39,14 @@ class CharacterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
         setupTableView()
-        setUpTheming()
+       // setUpTheming()
         viewModel.loadPage(1)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        themeProvider.nextTheme()
         viewModel.stateUpdated = { [weak self] state in
             self?.setFooterView(for: state)
             self?.tableView.reloadData()
@@ -71,6 +76,17 @@ class CharacterViewController: UIViewController {
         case .populated:
             tableView.tableFooterView = nil
         }
+    }
+
+    private func setupNavigationBar() {
+        navigationController?.delegate = self
+        let backButton = UIBarButtonItem(title: navigationItem.title, style: .plain, target: nil, action: nil)
+        let shadow = NSShadow()
+        shadow.shadowColor = UIColor.gray
+        shadow.shadowBlurRadius = 5
+        let attributes = [NSAttributedString.Key.shadow: shadow]
+        backButton.setTitleTextAttributes(attributes, for: .normal)
+        navigationItem.backBarButtonItem = backButton
     }
 
     private func setupTableView() {
@@ -105,10 +121,38 @@ extension CharacterViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension CharacterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as? CharacterCell
+        pointX = cell?.characterImageView.frame.midX
+        pointY = cell?.frame.midY
+        selectedFrame = CGRect(x: cell?.frame.minX ?? 0,
+                               y: cell?.frame.midY ?? 0,
+                               width: cell?.characterImageView.frame.width ?? 0,
+                               height: cell?.characterImageView.frame.height ?? 0)
+        selectedImage = cell?.characterImageView.image
         let vc = DetailsViewController()
+        alpha = vc.headerView?.imageView.alpha
         let character = viewModel.character(for: indexPath)
         vc.character = character
         show(vc, sender: nil)
+    }
+}
+
+extension CharacterViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController,
+                              animationControllerFor operation: UINavigationController.Operation,
+                              from fromVC: UIViewController,
+                              to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+
+        switch operation {
+        case .push:
+            return AnimationController(animationDuration: 0.2,
+                                       animationType: .show,
+                                       pointX: pointX,
+                                       pointY: view.safeAreaInsets.top + pointY,
+                                       frame: selectedFrame!, image: selectedImage!)
+        default:
+            return nil
+        }
     }
 }
 

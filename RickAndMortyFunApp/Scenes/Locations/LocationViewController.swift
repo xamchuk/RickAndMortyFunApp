@@ -112,6 +112,7 @@ extension LocationViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension LocationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let vc = LocationDetailsViewController()
         vc.item = viewModel.location(for: indexPath)
         show(vc, sender: nil)
