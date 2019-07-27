@@ -10,15 +10,13 @@ import UIKit
 class LocationViewController: UIViewController {
 
     // MARK: - Views
-
     var tableView = UITableView()
+    var navImage: UIImage!
 
     // MARK: - Properties
-
     var viewModel: LocationViewModel
 
     // MARK: - Init
-
     init(viewModel: LocationViewModel = .init()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -29,10 +27,10 @@ class LocationViewController: UIViewController {
     }
 
     // MARK: - Life cycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
+        view.backgroundColor = .black
+        setupNavifationConroller()
         setupTableView()
         loadPage(1)
     }
@@ -51,13 +49,11 @@ class LocationViewController: UIViewController {
     }
 
     // MARK: - Actions
-
     @objc private func refreshTableView() {
         loadPage(1)
     }
 
     // MARK: - Private
-
     private func setFooterView(for state: State<Location>) {
         switch state {
         case .error(let error):
@@ -79,10 +75,26 @@ class LocationViewController: UIViewController {
         let request = RickAndMortyRouter.getLocation(page: page)
         viewModel.load(request: request, page: page)
     }
+// MARK: - Setup UI
+    fileprivate func setupNavifationConroller() {
+        guard let navigationBar = navigationController?.navigationBar else { return }
+               navigationBar.prefersLargeTitles = true
+               navigationBar.barStyle = .black
+               navigationBar.largeTitleTextAttributes = [
+                           NSAttributedString.Key.foregroundColor: UIColor.white
+                       ]
+               navigationBar.titleTextAttributes = [
+                           NSAttributedString.Key.foregroundColor: UIColor.white
+                       ]
+
+               navigationBar.setBackgroundImage(navImage, for: UIBarMetrics.default)
+               navigationBar.shadowImage = navImage
+    }
 
     private func setupTableView() {
         view.addSubview(tableView)
-        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+        tableView.backgroundColor = #colorLiteral(red: 0.1058690622, green: 0.1058908626, blue: 0.105864279, alpha: 1)
+        tableView.anchor(top: view.topAnchor,
                                  leading: view.safeAreaLayoutGuide.leadingAnchor,
                                  bottom: view.safeAreaLayoutGuide.bottomAnchor,
                                  trailing: view.safeAreaLayoutGuide.trailingAnchor)

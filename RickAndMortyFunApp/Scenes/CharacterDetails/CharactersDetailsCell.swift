@@ -15,37 +15,33 @@ class CharactersDetailsCell: UICollectionViewCell {
            fetchData()
         }
     }
-
-    var stackView = UIStackView()
+// MARK: - Views
+    let stackView = UIStackView()
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)
-        label.textColor = .white
+        label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.headline)
+        label.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
         return label
     }()
+
     let valueLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.callout)
+        label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.title2)
         label.adjustsFontSizeToFitWidth = true
-        label.textColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+        label.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         label.text = "N/A"
         return label
     }()
     let valueButton: UIButton = {
         let button = UIButton(type: .system)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
-        button.setTitleColor(#colorLiteral(red: 0.3098039329, green: 0.01568627544, blue: 0.1294117719, alpha: 1), for: .normal)
         return button
     }()
-
+// MARK: - Fetch Data
     func fetchData() {
         titleLabel.text = "\(detail.title):"
         if detail.isButton {
-            let underlineAttribute: [NSAttributedString.Key: Any] = [
-                NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
-                NSAttributedString.Key.foregroundColor: UIColor.red]
-            let underlineAttributedString = NSAttributedString(string: detail.value, attributes: underlineAttribute)
-            valueButton.setAttributedTitle(underlineAttributedString, for: .normal)
+            valueButton.setTitle(detail.value, for: .normal)
             [titleLabel, valueButton].forEach({ stackView.addArrangedSubview($0)})
         } else {
             if detail.value != "" {
@@ -54,11 +50,18 @@ class CharactersDetailsCell: UICollectionViewCell {
             [titleLabel, valueLabel].forEach({ stackView.addArrangedSubview($0)})
         }
     }
-
+// MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = #colorLiteral(red: 0.1215686275, green: 0.1294117647, blue: 0.1411764706, alpha: 1)
-        layer.cornerRadius = 10
+        setupViews()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+// MARK: - Setup UI
+    fileprivate func setupViews() {
         addSubview(stackView)
         stackView.anchor(top: topAnchor,
                          leading: leadingAnchor,
@@ -67,9 +70,14 @@ class CharactersDetailsCell: UICollectionViewCell {
                          padding: .init(top: 4, left: 8, bottom: 4, right: 8))
         stackView.axis = .horizontal
         stackView.spacing = 10
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        let seperatorView = UIView()
+        seperatorView.backgroundColor = .gray
+        addSubview(seperatorView)
+        seperatorView.anchor(top: stackView.bottomAnchor,
+                             leading: stackView.leadingAnchor,
+                             bottom: bottomAnchor,
+                             trailing: stackView.trailingAnchor,
+                             padding: .init(top: 14, left: 0, bottom: 0, right: 0),
+                             size: .init(width: 0, height: 0.5))
     }
 }

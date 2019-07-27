@@ -38,6 +38,7 @@ class EpisodeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         navigationController?.navigationBar.prefersLargeTitles = true
         setupTableView()
     }

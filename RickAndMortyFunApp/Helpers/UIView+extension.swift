@@ -23,6 +23,13 @@ extension UIView {
                trailing: superview?.safeAreaLayoutGuide.trailingAnchor)
     }
 
+    func fillWithSafeAreaSuperview() {
+        anchor(top: superview?.topAnchor,
+               leading: superview?.leadingAnchor,
+               bottom: superview?.bottomAnchor,
+               trailing: superview?.trailingAnchor)
+    }
+
     func anchorSize(to view: UIView) {
         widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true

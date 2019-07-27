@@ -11,12 +11,11 @@ import Alamofire
 
 class CharacterViewController: UIViewController {
 
-    // MARK: - Views
-
+// MARK: - Views
     var tableView = UITableView()
+    var navImage: UIImage!
 
-    // MARK: - Properties
-
+// MARK: - Properties
     var viewModel: CharacterViewModel
     var pointX: CGFloat!
     var pointY: CGFloat!
@@ -24,8 +23,7 @@ class CharacterViewController: UIViewController {
     var selectedImage: UIImage?
     var alpha: CGFloat!
 
-    // MARK: - Init
-
+// MARK: - Init
     init(viewModel: CharacterViewModel = .init()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -35,18 +33,21 @@ class CharacterViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Life cycle
-
+// MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
+        navImage = navigationController?.navigationBar.backgroundImage(for: .default)
         setupTableView()
-       // setUpTheming()
         viewModel.loadPage(1)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupNavigationBar()
+// TODO: - for some reason cell doesnt deselect automaticly. I dont know why:(
+        if let indexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
         viewModel.stateUpdated = { [weak self] state in
             self?.setFooterView(for: state)
             self?.tableView.reloadData()
@@ -58,12 +59,11 @@ class CharacterViewController: UIViewController {
         viewModel.stateUpdated = nil
     }
 
-    // MARK: - Private
+// MARK: - Private
     private func setFooterView(for state: State<CharacterOfShow>) {
         switch state {
         case .error(let error):
             let errorView: ErrorView = .fromNib()
-            // add var error trouth didSet //
             tableView.tableFooterView = errorView
             errorView.errorLabel.text = error.localizedDescription
         case .loading, .paging:
@@ -79,20 +79,27 @@ class CharacterViewController: UIViewController {
     }
 
     private func setupNavigationBar() {
-        navigationController?.delegate = self
-        let backButton = UIBarButtonItem(title: navigationItem.title, style: .plain, target: nil, action: nil)
-        let shadow = NSShadow()
-        shadow.shadowColor = UIColor.gray
-        shadow.shadowBlurRadius = 5
-        let attributes = [NSAttributedString.Key.shadow: shadow]
-        backButton.setTitleTextAttributes(attributes, for: .normal)
-        navigationItem.backBarButtonItem = backButton
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        navigationBar.prefersLargeTitles = true
+        navigationBar.barStyle = .black
+        navigationBar.largeTitleTextAttributes = [
+                    NSAttributedString.Key.foregroundColor: UIColor.white
+                ]
+        navigationBar.titleTextAttributes = [
+                    NSAttributedString.Key.foregroundColor: UIColor.white
+                ]
+
+        navigationBar.setBackgroundImage(navImage, for: UIBarMetrics.default)
+        navigationBar.shadowImage = navImage
     }
 
     private func setupTableView() {
         view.addSubview(tableView)
-        tableView.fillSuperview()
-        tableView.separatorStyle = .none
+        tableView.backgroundColor = #colorLiteral(red: 0.1058690622, green: 0.1058908626, blue: 0.105864279, alpha: 1)
+        tableView.anchor(top: view.topAnchor,
+                         leading: view.safeAreaLayoutGuide.leadingAnchor,
+                         bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                         trailing: view.safeAreaLayoutGuide.trailingAnchor)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(CharacterCell.self)
@@ -109,7 +116,6 @@ extension CharacterViewController: UITableViewDataSource {
         let cell: CharacterCell = tableView.dequeueReusableCell(for: indexPath)
         let characters = viewModel.items
         cell.configure(with: characters[indexPath.row])
-
         if case .paging(_, let nextPage) = viewModel.state,
             indexPath.row == viewModel.items.count - 1 {
             viewModel.loadPage(nextPage)
@@ -121,44 +127,9 @@ extension CharacterViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension CharacterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as? CharacterCell
-        pointX = cell?.characterImageView.frame.midX
-        pointY = cell?.frame.midY
-        selectedFrame = CGRect(x: cell?.frame.minX ?? 0,
-                               y: cell?.frame.midY ?? 0,
-                               width: cell?.characterImageView.frame.width ?? 0,
-                               height: cell?.characterImageView.frame.height ?? 0)
-        selectedImage = cell?.characterImageView.image
         let vc = DetailsViewController()
-        alpha = vc.headerView?.imageView.alpha
         let character = viewModel.character(for: indexPath)
         vc.character = character
-        show(vc, sender: nil)
-    }
-}
-
-extension CharacterViewController: UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController,
-                              animationControllerFor operation: UINavigationController.Operation,
-                              from fromVC: UIViewController,
-                              to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-
-        switch operation {
-        case .push:
-            return AnimationController(animationDuration: 0.2,
-                                       animationType: .show,
-                                       pointX: pointX,
-                                       pointY: view.safeAreaInsets.top + pointY,
-                                       frame: selectedFrame!, image: selectedImage!)
-        default:
-            return nil
-        }
-    }
-}
-
-extension CharacterViewController: Themed {
-    func applyTheme(_ theme: AppTheme) {
-        tableView.backgroundColor = theme.cellBorderColor
-        view.backgroundColor = theme.cellBorderColor
+        navigationController?.show(vc, sender: nil)
     }
 }

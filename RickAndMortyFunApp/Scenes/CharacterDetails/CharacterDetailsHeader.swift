@@ -10,57 +10,50 @@ import UIKit
 
 class CharacterDetailsHeader: UICollectionReusableView {
 
-    let imageView: UIImageView = {
-        var iv = UIImageView()
+// MARK: - Views
+    lazy var profileImageView: UIImageView = {
+        let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
+        iv.layer.borderWidth = 3
+        iv.layer.borderColor = UIColor.black.cgColor
         iv.layer.masksToBounds = true
         return iv
     }()
 
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.title1)
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 34)
+        label.adjustsFontSizeToFitWidth = true
         label.textColor = .white
         return label
     }()
 
-    let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
-    var alphaOfBlur: CGFloat! {
-        didSet {
-            visualEffectView.alpha = alphaOfBlur
-        }
-    }
-
+// MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(imageView)
-        imageView.fillSuperview()
-        setupBlurEffect()
-        setupGradientLayer()
-        addSubview(nameLabel)
-        nameLabel.anchor(top: nil, leading: imageView.leadingAnchor, bottom: imageView.bottomAnchor, trailing: nil,
-                         padding: .init(top: 0, left: 8, bottom: 8, right: 0))
+        setupViews()
     }
 
-    func setupBlurEffect() {
-        self.addSubview(visualEffectView)
-        visualEffectView.fillSuperview()
-        visualEffectView.alpha = 0
-    }
-
-    func setupGradientLayer() {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
-        gradientLayer.locations = [0.4, 1]
-
-        let gradientContainerView = UIView()
-        addSubview(gradientContainerView)
-        gradientContainerView.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
-        gradientContainerView.layer.addSublayer(gradientLayer)
-        gradientLayer.frame = bounds
-        gradientLayer.frame.origin.y -= bounds.height
-    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
+    }
+
+// MARK: - Setup UI
+    fileprivate func setupViews() {
+        addSubview(profileImageView)
+        profileImageView.centerInSuperview()
+        addSubview(nameLabel)
+        nameLabel.anchor(top: profileImageView.bottomAnchor,
+                         leading: leadingAnchor,
+                         bottom: nil,
+                         trailing: trailingAnchor,
+                         padding: .init(top: 16, left: 16, bottom: 0, right: 16))
+
     }
 }

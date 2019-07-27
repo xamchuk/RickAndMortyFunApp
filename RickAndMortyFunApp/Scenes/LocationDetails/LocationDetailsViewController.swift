@@ -10,35 +10,31 @@ import UIKit
 
 class LocationDetailsViewController: UIViewController {
 
+    fileprivate let padding: CGFloat = 8
     let networkService = NetworkService()
-    let imageColletionView = ImageColectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     var id: String? {
-        didSet {
-            guard let id = id else { return }
-            fetchLocation(from: id)
+            didSet {
+                guard let id = id else { return }
+                fetchLocation(from: id)
+            }
         }
-    }
-    var item: Location? {
-        didSet {
-            imageColletionView.showAllCharacters = true
-            imageColletionView.items = item?.residents ?? [""]
-            navigationItem.title = item?.name ?? ""
-            imageColletionView.reloadData()
+        var item: Location? {
+            didSet {
+                navigationItem.title = item?.name ?? ""
+            }
         }
-    }
 
+// MARK: - Views
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    var headerView: LocationDetailsHeader?
+
+// MARK: - Lifecicle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        view.addSubview(imageColletionView)
-        imageColletionView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-        imageColletionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4),
-        imageColletionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        imageColletionView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 3/4),
-        imageColletionView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 3/4)
-             ])
-        navigationController?.navigationBar.prefersLargeTitles = false
+        view.backgroundColor = .black
+        setupNavigationController()
+        setupCollectionView()
+        setupCollectionViewLayout()
     }
 
     func fetchLocation(from id: String) {
@@ -61,5 +57,65 @@ class LocationDetailsViewController: UIViewController {
             }
             return array
         }
+    }
+// MARK: - Setup UI
+    fileprivate func setupNavigationController() {
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        navigationBar.prefersLargeTitles = false
+        }
+    fileprivate func setupCollectionView() {
+           view.addSubview(collectionView)
+           collectionView.backgroundColor = .clear
+           collectionView.anchor(top: view.topAnchor,
+                                 leading: view.safeAreaLayoutGuide.leadingAnchor,
+                                 bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                                 trailing: view.safeAreaLayoutGuide.trailingAnchor)
+           collectionView.dataSource = self
+           collectionView.delegate = self
+           collectionView.contentInsetAdjustmentBehavior = .never
+           collectionView.register(cellType: LocationDetailsCell.self)
+           collectionView.register(reusableViewType: LocationDetailsHeader.self)
+       }
+
+       fileprivate func setupCollectionViewLayout() {
+           if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+               layout.sectionInset = .init(top: padding, left: padding, bottom: padding, right: padding)
+           }
+       }
+}
+
+// MARK: - CollectionView Data Source
+extension LocationDetailsViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(with: LocationDetailsCell.self, for: indexPath)
+
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
+        headerView = collectionView.dequeueReusableView(with: LocationDetailsHeader.self, for: indexPath)
+
+        return headerView!
+    }
+}
+
+// MARK: - CollectionView Delegate
+extension LocationDetailsViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return .init(width: view.frame.width - (2 * padding), height: 72)
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return .init(width: view.frame.width, height: view.frame.width)
     }
 }

@@ -10,48 +10,63 @@ import UIKit
 
 class DetailsViewController: UIViewController {
 
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: StretchyHeaderFlowLayout())
     fileprivate let padding: CGFloat = 8
     var characterDetailsArray: [CharacterDetails]!
     var character: CharacterOfShow! {
         didSet {
+            backgroundView.imageView.setImage(from: character.image, size: .init(width: view.frame.width, height: view.frame.width))
             fetchingData()
             collectionView.reloadData()
+
         }
     }
-    var headerView: CharacterDetailsHeader? 
 
+// MARK: - Views
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    var headerView: CharacterDetailsHeader?
+    var backgroundView = DetailsBackGroundView()
+
+// MARK: - Lifecicle
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = false
-        setupNavigationController()
+        setupBackgroundView()
         setupCollectionView()
         setupCollectionViewLayout()
+    }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        setupNavigationController()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        headerView?.alpha = 1
+    }
+
+// MARK: - Setup UI
+    fileprivate func setupBackgroundView() {
+        view.addSubview(backgroundView)
+        backgroundView.fillWithSafeAreaSuperview()
     }
 
     fileprivate func setupNavigationController() {
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.barTintColor = .clear
-        navigationController?.navigationBar.tintColor = .white
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        navigationBar.prefersLargeTitles = false
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationBar.shadowImage = UIImage()
+        navigationBar.tintColor = .gray
     }
 
     fileprivate func setupCollectionView() {
         view.addSubview(collectionView)
+        collectionView.backgroundColor = .clear
         collectionView.anchor(top: view.topAnchor,
                               leading: view.safeAreaLayoutGuide.leadingAnchor,
                               bottom: view.safeAreaLayoutGuide.bottomAnchor,
                               trailing: view.safeAreaLayoutGuide.trailingAnchor)
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.register(cellType: CharactersDetailsCell.self)
         collectionView.register(reusableViewType: CharacterDetailsHeader.self)
     }
@@ -62,15 +77,6 @@ class DetailsViewController: UIViewController {
         }
     }
 
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentOffsetY = scrollView.contentOffset.y
-        if contentOffsetY > 0 {
-            headerView?.alphaOfBlur = 0
-            return
-        }
-        headerView?.alphaOfBlur = abs(contentOffsetY) / 100
-    }
-
     func fetchingData() {
         characterDetailsArray = [
             CharacterDetails(isButton: false, title: "Status", value: character.status),
@@ -78,12 +84,10 @@ class DetailsViewController: UIViewController {
             CharacterDetails(isButton: false, title: "Type", value: character.type),
             CharacterDetails(isButton: false, title: "Gender", value: character.gender),
             CharacterDetails(isButton: false, title: "Origin", value: character.origin.name),
-            CharacterDetails(isButton: true, title: "Location", value: character.location.name),
-            CharacterDetails(isButton: false, title: "111", value: "1111"),
-            CharacterDetails(isButton: false, title: "222", value: "2222")
+            CharacterDetails(isButton: true, title: "Location", value: character.location.name)
         ]
     }
-
+// MARK: - Actions
     @objc func handleLocationAction() {
         let vc = LocationDetailsViewController()
         let url = URL(string: character.location.url)
@@ -92,6 +96,7 @@ class DetailsViewController: UIViewController {
     }
 }
 
+// MARK: - CollectionView Data Source
 extension DetailsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return characterDetailsArray.count
@@ -108,15 +113,15 @@ extension DetailsViewController: UICollectionViewDataSource {
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
         headerView = collectionView.dequeueReusableView(with: CharacterDetailsHeader.self, for: indexPath)
-        headerView?.alpha = 0
-        headerView?.imageView.setImage(from: character.image,
-                                       size: .init(width: 300, height: 300))
+        headerView?.profileImageView.setImage(from: character.image,
+                                       size: .init(width: 150, height: 150))
         headerView?.nameLabel.text = character.name
 
         return headerView!
     }
 }
 
+// MARK: - CollectionView Delegate
 extension DetailsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,

@@ -48,7 +48,6 @@ class NetworkService {
                 currentPage: page,
                 pageCount: Int(response.info.pages)
             )
-
             completion(result)
         }
     }

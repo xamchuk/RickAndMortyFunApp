@@ -51,10 +51,8 @@ class LocationViewModel {
             guard let `self` = self else {
                 return
             }
-
             self.update(response: response)
         }
-
     }
 
     // MARK: - Private

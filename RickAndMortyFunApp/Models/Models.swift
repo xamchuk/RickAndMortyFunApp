@@ -64,4 +64,25 @@ struct Episode: Codable {
     var season: String {
         return String(episode.prefix(3))
     }
+
+    var imageUrl: String {
+        let nameArray = name.components(separatedBy: " ")
+        var epis: Substring = ""
+        if episode.suffix(2) == "10" {
+            epis = episode.suffix(2)
+        } else {
+            epis = episode.suffix(1)
+        }
+        let body = "http://watchrickandmorty.eu/wp-content/uploads/2018/07/Watch-Rick-and-Morty-Season-\(season.suffix(1))-Episode-\(epis)-"
+        var name = ""
+        for i in nameArray {
+            name += i.capitalizingFirstLetter() + "-"
+        }
+        let url = body + name + "350x230"//"\(nameArray.first!)-\(nameArray.last!)-350x230"
+        if season.suffix(1) == "3" {
+
+            return "http://watchrickandmorty.eu/wp-content/uploads/2018/07/watch-rick-and-Morty-Season-3-Episode-\(epis)-350x230"
+        }
+        return url
+    }
 }

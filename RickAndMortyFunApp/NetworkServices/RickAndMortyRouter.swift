@@ -17,14 +17,11 @@ enum RickAndMortyRouter {
     case getCharacters(page: Int)
     case getLocation(page: Int)
     case getEpisode(page: Int)
-
     case getSingleLocation(id: String)
 
     var method: HTTPMethod {
         switch self {
-        case .getCharacters, .getLocation, .getEpisode:
-            return .get
-        case .getSingleLocation:
+        case .getCharacters, .getLocation, .getEpisode, .getSingleLocation:
             return .get
         }
     }
@@ -58,7 +55,7 @@ enum RickAndMortyRouter {
     var encoding: ParameterEncoding {
         switch method {
         case .get:
-            return  URLEncoding.default
+            return URLEncoding.default
         default:
             return JSONEncoding.default
         }
@@ -66,7 +63,6 @@ enum RickAndMortyRouter {
 }
 
 extension RickAndMortyRouter: URLRequestConvertible {
-
     func asURLRequest() throws -> URLRequest {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.rawValue
