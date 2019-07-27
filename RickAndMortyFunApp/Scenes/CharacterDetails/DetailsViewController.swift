@@ -51,7 +51,6 @@ class DetailsViewController: UIViewController {
 
     fileprivate func setupNavigationController() {
         guard let navigationBar = navigationController?.navigationBar else { return }
-        navigationBar.prefersLargeTitles = false
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
         navigationBar.tintColor = .gray

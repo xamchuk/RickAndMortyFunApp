@@ -4,7 +4,7 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>SFProText-Light</string>
+		<string>SFProText-Light.ttf</string>
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>

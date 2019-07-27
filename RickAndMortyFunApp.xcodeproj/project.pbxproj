@@ -44,6 +44,7 @@
 		B072EFF222EC4BAF00F82E17 /* LocationDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B072EFF122EC4BAF00F82E17 /* LocationDetailsCell.swift */; };
 		B072EFF422EC50D600F82E17 /* LocationDetailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B072EFF322EC50D600F82E17 /* LocationDetailsHeader.swift */; };
 		B072EFF822EC5A1400F82E17 /* SFProText-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B072EFF722EC5A1400F82E17 /* SFProText-Light.ttf */; };
+		B0B727FB22EC6BBA00858F0E /* StretchyHeaderFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B727FA22EC6BBA00858F0E /* StretchyHeaderFlowLayout.swift */; };
 		B0CD59E32222B25F00244139 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CD59E22222B25F00244139 /* AppDelegate.swift */; };
 		B0CD59EA2222B26200244139 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0CD59E92222B26200244139 /* Assets.xcassets */; };
 		B0CD59ED2222B26200244139 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0CD59EB2222B26200244139 /* LaunchScreen.storyboard */; };
@@ -108,6 +109,7 @@
 		B072EFF122EC4BAF00F82E17 /* LocationDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocationDetailsCell.swift; path = ../../../../../../../../../System/Volumes/Data/Users/ruslanchamski/Desktop/Programming/PortfolioApps/RickAndMortyFunApp/RickAndMortyFunApp/Scenes/LocationDetails/LocationDetailsCell.swift; sourceTree = "<group>"; };
 		B072EFF322EC50D600F82E17 /* LocationDetailsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocationDetailsHeader.swift; path = ../../../../../../../../../System/Volumes/Data/Users/ruslanchamski/Desktop/Programming/PortfolioApps/RickAndMortyFunApp/RickAndMortyFunApp/Scenes/LocationDetails/LocationDetailsHeader.swift; sourceTree = "<group>"; };
 		B072EFF722EC5A1400F82E17 /* SFProText-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Light.ttf"; sourceTree = "<group>"; };
+		B0B727FA22EC6BBA00858F0E /* StretchyHeaderFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StretchyHeaderFlowLayout.swift; sourceTree = "<group>"; };
 		B0CD59DF2222B25F00244139 /* RickAndMortyFunApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RickAndMortyFunApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0CD59E22222B25F00244139 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B0CD59E92222B26200244139 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 			children = (
 				B0367C8F2267598400059D80 /* ImageCollectionView.swift */,
 				B0367C9122675A9300059D80 /* ImageCollectionCell.swift */,
+				B0B727FA22EC6BBA00858F0E /* StretchyHeaderFlowLayout.swift */,
 				B060488D222EF0BF0029ADC6 /* State.swift */,
 				B060486A22267F680029ADC6 /* FooterViews */,
 			);
@@ -532,6 +535,7 @@
 				B03F37A722E9D5A3000E5F98 /* DetailsBackGroundView.swift in Sources */,
 				B04A2CB52237E80900162E45 /* CharacterViewModel.swift in Sources */,
 				B06FED7722706BBE00CB9BDC /* CharacterDetailsHeader.swift in Sources */,
+				B0B727FB22EC6BBA00858F0E /* StretchyHeaderFlowLayout.swift in Sources */,
 				B0604887222CB70D0029ADC6 /* LocationCell.swift in Sources */,
 				B0604881222A8F2D0029ADC6 /* RickAndMortyRouter.swift in Sources */,
 				B0367C9222675A9300059D80 /* ImageCollectionCell.swift in Sources */,

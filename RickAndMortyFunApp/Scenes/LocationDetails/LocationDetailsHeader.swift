@@ -27,9 +27,8 @@ class LocationDetailsHeader: UICollectionReusableView {
 
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .center
         label.font = UIFont(name: "SFProText-Light", size: 16)
-        label.adjustsFontSizeToFitWidth = true
+       // label.adjustsFontSizeToFitWidth = true
         label.textColor = .white
         label.text = "R E S I D E N T S"
         label.textAlignment = .left
