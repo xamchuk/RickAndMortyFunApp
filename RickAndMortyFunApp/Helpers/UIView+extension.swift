@@ -9,12 +9,25 @@
 import UIKit
 
 extension UIView {
+    func addSubviews(_ views: UIView...) {
+        views.forEach {addSubview($0)}
+    }
+}
+
+extension UIView {
 
     func fillSuperview() {
         anchor(top: superview?.safeAreaLayoutGuide.topAnchor,
                leading: superview?.safeAreaLayoutGuide.leadingAnchor,
                bottom: superview?.safeAreaLayoutGuide.bottomAnchor,
                trailing: superview?.safeAreaLayoutGuide.trailingAnchor)
+    }
+
+    func fillWithSafeAreaSuperview() {
+        anchor(top: superview?.topAnchor,
+               leading: superview?.leadingAnchor,
+               bottom: superview?.bottomAnchor,
+               trailing: superview?.trailingAnchor)
     }
 
     func anchorSize(to view: UIView) {
@@ -81,3 +94,20 @@ extension UIView {
         return view
     }
 }
+
+public protocol ClassNameProtocol {
+    static var className: String { get }
+    var className: String { get }
+}
+
+public extension ClassNameProtocol {
+    static var className: String {
+        return String(describing: self)
+    }
+
+    var className: String {
+        return type(of: self).className
+    }
+}
+
+extension NSObject: ClassNameProtocol {}

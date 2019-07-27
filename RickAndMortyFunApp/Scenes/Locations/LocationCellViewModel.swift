@@ -11,4 +11,5 @@ import Foundation
 struct LocationCellViewModel {
     let name: String
     let dimension: String
+    let residents: [String]?
 }

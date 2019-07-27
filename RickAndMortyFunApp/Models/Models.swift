@@ -20,18 +20,24 @@ struct Info: Codable {
     var prev: String
 }
 
-struct Character: Codable {
-    var id: Int
-    var name: String
-    var status: String
-    var species: String
-    var type: String
-    var gender: String
-    var origin: Origin
-    var location: Location
-    var image: String
-    var episode: [String]
-    var url: String
+struct CharacterOfShow: Codable {
+    let id: Int
+    let name: String
+    let status: String
+    let species: String
+    let type: String
+    let gender: String
+    let origin: Origin
+    let location: Location
+    let image: String
+    let episode: [String]
+    let url: String
+}
+
+struct CharacterDetails {
+    var isButton: Bool
+    var title: String
+    var value: String
 }
 
 struct Origin: Codable {
@@ -57,5 +63,26 @@ struct Episode: Codable {
     var url: String?
     var season: String {
         return String(episode.prefix(3))
+    }
+
+    var imageUrl: String {
+        let nameArray = name.components(separatedBy: " ")
+        var epis: Substring = ""
+        if episode.suffix(2) == "10" {
+            epis = episode.suffix(2)
+        } else {
+            epis = episode.suffix(1)
+        }
+        let body = "http://watchrickandmorty.eu/wp-content/uploads/2018/07/Watch-Rick-and-Morty-Season-\(season.suffix(1))-Episode-\(epis)-"
+        var name = ""
+        for i in nameArray {
+            name += i.capitalizingFirstLetter() + "-"
+        }
+        let url = body + name + "350x230"//"\(nameArray.first!)-\(nameArray.last!)-350x230"
+        if season.suffix(1) == "3" {
+
+            return "http://watchrickandmorty.eu/wp-content/uploads/2018/07/watch-rick-and-Morty-Season-3-Episode-\(epis)-350x230"
+        }
+        return url
     }
 }

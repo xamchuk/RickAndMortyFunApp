@@ -11,16 +11,19 @@ import Alamofire
 
 class CharacterViewController: UIViewController {
 
-    // MARK: - Views
-
+// MARK: - Views
     var tableView = UITableView()
+    var navImage: UIImage!
 
-    // MARK: - Properties
-
+// MARK: - Properties
     var viewModel: CharacterViewModel
+    var pointX: CGFloat!
+    var pointY: CGFloat!
+    var selectedFrame: CGRect?
+    var selectedImage: UIImage?
+    var alpha: CGFloat!
 
-    // MARK: - Init
-
+// MARK: - Init
     init(viewModel: CharacterViewModel = .init()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -30,18 +33,21 @@ class CharacterViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Life cycle
-
+// MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
+        navImage = navigationController?.navigationBar.backgroundImage(for: .default)
         setupTableView()
+        viewModel.loadPage(1)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.loadPage(1)
-
+        setupNavigationBar()
+// TODO: - for some reason cell doesnt deselect automaticly. I dont know why:(
+        if let indexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
         viewModel.stateUpdated = { [weak self] state in
             self?.setFooterView(for: state)
             self?.tableView.reloadData()
@@ -53,8 +59,8 @@ class CharacterViewController: UIViewController {
         viewModel.stateUpdated = nil
     }
 
-    // MARK: - Private
-    private func setFooterView(for state: State<Character>) {
+// MARK: - Private
+    private func setFooterView(for state: State<CharacterOfShow>) {
         switch state {
         case .error(let error):
             let errorView: ErrorView = .fromNib()
@@ -64,16 +70,36 @@ class CharacterViewController: UIViewController {
             let loadingView: LoadingView = .fromNib()
             tableView.tableFooterView = loadingView
         case .empty:
-            let emptyView: EmptyView = .fromNib()
+            let emptyView: ErrorView = .fromNib()
+            emptyView.errorLabel.text = "No results! Try searching for something different."
             tableView.tableFooterView = emptyView
         case .populated:
             tableView.tableFooterView = nil
         }
     }
 
+    private func setupNavigationBar() {
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        navigationBar.prefersLargeTitles = true
+        navigationBar.barStyle = .black
+        navigationBar.largeTitleTextAttributes = [
+                    NSAttributedString.Key.foregroundColor: UIColor.white
+                ]
+        navigationBar.titleTextAttributes = [
+                    NSAttributedString.Key.foregroundColor: UIColor.white
+                ]
+
+        navigationBar.setBackgroundImage(navImage, for: UIBarMetrics.default)
+        navigationBar.shadowImage = navImage
+    }
+
     private func setupTableView() {
         view.addSubview(tableView)
-        tableView.fillSuperview()
+        tableView.backgroundColor = #colorLiteral(red: 0.1058690622, green: 0.1058908626, blue: 0.105864279, alpha: 1)
+        tableView.anchor(top: view.topAnchor,
+                         leading: view.safeAreaLayoutGuide.leadingAnchor,
+                         bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                         trailing: view.safeAreaLayoutGuide.trailingAnchor)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(CharacterCell.self)
@@ -90,7 +116,6 @@ extension CharacterViewController: UITableViewDataSource {
         let cell: CharacterCell = tableView.dequeueReusableCell(for: indexPath)
         let characters = viewModel.items
         cell.configure(with: characters[indexPath.row])
-
         if case .paging(_, let nextPage) = viewModel.state,
             indexPath.row == viewModel.items.count - 1 {
             viewModel.loadPage(nextPage)
@@ -105,6 +130,6 @@ extension CharacterViewController: UITableViewDelegate {
         let vc = DetailsViewController()
         let character = viewModel.character(for: indexPath)
         vc.character = character
-        show(vc, sender: nil)
+        navigationController?.show(vc, sender: nil)
     }
 }

@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "pickle-rick-1.jpg",
+      "filename" : "episodesIcon.png",
       "scale" : "1x"
     },
     {
@@ -11,12 +11,14 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "pickle-rick.jpg",
       "scale" : "3x"
     }
   ],
   "info" : {
     "version" : 1,
     "author" : "xcode"
+  },
+  "properties" : {
+    "template-rendering-intent" : "original"
   }
 }

@@ -12,9 +12,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="acz-Id-bwC" userLabel="Loading View" customClass="LoadingView" customModule="RickAndMortyFunApp" customModuleProvider="target">
+        <view contentMode="scaleAspectFit" id="acz-Id-bwC" userLabel="Loading View" customClass="LoadingView" customModule="RickAndMortyFunApp" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
-            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
             <subviews>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="uHB-cB-DZR">
                     <rect key="frame" x="177.5" y="90" width="20" height="20"/>
