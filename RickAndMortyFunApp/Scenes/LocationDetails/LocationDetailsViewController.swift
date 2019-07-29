@@ -10,24 +10,22 @@ import UIKit
 
 class LocationDetailsViewController: UIViewController {
 
+    var viewModel: LocationDetailsViewModel
     fileprivate let padding: CGFloat = 8
-    let networkService = NetworkService()
-    var id: String? {
-        didSet {
-            guard let id = id else { return }
-            fetchLocation(from: id)
-        }
-    }
-    var item: Location? {
-        didSet {
-            navigationItem.title = item?.name ?? ""
-        }
-    }
-
+    
     // MARK: - Views
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: StretchyHeaderFlowLayout())
     var headerView: LocationDetailsHeader?
 
+    // MARK: - Init
+    init(viewModel: LocationDetailsViewModel = .init()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     // MARK: - Lifecicle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,11 +51,6 @@ class LocationDetailsViewController: UIViewController {
             if y <= 0 {
                 self.navigationController?.navigationBar.alpha = 1
             }
-        }
-    }
-    func fetchLocation(from id: String) {
-        networkService.loadSingle(request: RickAndMortyRouter.getSingleLocation(id: id)) { [weak self] (response: Location) in
-            self?.item = response
         }
     }
 
@@ -93,12 +86,14 @@ class LocationDetailsViewController: UIViewController {
 // MARK: - CollectionView Data Source
 extension LocationDetailsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        guard let residents = viewModel.item?.residents else { return 0 }
+        return residents.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(with: LocationDetailsCell.self, for: indexPath)
-
+        guard let residents = viewModel.item?.residents else { return cell }
+        cell.resident = residents[indexPath.item]
         return cell
     }
 

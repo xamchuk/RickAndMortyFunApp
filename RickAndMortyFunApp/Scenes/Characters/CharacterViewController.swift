@@ -11,19 +11,14 @@ import Alamofire
 
 class CharacterViewController: UIViewController {
 
-// MARK: - Views
+    // MARK: - Views
     var tableView = UITableView()
     var navImage: UIImage!
 
-// MARK: - Properties
+    // MARK: - Properties
     var viewModel: CharacterViewModel
-    var pointX: CGFloat!
-    var pointY: CGFloat!
-    var selectedFrame: CGRect?
-    var selectedImage: UIImage?
-    var alpha: CGFloat!
 
-// MARK: - Init
+    // MARK: - Init
     init(viewModel: CharacterViewModel = .init()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -33,33 +28,25 @@ class CharacterViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-// MARK: - Life cycle
+    // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         navImage = navigationController?.navigationBar.backgroundImage(for: .default)
         setupTableView()
+        viewModel.stateUpdated = nil
         viewModel.loadPage(1)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
-// TODO: - for some reason cell doesnt deselect automaticly. I dont know why:(
-        if let indexPath = tableView.indexPathForSelectedRow {
-            tableView.deselectRow(at: indexPath, animated: true)
-        }
         viewModel.stateUpdated = { [weak self] state in
             self?.setFooterView(for: state)
             self?.tableView.reloadData()
         }
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        viewModel.stateUpdated = nil
-    }
-
-// MARK: - Private
+    // MARK: - Private
     private func setFooterView(for state: State<CharacterOfShow>) {
         switch state {
         case .error(let error):
@@ -127,9 +114,10 @@ extension CharacterViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension CharacterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = DetailsViewController()
+        tableView.deselectRow(at: indexPath, animated: true)
         let character = viewModel.character(for: indexPath)
-        vc.character = character
+        let viewModel = CharacterDetailsViewModel(character: character)
+        let vc = DetailsViewController(viewModel: viewModel)
         navigationController?.show(vc, sender: nil)
     }
 }

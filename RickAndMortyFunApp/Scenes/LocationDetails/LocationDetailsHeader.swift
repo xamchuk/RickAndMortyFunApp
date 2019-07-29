@@ -54,7 +54,7 @@ class LocationDetailsHeader: UICollectionReusableView {
                                  leading: leadingAnchor,
                                  bottom: nil,
                                  trailing: trailingAnchor,
-                                 padding: .init(top: padding, left: padding, bottom: padding, right: padding))
+                                 padding: .init(top: 3 * padding, left: padding, bottom: padding, right: padding))
         let containerView = UIView()
         containerView.backgroundColor = #colorLiteral(red: 0.1215686275, green: 0.1294117647, blue: 0.1411764706, alpha: 1)
         addSubview(containerView)

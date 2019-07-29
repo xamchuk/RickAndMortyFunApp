@@ -24,8 +24,8 @@ class CharacterViewModel {
         }
     }
 
-    var items: [CharacterCellViewModel] {
-        return state.currentItems.map { CharacterCellViewModel(name: $0.name, imageURl: $0.image, locationName: $0.location.name)}
+    var items: [CharacterCellContent] {
+        return state.currentItems.map { CharacterCellContent(name: $0.name, imageURl: $0.image, locationName: $0.location.name)}
     }
 
     func character(for indexPath: IndexPath) -> CharacterOfShow {

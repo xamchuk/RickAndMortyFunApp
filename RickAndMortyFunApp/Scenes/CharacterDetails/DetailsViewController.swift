@@ -11,15 +11,7 @@ import UIKit
 class DetailsViewController: UIViewController {
 
     fileprivate let padding: CGFloat = 8
-    var characterDetailsArray: [CharacterDetails]!
-    var character: CharacterOfShow! {
-        didSet {
-            backgroundView.imageView.setImage(from: character.image, size: .init(width: view.frame.width, height: view.frame.width))
-            fetchingData()
-            collectionView.reloadData()
-
-        }
-    }
+    var viewModel: CharacterDetailsViewModel
 
 // MARK: - Views
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -32,6 +24,10 @@ class DetailsViewController: UIViewController {
         setupBackgroundView()
         setupCollectionView()
         setupCollectionViewLayout()
+
+        viewModel.reload = { [weak self] in
+            self?.collectionView.reloadData()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -43,10 +39,21 @@ class DetailsViewController: UIViewController {
         super.viewDidAppear(true)
     }
 
+    // MARK: - Init
+    init(viewModel: CharacterDetailsViewModel) {
+            self.viewModel = viewModel
+            super.init(nibName: nil, bundle: nil)
+        }
+
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+
 // MARK: - Setup UI
     fileprivate func setupBackgroundView() {
         view.addSubview(backgroundView)
         backgroundView.fillWithSafeAreaSuperview()
+        backgroundView.imageView.setImage(from: viewModel.character.image, size: view.frame.size)
     }
 
     fileprivate func setupNavigationController() {
@@ -75,22 +82,12 @@ class DetailsViewController: UIViewController {
             layout.sectionInset = .init(top: padding, left: padding, bottom: padding, right: padding)
         }
     }
-
-    func fetchingData() {
-        characterDetailsArray = [
-            CharacterDetails(isButton: false, title: "Status", value: character.status),
-            CharacterDetails(isButton: false, title: "Species", value: character.species),
-            CharacterDetails(isButton: false, title: "Type", value: character.type),
-            CharacterDetails(isButton: false, title: "Gender", value: character.gender),
-            CharacterDetails(isButton: false, title: "Origin", value: character.origin.name),
-            CharacterDetails(isButton: true, title: "Location", value: character.location.name)
-        ]
-    }
+    
 // MARK: - Actions
     @objc func handleLocationAction() {
         let vc = LocationDetailsViewController()
-        let url = URL(string: character.location.url)
-        vc.id = url?.lastPathComponent
+        let url = URL(string: viewModel.character.location.url)
+        vc.viewModel.id = url?.lastPathComponent
         show(vc, sender: nil)
     }
 }
@@ -98,12 +95,12 @@ class DetailsViewController: UIViewController {
 // MARK: - CollectionView Data Source
 extension DetailsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return characterDetailsArray.count
+        return viewModel.characterDetailsArray.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(with: CharactersDetailsCell.self, for: indexPath)
-        cell.detail = characterDetailsArray[indexPath.item]
+        cell.detail = viewModel.characterDetailsArray[indexPath.item]
         cell.valueButton.addTarget(self, action: #selector(handleLocationAction), for: .touchUpInside)
         return cell
     }
@@ -112,9 +109,9 @@ extension DetailsViewController: UICollectionViewDataSource {
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
         headerView = collectionView.dequeueReusableView(with: CharacterDetailsHeader.self, for: indexPath)
-        headerView?.profileImageView.setImage(from: character.image,
+        headerView?.profileImageView.setImage(from: viewModel.character.image,
                                        size: .init(width: 150, height: 150))
-        headerView?.nameLabel.text = character.name
+        headerView?.nameLabel.text = viewModel.character.name
 
         return headerView!
     }

@@ -31,7 +31,7 @@ class RickAndMortyFunAppTests: XCTestCase {
                                         image: "",
                                         episode: ["", ""],
                                         url: "")
-        let charcterCellViewModel = CharacterCellViewModel(name: "Rick", imageURl: "", locationName: "")
+        let charcterCellViewModel = CharacterCellContent(name: "Rick", imageURl: "", locationName: "")
 
         XCTAssertEqual(character.name, charcterCellViewModel.name)
     }

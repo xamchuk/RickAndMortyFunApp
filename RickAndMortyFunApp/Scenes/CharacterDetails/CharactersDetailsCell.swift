@@ -15,7 +15,7 @@ class CharactersDetailsCell: UICollectionViewCell {
            fetchData()
         }
     }
-// MARK: - Views
+    // MARK: - Views
     let stackView = UIStackView()
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -37,7 +37,7 @@ class CharactersDetailsCell: UICollectionViewCell {
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         return button
     }()
-// MARK: - Fetch Data
+    // MARK: - Fetch Data
     func fetchData() {
         titleLabel.text = "\(detail.title):"
         if detail.isButton {
@@ -50,7 +50,7 @@ class CharactersDetailsCell: UICollectionViewCell {
             [titleLabel, valueLabel].forEach({ stackView.addArrangedSubview($0)})
         }
     }
-// MARK: - Init
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -60,7 +60,7 @@ class CharactersDetailsCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-// MARK: - Setup UI
+    // MARK: - Setup UI
     fileprivate func setupViews() {
         addSubview(stackView)
         stackView.anchor(top: topAnchor,

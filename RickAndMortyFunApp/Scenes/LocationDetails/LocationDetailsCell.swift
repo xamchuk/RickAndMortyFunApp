@@ -11,9 +11,9 @@ import UIKit
 
 class LocationDetailsCell: UICollectionViewCell {
     private var imageSize = CGSize(width: 56, height: 56)
-    var detail: CharacterDetails! {
+    var resident: String? {
         didSet {
-            fetchData()
+            setImageForCellWith(urlString: resident ?? "")
         }
     }
     // MARK: - Views
@@ -36,7 +36,7 @@ class LocationDetailsCell: UICollectionViewCell {
 
     // MARK: - Fetch Data
     func fetchData() {
-
+      //  setImageForCellWith(urlString: detail.)
     }
     // MARK: - Init
     override init(frame: CGRect) {
@@ -47,6 +47,11 @@ class LocationDetailsCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    func setImageForCellWith(urlString: String) {
+            let characterId = URL(string: urlString)!.lastPathComponent
+            characterImageView.setImage(from: "https://rickandmortyapi.com/api/character/avatar/\(characterId).jpeg", size: imageSize)
+        }
 
     // MARK: - Setup UI
     fileprivate func setupViews() {

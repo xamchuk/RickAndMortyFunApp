@@ -13,7 +13,7 @@ class CharacterCell: UITableViewCell {
 
     private var imageSize = CGSize(width: 56, height: 56)
 
-// MARK: - Views properties
+    // MARK: - Views properties
     let characterImageView: UIImageView = {
         var imageV = UIImageView()
         imageV.contentMode = .scaleAspectFill
@@ -40,7 +40,7 @@ class CharacterCell: UITableViewCell {
         return label
     }()
 
-// MARK: - Init
+    // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -55,13 +55,13 @@ class CharacterCell: UITableViewCell {
         detailsLabel.text = nil
     }
 
-    func configure(with viewModel: CharacterCellViewModel) {
+    func configure(with viewModel: CharacterCellContent) {
         characterImageView.setImage(from: viewModel.imageURl, size: imageSize)
         nameLabel.text = viewModel.name
         detailsLabel.text = viewModel.locationName
     }
 
-// MARK: - Setup UI
+    // MARK: - Setup UI
     fileprivate func setupViews() {
         backgroundColor = .clear
         addSubviews(characterImageView, nameLabel, detailsLabel)

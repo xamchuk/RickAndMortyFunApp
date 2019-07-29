@@ -1,5 +1,5 @@
 //
-//  CharacterCellViewModel.swift
+//  CharacterCellContent.swift
 //  RickAndMortyFunApp
 //
 //  Created by Rusłan Chamski on 12/03/2019.
@@ -7,8 +7,7 @@
 //
 import Foundation
 
-struct CharacterCellViewModel {
-
+struct CharacterCellContent {
     let name: String
     let imageURl: String
     let locationName: String
