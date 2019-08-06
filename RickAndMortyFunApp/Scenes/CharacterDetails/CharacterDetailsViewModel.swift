@@ -8,31 +8,41 @@
 
 import Foundation
 
+enum CharacterData {
+    case byItem(item: CharacterOfShow)
+    case byId(id: Int)
+}
+
 class CharacterDetailsViewModel {
 
-    let character: CharacterOfShow
-
+    var character: CharacterOfShow?
     var characterDetailsArray: [CharacterDetails] = []
-
     var reload: (() -> Void)?
 
-// MARK: - Init
-    init(character: CharacterOfShow) {
-        self.character = character
-        fetchingData()
+    init(data: CharacterData) {
+        switch data {
+        case .byId(let id):
+            let networkService = NetworkService()
+            networkService.loadSingle(request: RickAndMortyRouter.getSingleCharacter(id: id)) { [weak self] (response: CharacterOfShow) in
+                self?.character = response
+                self?.fetchingData()
+            }
+        case .byItem(let item):
+            self.character = item
+            fetchingData()
+        }
     }
 
     func fetchingData() {
-            characterDetailsArray = [
-                CharacterDetails(isButton: false, title: "Status", value: character.status),
-                CharacterDetails(isButton: false, title: "Species", value: character.species),
-                CharacterDetails(isButton: false, title: "Type", value: character.type),
-                CharacterDetails(isButton: false, title: "Gender", value: character.gender),
-                CharacterDetails(isButton: false, title: "Origin", value: character.origin.name),
-                CharacterDetails(isButton: true, title: "Location", value: character.location.name)
-            ]
+        guard let character = character else { return }
+        characterDetailsArray = [
+            CharacterDetails(isButton: false, title: "Status", value: character.status),
+            CharacterDetails(isButton: false, title: "Species", value: character.species),
+            CharacterDetails(isButton: false, title: "Type", value: character.type),
+            CharacterDetails(isButton: false, title: "Gender", value: character.gender),
+            CharacterDetails(isButton: false, title: "Origin", value: character.origin.name),
+            CharacterDetails(isButton: true, title: "Location", value: character.location.name)
+        ]
         reload?()
-        }
-    // delegate
-
+    }
 }

@@ -36,7 +36,7 @@ class LocationViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavifationConroller()
+        setupNavigationBar()
         viewModel.stateUpdated = { [weak self] state in
             self?.setFooterView(for: state)
             self?.tableView.reloadData()
@@ -76,7 +76,7 @@ class LocationViewController: UIViewController {
         viewModel.load(request: request, page: page)
     }
 // MARK: - Setup UI
-    fileprivate func setupNavifationConroller() {
+    fileprivate func setupNavigationBar() {
         guard let navigationBar = navigationController?.navigationBar else { return }
                navigationBar.prefersLargeTitles = true
                navigationBar.barStyle = .black
@@ -125,8 +125,8 @@ extension LocationViewController: UITableViewDataSource {
 extension LocationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let vc = LocationDetailsViewController()
-        vc.viewModel.item = viewModel.location(for: indexPath)
+        let item = viewModel.location(for: indexPath)
+        let vc = LocationDetailsViewController(viewModel: LocationDetailsViewModel(data: .byItem(item: item)))
         show(vc, sender: nil)
     }
 }

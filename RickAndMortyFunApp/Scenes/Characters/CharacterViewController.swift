@@ -116,7 +116,7 @@ extension CharacterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let character = viewModel.character(for: indexPath)
-        let viewModel = CharacterDetailsViewModel(character: character)
+        let viewModel = CharacterDetailsViewModel(data: .byItem(item: character))
         let vc = DetailsViewController(viewModel: viewModel)
         navigationController?.show(vc, sender: nil)
     }

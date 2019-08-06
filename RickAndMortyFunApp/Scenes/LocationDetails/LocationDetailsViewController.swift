@@ -11,14 +11,14 @@ import UIKit
 class LocationDetailsViewController: UIViewController {
 
     var viewModel: LocationDetailsViewModel
-    fileprivate let padding: CGFloat = 8
-    
+    private let padding: CGFloat = 8
     // MARK: - Views
+    var navImage: UIImage!
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: StretchyHeaderFlowLayout())
     var headerView: LocationDetailsHeader?
 
     // MARK: - Init
-    init(viewModel: LocationDetailsViewModel = .init()) {
+    init(viewModel: LocationDetailsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -33,7 +33,12 @@ class LocationDetailsViewController: UIViewController {
         setupNavigationController()
         setupCollectionView()
         setupCollectionViewLayout()
+        viewModel.reload = { [weak self] in
+            self?.collectionView.reloadData()
+            self?.navigationItem.title = self?.viewModel.name
+        }
     }
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         amimationNavigationBar(scrollView: scrollView)
     }
@@ -44,25 +49,29 @@ class LocationDetailsViewController: UIViewController {
 
     func amimationNavigationBar(scrollView: UIScrollView) {
         let y = scrollView.contentOffset.y
-        UIView.animate(withDuration: 0.3 ) {
+        UIView.animate(withDuration: 0.3 ) { [weak self] in
+            guard let navigationBar = self?.navigationController?.navigationBar else { return }
             if y > 0 {
-                self.navigationController?.navigationBar.alpha = 0
+                navigationBar.setBackgroundImage(self?.navImage, for: UIBarMetrics.default)
+                navigationBar.shadowImage = self?.navImage
             }
             if y <= 0 {
-                self.navigationController?.navigationBar.alpha = 1
+                navigationBar.setBackgroundImage(UIImage(), for: .default)
+                navigationBar.shadowImage = UIImage()
             }
         }
     }
 
     // MARK: - Setup UI
-    fileprivate func setupNavigationController() {
+    private func setupNavigationController() {
         guard let navigationBar = navigationController?.navigationBar else { return }
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
         navigationBar.tintColor = .gray
         navigationItem.largeTitleDisplayMode = .never
+        navigationItem.title = viewModel.name
     }
-    fileprivate func setupCollectionView() {
+    private func setupCollectionView() {
         view.addSubview(collectionView)
         collectionView.backgroundColor = .clear
         collectionView.anchor(top: view.topAnchor,
@@ -76,7 +85,7 @@ class LocationDetailsViewController: UIViewController {
         collectionView.register(reusableViewType: LocationDetailsHeader.self)
     }
 
-    fileprivate func setupCollectionViewLayout() {
+    private func setupCollectionViewLayout() {
         if let layout = collectionView.collectionViewLayout as? StretchyHeaderFlowLayout {
             layout.sectionInset = .init(top: padding, left: padding, bottom: padding, right: padding)
         }
@@ -86,14 +95,15 @@ class LocationDetailsViewController: UIViewController {
 // MARK: - CollectionView Data Source
 extension LocationDetailsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let residents = viewModel.item?.residents else { return 0 }
+        guard let residents = viewModel.residents else { return 0 }
         return residents.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(with: LocationDetailsCell.self, for: indexPath)
-        guard let residents = viewModel.item?.residents else { return cell }
-        cell.resident = residents[indexPath.item]
+        guard let residents = viewModel.residents else { return cell }
+        let resident = residents[indexPath.item]
+        cell.fetchResident(resident: resident)
         return cell
     }
 
@@ -118,5 +128,17 @@ extension LocationDetailsViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
         return .init(width: view.frame.width, height: view.frame.width)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if navigationController?.viewControllers.count ?? 0 >= 3 {
+            return
+        } else {
+            guard let residents = viewModel.residents else { return }
+            let resident = residents[indexPath.item]
+            let vc = DetailsViewController(viewModel: CharacterDetailsViewModel(data: .byId(id: resident.id)))
+            navigationController?.pushViewController(vc, animated: true)
+        }
+
     }
 }

@@ -12,7 +12,7 @@ class EpisodeCell: UITableViewCell {
 
     lazy var imageTest: UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "charactersIcon")
+        iv.image = nil
         iv.contentMode = .scaleAspectFit
         return iv
     }()

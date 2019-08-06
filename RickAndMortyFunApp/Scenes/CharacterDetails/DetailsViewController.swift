@@ -53,7 +53,10 @@ class DetailsViewController: UIViewController {
     fileprivate func setupBackgroundView() {
         view.addSubview(backgroundView)
         backgroundView.fillWithSafeAreaSuperview()
-        backgroundView.imageView.setImage(from: viewModel.character.image, size: view.frame.size)
+        viewModel.reload = { [weak self] in
+            guard let character = self?.viewModel.character else { return }
+            self?.backgroundView.imageView.setImage(from: character.image, size: self?.view.frame.size ?? .zero)
+        }
     }
 
     fileprivate func setupNavigationController() {
@@ -82,13 +85,14 @@ class DetailsViewController: UIViewController {
             layout.sectionInset = .init(top: padding, left: padding, bottom: padding, right: padding)
         }
     }
-    
-// MARK: - Actions
+
+    // MARK: - Actions
     @objc func handleLocationAction() {
-        let vc = LocationDetailsViewController()
-        let url = URL(string: viewModel.character.location.url)
-        vc.viewModel.id = url?.lastPathComponent
-        show(vc, sender: nil)
+        guard let character = viewModel.character else { return }
+        let url = URL(string: character.location.url)
+        guard let id = url?.lastPathComponent else { return}
+        let vc = LocationDetailsViewController(viewModel: LocationDetailsViewModel(data: .byId(id: id)))
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -101,7 +105,12 @@ extension DetailsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(with: CharactersDetailsCell.self, for: indexPath)
         cell.detail = viewModel.characterDetailsArray[indexPath.item]
-        cell.valueButton.addTarget(self, action: #selector(handleLocationAction), for: .touchUpInside)
+        if navigationController?.viewControllers.count ?? 0 > 2 {
+            cell.valueButton.isEnabled = false
+        } else {
+            cell.valueButton.isEnabled = true
+            cell.valueButton.addTarget(self, action: #selector(handleLocationAction), for: .touchUpInside)
+        }
         return cell
     }
 
@@ -109,9 +118,10 @@ extension DetailsViewController: UICollectionViewDataSource {
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
         headerView = collectionView.dequeueReusableView(with: CharacterDetailsHeader.self, for: indexPath)
-        headerView?.profileImageView.setImage(from: viewModel.character.image,
+        guard let character = viewModel.character else { return headerView!}
+        headerView?.profileImageView.setImage(from: character.image,
                                        size: .init(width: 150, height: 150))
-        headerView?.nameLabel.text = viewModel.character.name
+        headerView?.nameLabel.text = character.name
 
         return headerView!
     }

@@ -61,4 +61,14 @@ class NetworkService {
             completion(item)
         }
     }
+
+    func loadResidents<Model: Codable>(request: URLRequestConvertible, completion: @escaping (Model) -> Void) {
+            AF.request(request).responseDecodable { (response: DataResponse<Model>) in
+                if let error = response.error {
+                    print("error: \(error)")
+                }
+                guard let item = response.value else { return }
+                completion(item)
+            }
+        }
 }

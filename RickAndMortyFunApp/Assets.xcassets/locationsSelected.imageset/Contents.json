@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "episodesIcon.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "glyph-locations-active.png",
       "scale" : "2x"
     },
     {

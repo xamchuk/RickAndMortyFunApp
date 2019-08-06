@@ -1,4 +1,3 @@
-
 //
 //  LocationDetailsCell.swift
 //  RickAndMortyFunApp
@@ -11,11 +10,7 @@ import UIKit
 
 class LocationDetailsCell: UICollectionViewCell {
     private var imageSize = CGSize(width: 56, height: 56)
-    var resident: String? {
-        didSet {
-            setImageForCellWith(urlString: resident ?? "")
-        }
-    }
+
     // MARK: - Views
     let characterImageView: UIImageView = {
         var imageV = UIImageView()
@@ -29,14 +24,16 @@ class LocationDetailsCell: UICollectionViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.title1)
-        label.text = "Abra ka dabra"
+        label.adjustsFontSizeToFitWidth = true
+        label.text = "Unnkown"
         label.textColor = .white
         return label
     }()
 
     // MARK: - Fetch Data
-    func fetchData() {
-      //  setImageForCellWith(urlString: detail.)
+    func fetchResident(resident: LocationDetailsCellContent) {
+        characterImageView.setImage(from: resident.imageUrl, size: imageSize)
+        titleLabel.text = resident.title
     }
     // MARK: - Init
     override init(frame: CGRect) {
@@ -47,11 +44,6 @@ class LocationDetailsCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    func setImageForCellWith(urlString: String) {
-            let characterId = URL(string: urlString)!.lastPathComponent
-            characterImageView.setImage(from: "https://rickandmortyapi.com/api/character/avatar/\(characterId).jpeg", size: imageSize)
-        }
 
     // MARK: - Setup UI
     fileprivate func setupViews() {

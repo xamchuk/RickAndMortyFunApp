@@ -65,7 +65,11 @@ class LocationDetailsHeader: UICollectionReusableView {
                              padding: .init(top: 16, left: 0, bottom: 0, right: 0),
                              size: .init(width: 0, height: 50))
         containerView.addSubview(nameLabel)
-        nameLabel.anchor(top: containerView.topAnchor, leading: containerView.leadingAnchor, bottom: containerView.bottomAnchor, trailing: containerView.trailingAnchor, padding: .init(top: 0, left: padding, bottom: 0, right: padding))
+        nameLabel.anchor(top: containerView.topAnchor,
+                         leading: containerView.leadingAnchor,
+                         bottom: containerView.bottomAnchor,
+                         trailing: containerView.trailingAnchor,
+                         padding: .init(top: 0, left: padding, bottom: 0, right: padding))
     }
 
     fileprivate func setupBackgroundView() {

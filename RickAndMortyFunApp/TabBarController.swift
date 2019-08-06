@@ -37,20 +37,20 @@ class TabBarController: UITabBarController {
 
         let characterTabBarItem = items[0] as UITabBarItem
         characterTabBarItem.title = NSLocalizedString("Characters", comment: "Person, ")
-        characterTabBarItem.image = #imageLiteral(resourceName: "charactersIcon")
-        characterTabBarItem.selectedImage = #imageLiteral(resourceName: "charactersIconSelected")
+        characterTabBarItem.image = nil
+        characterTabBarItem.selectedImage = nil
         characterViewController.navigationItem.title = characterTabBarItem.title
 
         let locationTabBarItem =  items[1] as UITabBarItem
         locationTabBarItem.title = NSLocalizedString("Locations", comment: "TableView by places, locations or dimensions ")
-        locationTabBarItem.image = #imageLiteral(resourceName: "loacionsIcon")
-        locationTabBarItem.selectedImage = #imageLiteral(resourceName: "loacionsIconSelected")
+        locationTabBarItem.image = #imageLiteral(resourceName: "locationsSelected")
+        locationTabBarItem.selectedImage = #imageLiteral(resourceName: "locationsSelected")
         locationViewController.navigationItem.title = locationTabBarItem.title
 
         let episodeTabBarItem =  items[2] as UITabBarItem
         episodeTabBarItem.title = NSLocalizedString("Episodes", comment: "")
-        episodeTabBarItem.image = #imageLiteral(resourceName: "episodesIcon")
-        episodeTabBarItem.selectedImage = #imageLiteral(resourceName: "episodesIconSelected")
+        episodeTabBarItem.image = #imageLiteral(resourceName: "episodes")
+        episodeTabBarItem.selectedImage = nil
         episodeViewController.navigationItem.title = episodeTabBarItem.title
     }
 }
